@@ -2,7 +2,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.Graphics;
 import java.awt.color.*;
-//lmao x2
+//lmao x3
 
 public class Circle extends JPanel{
 	
