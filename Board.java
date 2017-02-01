@@ -18,6 +18,7 @@ public class Board extends JFrame {
 		setVisible(true);
 	
 		setLayout(new BorderLayout());
+			//guys there could be an issue with this file path
 		setContentPane(new JLabel(new ImageIcon("C:\\Users\\cloda\\OneDrive\\Pictures\\1f0146d66abc474e942a973915a20bad.jpg")));
 		setLayout(new FlowLayout());
 		l1=new JLabel("Here is a button");
