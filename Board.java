@@ -12,21 +12,21 @@ public class Board extends JFrame {
 		public Board()
 		{
 		setTitle("Background Color for JFrame");
-		setSize(600,600);
+		setSize(800,800);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
 	
 		setLayout(new BorderLayout());
-		setContentPane(new JLabel(new ImageIcon("C:\\Users\\cloda\\Monopoly1\\Monopoly\\src\\MonopolyBoard.jpg")));
+		setContentPane(new JLabel(new ImageIcon("C:\\Users\\cloda\\OneDrive\\Pictures\\1f0146d66abc474e942a973915a20bad.jpg")));
 		setLayout(new FlowLayout());
 		l1=new JLabel("Here is a button");
 		b1=new JButton("I am a button");
 		add(l1);
 		add(b1);
 		// Just for refresh :) Not optional!
-		setSize(599,599);
-		setSize(600,600);
+		setSize(799,799);
+		setSize(800,800);
 		}
 		public static void main(String args[])
 		{
