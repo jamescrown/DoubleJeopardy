@@ -1,37 +1,41 @@
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import javax.swing.*;
-import javax.swing.border.*;
-import java.awt.event.*;
 
-public class Board extends JFrame {
+public class Board  {
 	//class BackgroundImageJFrame extends JFrame
 	//{
 	JButton b1;
 	JLabel l1;
+	JPanel p1;
+	JFrame f;
+	
 		public Board()
 		{
-		setTitle("Background Color for JFrame");
-		setSize(800,800);
-		setLocationRelativeTo(null);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setVisible(true);
+		
+		f = new JFrame();
+		f.setTitle("Monopoly Board");
+		f.setSize(800,800);
+		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		f.setVisible(true);
 	
-		setLayout(new BorderLayout());
-			//guys there could be an issue with this file path
-		setContentPane(new JLabel(new ImageIcon("C:\\Users\\cloda\\OneDrive\\Pictures\\1f0146d66abc474e942a973915a20bad.jpg")));
-		setLayout(new FlowLayout());
-		l1=new JLabel("Here is a button");
-		b1=new JButton("I am a button");
-		add(l1);
-		add(b1);
-		// Just for refresh :) Not optional!
-		setSize(799,799);
-		setSize(800,800);
+		f.setLayout(null);
+		f.setContentPane(new JLabel(new ImageIcon("C:\\Users\\cloda\\OneDrive\\Pictures\\1f0146d66abc474e942a973915a20bad.jpg")));
+		f.setSize(799,799);
+		f.setSize(800,800);
+		
+		p1 = new JPanel();
+		p1.setBackground(Color.GRAY);
+		
+		l1 = new JLabel("This is our information panel");
+		p1.add(l1);
+		
+		f.add(p1);
+		p1.setLocation(300, 400);
+		p1.setSize(200, 100);
 		}
 		public static void main(String args[])
 		{
-		new Board();
+			new Board();
 		}
 	}
   
