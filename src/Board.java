@@ -28,7 +28,7 @@ public class Board extends JFrame {
 		f.setVisible(true);
 	
 		f.setLayout(null);
-		f.setContentPane(new JLabel(new ImageIcon("C:\\Users\\cloda\\OneDrive\\Pictures\\1f0146d66abc474e942a973915a20bad.jpg")));
+		f.setContentPane(new JLabel(new ImageIcon("MonopolyBoard.jpg")));
 		f.setSize(799,799);
 		f.setSize(800,800);
 //		
