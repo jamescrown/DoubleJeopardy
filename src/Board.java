@@ -5,31 +5,32 @@ import java.awt.geom.*;
 //first attempt
 
 class Board extends JFrame{
-
-    public Board(){
-    	
+	
+	static int roll;
+	
+	static int a = 720;
+    static int b = 620;
     
-    	JPanel panel=new JPanel();
-   	 getContentPane().add(panel);
-        setSize(770, 660);
-   
-//        JFrame frame = new JFrame();
-//    	frame.setSize(1680, 1080);
-//     frame.add(panel, BorderLayout.CENTER);
-//        frame.setLayout(new BorderLayout());
-//    	frame.setVisible(true);  
-//       
-       
-        //panel.setExtendedState(JPanel.MAXIMIZED_BOTH); 
-      
-       /* JLabel title = new JLabel("monopoly");
-        getContentPane().add(title);
-        title setVisible(true);
-        */
-   
-        //  getContentPane().add(panel);
-       // JButton button =new JButton("press");
-       // panel.add(button);
+	int c = 720;
+    int d = 625;
+	
+	int e = 720;
+    int f = 630;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	private static final int FRAME_WIDTH = 800;
+	private static final int FRAME_HEIGHT = 660;
+
+
+	public Board(){
+    	
+		setSize(FRAME_WIDTH, FRAME_HEIGHT);
+		setLayout(new GridBagLayout());
+		getContentPane().add(ButtonFrame2.createComponents());
+
     }
 
     public void paint(Graphics g) {
@@ -131,12 +132,51 @@ class Board extends JFrame{
         g2.draw(linLEFT7);
         g2.draw(linLEFT8);
         g2.draw(linLEFT9);
-    }
-
-    public static void main(String []args){
-        Board s=new Board();
-        s.setVisible(true);
-    
+        
+       //add the pieces
+        g2.setColor(Color.RED);
+        g2.fillOval(a, b, 20, 20);
+        
+        g2.setColor(Color.BLUE);
+        g2.fillOval(c, d, 20, 20);
+        
+        g2.setColor(Color.GREEN);
+        g2.fillOval(e, f, 20, 20);
        
     }
+    
+   public static void movePieces(){
+	   
+	   switch(roll){
+	   case 2 :
+		   if(a<721 && b==620){
+		   a = a - 68;
+		   }
+		  // else if()
+		   
+		   break;
+	   case 3 :
+		   break;
+	   case 4 :
+		   break;
+	   case 5 :
+		   break;
+	   case 6 :
+		   break;
+	   case 7 :
+		   break;
+	   case 8 :
+		   break;
+	   case 9 :
+		   break;
+	   case 10 :
+		   //do something
+		   break;
+	   case 11 :
+		   break;
+	   case 12 :
+		   break;
+	   }
+   }
 }
+
