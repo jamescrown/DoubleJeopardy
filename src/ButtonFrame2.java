@@ -14,7 +14,7 @@ public class ButtonFrame2 extends JFrame{
 	 */
 	private static final long serialVersionUID = 1L;
 	private static JButton button;
-	private static JLabel label;
+	static JLabel label;
 	
 	private static final int FRAME_WIDTH = 100;
 	private static final int FRAME_HEIGHT = 100;
@@ -31,16 +31,10 @@ public class ButtonFrame2 extends JFrame{
 			int  n = rand.nextInt(5) + 1;
 			int n2 = rand.nextInt(5) + 1;
 			int n3 = n + n2;
-			if(n == n2){
-				label.setText("Doubles! You rolled " + String.valueOf(n) + " + " + String.valueOf(n2) + "= " + String.valueOf(n3));
-				//call move pieces
-				
-				//movePieces(n3);
-			}
-			else{
-				label.setText("You rolled " + String.valueOf(n) + "+" + String.valueOf(n2) + "= " + String.valueOf(n3));
-				//call move pieces
-			}
+			//test
+			//n3 = 12;
+			
+			Board.movePieces(n3, n, n2);
 		}
 	}
 	public static JPanel createComponents() {
@@ -50,6 +44,7 @@ public class ButtonFrame2 extends JFrame{
 		button.addActionListener(listener);
 		
 		label  = new JLabel("Your turn!");
+		
 		 
 		JPanel panel = new JPanel();
 		panel.add(button);
