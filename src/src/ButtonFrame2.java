@@ -43,12 +43,10 @@ public class ButtonFrame2 extends JFrame{
 		ActionListener listener = new ClickListener();
 		button.addActionListener(listener);
 		
-		label  = new JLabel("Your turn!");
 		
 		 
 		JPanel panel = new JPanel();
 		panel.add(button);
-		panel.add(label);
 		return panel;
 		
 	}

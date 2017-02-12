@@ -5,44 +5,32 @@ import java.awt.geom.*;
 //first attempt
 
 class Board extends JFrame{
+	
 	static int roll;
-	static int a = 720;
+	
+	static int a = 720;		//players
     static int b = 620;
     
-	int c = 720;
-    int d = 625;
-	
-	int e = 720;
-    int f = 630;
-    /**
-	 * 
-	 */
+    static int player1 = 1;
+    static int player2 = 2;
+    static int player3 = 3;
+    int player;
+    static boolean beginning = true;
+    
+
 	private static final long serialVersionUID = 1L;
+	
+	private static final int FRAME_WIDTH = 800;
+	private static final int FRAME_HEIGHT = 660;
+
 
 	public Board(){
     	
-    
-    	JPanel panel=new JPanel();
-   	 getContentPane().add(panel);
-        setSize(770, 660);
-   
-//        JFrame frame = new JFrame();
-//    	frame.setSize(1680, 1080);
-//     frame.add(panel, BorderLayout.CENTER);
-//        frame.setLayout(new BorderLayout());
-//    	frame.setVisible(true);  
-//       
-       
-        //panel.setExtendedState(JPanel.MAXIMIZED_BOTH); 
-      
-       /* JLabel title = new JLabel("monopoly");
-        getContentPane().add(title);
-        title setVisible(true);
-        */
-   
-//          getContentPane().add(panel);
-//        JButton button =new JButton("press");
-//        panel.add(button);
+		setSize(FRAME_WIDTH, FRAME_HEIGHT);
+		setLayout(new GridBagLayout());
+		getContentPane().add(ButtonFrame2.createComponents());
+		player = player1;
+
     }
 
     public void paint(Graphics g) {
@@ -145,91 +133,133 @@ class Board extends JFrame{
         g2.draw(linLEFT8);
         g2.draw(linLEFT9);
         
-       //add the pieces
+       //if beginning
+        if (beginning){
+        	g2.setColor(Color.RED);
+            g2.fillOval(a, b, 20, 20);
+            g2.setColor(Color.BLUE);
+            g2.fillOval(a, 610, 20, 20);
+            g2.setColor(Color.GREEN);
+            g2.fillOval(a, 630, 20, 20);
+            beginning = false;
+            
+        }
+        
+        
+        else if (player == player1){
         g2.setColor(Color.RED);
         g2.fillOval(a, b, 20, 20);
+        }
         
+        else if (player == player2){//if player 2
         g2.setColor(Color.BLUE);
-        g2.fillOval(c, d, 20, 20);
+        g2.fillOval(a, b, 20, 20);
+        }
         
+        else if (player == player3){ //if player 3
         g2.setColor(Color.GREEN);
-        g2.fillOval(e, f, 20, 20);
-       
-    }
-    
-   public static void movePieces(){
-	   
-	   switch(roll){
-	   case 2 :
-		   if(a<721 && b==620){
-		   a = a - 68;
-		   }
-		  // else if()
-		   
-		   break;
-	   case 3 :
-		   break;
-	   case 4 :
-		   break;
-	   case 5 :
-		   break;
-	   case 6 :
-		   break;
-	   case 7 :
-		   break;
-	   case 8 :
-		   break;
-	   case 9 :
-		   break;
-	   case 10 :
-		   //do something
-		   break;
-	   case 11 :
-		   break;
-	   case 12 :
-		   break;
-	   }
-   }
-
-    public static void main(String []args){
-////        roll = 2;
-//    	movePieces();
-    	Board s=new Board();
-        s.setVisible(true);
-//        roll = 2;
-//    	movePieces();
-//    	Board t=new Board();
-//        s.setVisible(true);
-//        roll = 2;
-//    	movePieces();
-//    	Board y=new Board();
-//        s.setVisible(true);
-//        roll = 2;
-//    	movePieces();
-//    	Board l =new Board();
-//        s.setVisible(true);
-//        roll = 2;
-//    	movePieces();
-//    	Board h=new Board();
-//        s.setVisible(true);
-//        roll = 2;
-//    	movePieces();
-//    	Board i=new Board();
-//        s.setVisible(true);
-//        roll = 2;
-//    	movePieces();
-//    	Board j=new Board();
-//        s.setVisible(true);
-//        roll = 2;
-//    	movePieces();
-//    	Board t=new Board();
-//        s.setVisible(true);
-//        roll = 2;
-//    	movePieces();
-//    	Board y=new Board();
-//        s.setVisible(true);
+        g2.fillOval(a, b, 20, 20);
+        }
         
-    
+        
        
     }
+    
+   public static void movePieces(int roll, int n, int n2){
+	  int x;
+	  
+	  int corner;
+	  if ((a == 720 && b == 620) || (a == 20 && b ==620)|| (a == 20 && b == 20) || (a == 720 && b == 20)){
+		  corner = 1;
+	  }
+	  else{
+		  corner = 0;
+	  }
+	  
+	  
+	  if (b==620 && a<=720 && !(b==620 && a==20)){
+		  
+	   for (x = 0; x < roll; x++){
+		   if(a>20){
+			   a-=70;
+		   }
+		   if(a==20 && (corner == 1 || corner == 0)){
+			   corner = 2;
+		   }
+		   else if(a==20 && corner == 2){
+			   b -= 60;
+		   }
+	   }
+	   }
+	   
+	   else if (a == 20 && b<=620 && !(a == 20 && b == 20)){
+		   
+		   for (x = 0; x < roll; x++){
+			   if(b>20){
+				   b-=60;
+			   }
+			   if(b==20 && (corner == 1 || corner == 0)){
+				   corner=2;
+			   }
+			   else if(b==20 && corner ==2){
+				   a += 70;
+			   }
+		   }
+	   }
+	   
+	   else if (b == 20 && a <= 720 && !(a == 720 && b == 20)){
+		   
+		   for (x = 0; x < roll; x++){
+			   if(a<720){
+				   a+=70;
+			   }
+			   if(a==720 && (corner == 1 || corner == 0)){
+				   //System.out.println("Corner test " + corner);
+				   corner = 2;
+			   }
+			   else if(a==720 && corner ==2){
+				   b += 60;
+			   }
+		   }
+	   }
+	   
+	   
+	   else if (a == 720 && b <= 620 && !(a == 720 && b == 620)){
+		   
+		   for (x = 0; x < roll; x++){
+			   if(b<620){
+				   b+=60;
+			   }
+			   
+			   if(b==620 && (corner == 1 || corner == 0)){
+				   corner = 2;
+			   }
+			   else if(b==620 && corner ==2){
+				   a -= 70;
+			   }
+		   }
+	   }
+		  	
+	   		
+//	   		JLabel lab  = new JLabel();
+//	   		
+//	   		if(n == n2){
+//				lab.setText("Doubles! You rolled " + String.valueOf(n) + " + " + String.valueOf(n2) + "= " + String.valueOf(roll));
+//			}
+//			else{
+//				lab.setText("You rolled " + String.valueOf(n) + "+" + String.valueOf(n2) + "= " + String.valueOf(roll));
+//			}
+//	   		
+	
+	   		Board s2=new Board();
+	        
+			JPanel p = new JPanel();
+			//p.add(lab);
+			s2.add(p);
+			//s2.add(lab);
+			s2.setDefaultCloseOperation(Board.EXIT_ON_CLOSE);
+			s2.setVisible(true);
+			//ButtonViewer1.s.dispose();
+   }
 }
+
