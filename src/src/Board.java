@@ -133,52 +133,129 @@ class Board extends JFrame{
         g2.draw(linLEFT8);
         g2.draw(linLEFT9);
 	    
-	 //adding lines for JAIL
-         Line2D linJAIL1 = new Line2D.Float(35, 630, 70, 630);
-         Line2D linJAIL2 = new Line2D.Float(35, 630, 35, 600);
-         g2.draw(linJAIL1);
-         g2.draw(linJAIL2);
-	    
-         //adding lines for properties on first sprint
-         Line2D linPROP1 = new Line2D.Float(560, 615, 630, 615);
-         Line2D linPROP2 = new Line2D.Float(420, 615, 490, 615);
-         Line2D linPROP3 = new Line2D.Float(280, 615, 350, 615);
-         Line2D linPROP4 = new Line2D.Float(70, 615, 210, 615);
-         g2.draw(linPROP1);  
-         g2.draw(linPROP2);
-         g2.draw(linPROP3);
-         g2.draw(linPROP4);
+	    //adding box for JAIL
+
+         g.setColor(Color.orange);
+         g.fillRect(35,600,35,30);
+         g.setColor(Color.black);
+         g.drawRect(35,600,35,30);
+        
+//first group of properties
+         g.setColor(Color.lightGray);
+         g.fillRect(630,600,70,15);
+         g.setColor(Color.black);
+         g.drawRect(630,600,70,15);
          
-         //lines for the second sprint of properties
-         Line2D linPROP5 = new Line2D.Float(54, 540, 54, 600);
-         Line2D linPROP6 = new Line2D.Float(54, 480, 54, 360);
-         Line2D linPROP7 = new Line2D.Float(54, 300, 54, 240);
-         Line2D linPROP8 = new Line2D.Float(54, 180, 54, 60);
-         g2.draw(linPROP5);  
-         g2.draw(linPROP6);
-         g2.draw(linPROP7);
-         g2.draw(linPROP8);
+         g.setColor(Color.lightGray);
+         g.fillRect(490,600,70,15);
+         g.setColor(Color.black);
+         g.drawRect(490,600,70,15);
          
-         //lines for the third sprint of properties
-         Line2D linPROP9 = new Line2D.Float(70, 45, 140, 45);
-         Line2D linPROP10 = new Line2D.Float(210, 45, 350, 45);
-         Line2D linPROP11 = new Line2D.Float(420, 45, 560, 45);
-         Line2D linPROP12 = new Line2D.Float(630, 45, 700, 45);
-         g2.draw(linPROP9);  
-         g2.draw(linPROP10);
-         g2.draw(linPROP11);
-         g2.draw(linPROP12);
-      
-         //lines for the final sprint of properties
-         Line2D linPROP13 = new Line2D.Float(716, 60, 716, 180);
-         Line2D linPROP14 = new Line2D.Float(716, 240, 716, 300);
-         Line2D linPROP15 = new Line2D.Float(716, 420, 716, 480);
-         Line2D linPROP16 = new Line2D.Float(716, 540, 716, 600);
-         g2.draw(linPROP13);  
-         g2.draw(linPROP14);
-         g2.draw(linPROP15);
-         g2.draw(linPROP16);
+ //second group of properties
+         g.setColor(Color.cyan);
+         g.fillRect(280,600,70,15);
+         g.setColor(Color.black);
+         g.drawRect(280,600,70,15);
          
+         g.setColor(Color.cyan);
+         g.fillRect(140,600,70,15);
+         g.setColor(Color.black);
+         g.drawRect(140,600,70,15);
+         
+         g.setColor(Color.cyan);
+         g.fillRect(70,600,70,15);
+         g.setColor(Color.black);
+         g.drawRect(70,600,70,15);
+
+ //third group of properties
+         g.setColor(Color.magenta);
+         g.fillRect(54,540,16,60);
+         g.setColor(Color.black);
+         g.drawRect(54,540,16,60);
+         
+         g.setColor(Color.magenta);
+         g.fillRect(54,420,16,60);
+         g.setColor(Color.black);
+         g.drawRect(54,420,16,60);
+         
+         g.setColor(Color.magenta);
+         g.fillRect(54,360,16,60);
+         g.setColor(Color.black);
+         g.drawRect(54,360,16,60);
+ //fourth group
+         g.setColor(Color.orange);
+         g.fillRect(54,240,16,60);
+         g.setColor(Color.black);
+         g.drawRect(54,240,16,60);
+         
+         g.setColor(Color.orange);
+         g.fillRect(54,120,16,60);
+         g.setColor(Color.black);
+         g.drawRect(54,120,16,60);
+         
+         g.setColor(Color.orange);
+         g.fillRect(54,60,16,60);
+         g.setColor(Color.black);
+         g.drawRect(54,60,16,60);
+
+       //fifth group
+         g.setColor(Color.red);
+         g.fillRect(70,44,70,16);
+         g.setColor(Color.black);
+         g.drawRect(70,44,70,16);
+         
+         g.setColor(Color.red);
+         g.fillRect(210,44,70,16);
+         g.setColor(Color.black);
+         g.drawRect(210,44,70,16);
+         
+         g.setColor(Color.red);
+         g.fillRect(280,44,70,16);
+         g.setColor(Color.black);
+         g.drawRect(280,44,70,16);
+         
+       //sixth group
+         g.setColor(Color.yellow);
+         g.fillRect(420,44,70,16);
+         g.setColor(Color.black);
+         g.drawRect(420,44,70,16);
+         
+         g.setColor(Color.yellow);
+         g.fillRect(490,44,70,16);
+         g.setColor(Color.black);
+         g.drawRect(490,44,70,16);
+         
+         g.setColor(Color.yellow);
+         g.fillRect(630,44,70,16);
+         g.setColor(Color.black);
+         g.drawRect(630,44,70,16);
+    
+    //seventh group
+         g.setColor(Color.green);
+         g.fillRect(700,60,16,60);
+         g.setColor(Color.black);
+         g.drawRect(700,60,16,60);
+         
+         g.setColor(Color.green);
+         g.fillRect(700,120,16,60);
+         g.setColor(Color.black);
+         g.drawRect(700,120,16,60);
+         
+         g.setColor(Color.green);
+         g.fillRect(700,240,16,60);
+         g.setColor(Color.black);
+         g.drawRect(700,240,16,60);
+         
+   //final group
+         g.setColor(Color.blue);
+         g.fillRect(700,420,16,60);
+         g.setColor(Color.black);
+         g.drawRect(700,420,16,60);
+         
+         g.setColor(Color.blue);
+         g.fillRect(700,540,16,60);
+         g.setColor(Color.black);
+         g.drawRect(700,540,16,60);
 	    
        //if beginning
         if (beginning){
