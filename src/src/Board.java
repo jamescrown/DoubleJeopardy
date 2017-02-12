@@ -132,6 +132,12 @@ class Board extends JFrame{
         g2.draw(linLEFT7);
         g2.draw(linLEFT8);
         g2.draw(linLEFT9);
+	    
+	 //adding lines for JAIL
+         Line2D linJAIL1 = new Line2D.Float(35, 630, 70, 630);
+         Line2D linJAIL2 = new Line2D.Float(35, 630, 35, 600);
+         g2.draw(linJAIL1);
+         g2.draw(linJAIL2);
         
        //if beginning
         if (beginning){
