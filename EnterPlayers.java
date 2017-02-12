@@ -13,6 +13,8 @@ import java.awt.event.ActionEvent;
 
 public class EnterPlayers extends JFrame {
 
+	private static final long serialVersionUID = 1L; 
+	
 	private JFrame frame;
 	private JTextField textField_1;
 	private JTextField textField_2;
