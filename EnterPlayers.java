@@ -59,7 +59,7 @@ public class EnterPlayers extends JFrame {
 		panel.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("MONOPOLY");
-		lblNewLabel.setFont(new Font("Webdings", Font.BOLD, 30));
+		//lblNewLabel.setFont(new Font("Webdings", Font.BOLD, 30));
 		lblNewLabel.setBounds(220, 18, 212, 62);
 		panel.add(lblNewLabel);
 		
@@ -68,17 +68,17 @@ public class EnterPlayers extends JFrame {
 		panel.add(lblPleaseEnterThe);
 		
 		JLabel Player1 = new JLabel("Player 1:");
-		Player1.setFont(new Font("Webdings", Font.PLAIN, 13));
+		//Player1.setFont(new Font("Webdings", Font.PLAIN, 13));
 		Player1.setBounds(64, 159, 61, 16);
 		panel.add(Player1);
 		
 		JLabel Player2 = new JLabel("Player 2:");
-		Player2.setFont(new Font("Webdings", Font.PLAIN, 13));
+		//Player2.setFont(new Font("Webdings", Font.PLAIN, 13));
 		Player2.setBounds(64, 212, 61, 16);
 		panel.add(Player2);
 		
 		JLabel Player3 = new JLabel("Player 3:");
-		Player3.setFont(new Font("Webdings", Font.PLAIN, 13));
+		//Player3.setFont(new Font("Webdings", Font.PLAIN, 13));
 		Player3.setBounds(64, 264, 61, 16);
 		panel.add(Player3);
 		
