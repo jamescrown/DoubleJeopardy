@@ -9,9 +9,7 @@ import javax.swing.JPanel;
 
 public class ButtonFrame2 extends JFrame{
 	
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 	private static JButton button;
 	static JLabel label;
@@ -46,6 +44,7 @@ public class ButtonFrame2 extends JFrame{
 		
 		 
 		JPanel panel = new JPanel();
+		//panel.addText(player1 + " Your turn!");
 		panel.add(button);
 		return panel;
 		

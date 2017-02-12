@@ -4,7 +4,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class EnterPlayers extends JFrame {
-
+	
+	public static String player1 ;
+	public static Board s;
 	
 	private static final long serialVersionUID = 1L;
 	private JFrame frame;
@@ -34,7 +36,7 @@ public class EnterPlayers extends JFrame {
 
 	
 	
-	private void initialize() {
+	public void initialize() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 640, 480);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -70,16 +72,21 @@ public class EnterPlayers extends JFrame {
 		textField_1.setBounds(256, 156, 191, 19);
 		panel.add(textField_1);
 		textField_1.setColumns(10);
+		player1 = textField_1.getText();
 		
 		textField_2 = new JTextField(); // text field for player 2 
 		textField_2.setBounds(256, 206, 191, 19);
 		panel.add(textField_2);
 		textField_2.setColumns(10);
+		final String player2 = textField_2.getText();
+		
 		
 		textField_3 = new JTextField(); // text field for player 3
 		textField_3.setBounds(256, 261, 191, 19);
 		panel.add(textField_3);
 		textField_3.setColumns(10);
+		final String player3 = textField_3.getText();
+		
 		
 		JButton btnStartGame = new JButton("Start Game");
 		btnStartGame.addActionListener(new ActionListener() {
@@ -88,8 +95,14 @@ public class EnterPlayers extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 				setVisible(false);
-				Board board_monopoly = new Board();
-				board_monopoly.setVisible(true);
+				
+				JFrame frame = new ButtonFrame2();
+				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				frame.setVisible(true);
+				
+				s=new Board();
+		        s.setDefaultCloseOperation(Board.EXIT_ON_CLOSE);
+				s.setVisible(true);
 				
 			}
 		});
