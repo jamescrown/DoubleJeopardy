@@ -5,9 +5,7 @@ import java.awt.geom.*;
 //first attempt
 
 class Board extends JFrame{
-	
 	static int roll;
-	
 	static int a = 720;
     static int b = 620;
     
@@ -20,17 +18,31 @@ class Board extends JFrame{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
-	private static final int FRAME_WIDTH = 800;
-	private static final int FRAME_HEIGHT = 660;
-
 
 	public Board(){
     	
-		setSize(FRAME_WIDTH, FRAME_HEIGHT);
-		setLayout(new GridBagLayout());
-		getContentPane().add(ButtonFrame2.createComponents());
-
+    
+    	JPanel panel=new JPanel();
+   	 getContentPane().add(panel);
+        setSize(770, 660);
+   
+//        JFrame frame = new JFrame();
+//    	frame.setSize(1680, 1080);
+//     frame.add(panel, BorderLayout.CENTER);
+//        frame.setLayout(new BorderLayout());
+//    	frame.setVisible(true);  
+//       
+       
+        //panel.setExtendedState(JPanel.MAXIMIZED_BOTH); 
+      
+       /* JLabel title = new JLabel("monopoly");
+        getContentPane().add(title);
+        title setVisible(true);
+        */
+   
+//          getContentPane().add(panel);
+//        JButton button =new JButton("press");
+//        panel.add(button);
     }
 
     public void paint(Graphics g) {
@@ -142,110 +154,82 @@ class Board extends JFrame{
         
         g2.setColor(Color.GREEN);
         g2.fillOval(e, f, 20, 20);
-        
        
     }
     
-   public static void movePieces(int roll, int n, int n2){
-	  int x;
-	  
-	  int corner;
-	  if ((a == 720 && b == 620) || (a == 20 && b ==620)|| (a == 20 && b == 20) || (a == 720 && b == 20)){
-		  corner = 1;
-	  }
-	  else{
-		  corner = 0;
-	  }
-	  
-	  
-	  if (b==620 && a<=720 && !(b==620 && a==20)){
-		  
-	   for (x = 0; x < roll; x++){
-		   if(a>20){
-			   a-=70;
-		   }
-		   if(a==20 && (corner == 1 || corner == 0)){
-			   corner = 2;
-		   }
-		   else if(a==20 && corner == 2){
-			   b -= 60;
-		   }
-	   }
-	   }
+   public static void movePieces(){
 	   
-	   else if (a == 20 && b<=620 && !(a == 20 && b == 20)){
+	   switch(roll){
+	   case 2 :
+		   if(a<721 && b==620){
+		   a = a - 68;
+		   }
+		  // else if()
 		   
-		   for (x = 0; x < roll; x++){
-			   if(b>20){
-				   b-=60;
-			   }
-			   if(b==20 && (corner == 1 || corner == 0)){
-				   corner=2;
-			   }
-			   else if(b==20 && corner ==2){
-				   a += 70;
-			   }
-		   }
+		   break;
+	   case 3 :
+		   break;
+	   case 4 :
+		   break;
+	   case 5 :
+		   break;
+	   case 6 :
+		   break;
+	   case 7 :
+		   break;
+	   case 8 :
+		   break;
+	   case 9 :
+		   break;
+	   case 10 :
+		   //do something
+		   break;
+	   case 11 :
+		   break;
+	   case 12 :
+		   break;
 	   }
-	   
-	   else if (b == 20 && a <= 720 && !(a == 720 && b == 20)){
-		   
-		   for (x = 0; x < roll; x++){
-			   if(a<720){
-				   a+=70;
-			   }
-			   if(a==720 && (corner == 1 || corner == 0)){
-				   //System.out.println("Corner test " + corner);
-				   corner = 2;
-			   }
-			   else if(a==720 && corner ==2){
-				   b += 60;
-			   }
-		   }
-	   }
-	   
-	   
-	   else if (a == 720 && b <= 620 && !(a == 720 && b == 620)){
-		   
-		   for (x = 0; x < roll; x++){
-			   if(b<620){
-				   b+=60;
-			   }
-			   
-			   if(b==620 && (corner == 1 || corner == 0)){
-				   corner = 2;
-			   }
-			   else if(b==620 && corner ==2){
-				   a -= 70;
-			   }
-		   }
-	   }
-		  	
-	   		
-	   		JLabel lab  = new JLabel();
-	   		
-	   		if(n == n2){
-				lab.setText("Doubles! You rolled " + String.valueOf(n) + " + " + String.valueOf(n2) + "= " + String.valueOf(roll));
-			}
-			else{
-				lab.setText("You rolled " + String.valueOf(n) + "+" + String.valueOf(n2) + "= " + String.valueOf(roll));
-			}
-	   		
-//	   		JFrame frame = new ButtonFrame2();
-//			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//			frame.setVisible(true);
-//	   		
-//	   		ButtonFrame2.label.setText("Doubles! You rolled " + String.valueOf(roll));
-//	   		
-	   		Board s2=new Board();
-	        
-			JPanel p = new JPanel();
-			p.add(lab);
-			s2.add(p);
-			s2.add(lab);
-			s2.setDefaultCloseOperation(Board.EXIT_ON_CLOSE);
-			s2.setVisible(true);
-			//ButtonViewer1.s.dispose();
    }
-}
 
+    public static void main(String []args){
+////        roll = 2;
+//    	movePieces();
+    	Board s=new Board();
+        s.setVisible(true);
+//        roll = 2;
+//    	movePieces();
+//    	Board t=new Board();
+//        s.setVisible(true);
+//        roll = 2;
+//    	movePieces();
+//    	Board y=new Board();
+//        s.setVisible(true);
+//        roll = 2;
+//    	movePieces();
+//    	Board l =new Board();
+//        s.setVisible(true);
+//        roll = 2;
+//    	movePieces();
+//    	Board h=new Board();
+//        s.setVisible(true);
+//        roll = 2;
+//    	movePieces();
+//    	Board i=new Board();
+//        s.setVisible(true);
+//        roll = 2;
+//    	movePieces();
+//    	Board j=new Board();
+//        s.setVisible(true);
+//        roll = 2;
+//    	movePieces();
+//    	Board t=new Board();
+//        s.setVisible(true);
+//        roll = 2;
+//    	movePieces();
+//    	Board y=new Board();
+//        s.setVisible(true);
+        
+    
+       
+    }
+}
