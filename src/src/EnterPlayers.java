@@ -5,7 +5,9 @@ import java.awt.event.ActionEvent;
 
 public class EnterPlayers extends JFrame {
 	
-	public static String player1 ;
+	public static String playerone;
+	public static String playertwo;
+	public static String playerthree;
 	public static Board s;
 	
 	private static final long serialVersionUID = 1L;
@@ -72,20 +74,20 @@ public class EnterPlayers extends JFrame {
 		textField_1.setBounds(256, 156, 191, 19);
 		panel.add(textField_1);
 		textField_1.setColumns(10);
-		player1 = textField_1.getText();
+		playerone = textField_1.getText();
 		
 		textField_2 = new JTextField(); // text field for player 2 
 		textField_2.setBounds(256, 206, 191, 19);
 		panel.add(textField_2);
 		textField_2.setColumns(10);
-		final String player2 = textField_2.getText();
+		playertwo = textField_2.getText();
 		
 		
 		textField_3 = new JTextField(); // text field for player 3
 		textField_3.setBounds(256, 261, 191, 19);
 		panel.add(textField_3);
 		textField_3.setColumns(10);
-		final String player3 = textField_3.getText();
+		playerthree = textField_3.getText();
 		
 		
 		JButton btnStartGame = new JButton("Start Game");

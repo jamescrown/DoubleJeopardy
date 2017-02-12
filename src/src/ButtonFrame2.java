@@ -44,7 +44,8 @@ public class ButtonFrame2 extends JFrame{
 		
 		 
 		JPanel panel = new JPanel();
-		//panel.addText(player1 + " Your turn!");
+//		JLabel lab1 = new JLabel(EnterPlayers.player1 + " Your turn!", JLabel.LEFT);
+//        panel.add(lab1);
 		panel.add(button);
 		return panel;
 		

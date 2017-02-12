@@ -1,3 +1,4 @@
+
 import javax.swing.*;
 
 import java.awt.*;
@@ -8,9 +9,10 @@ class Board extends JFrame{
 	
 	static int roll;
 	
-	static int a = 720;		//players
+	static int a = 720;		
     static int b = 620;
     
+    //players
     static int player1 = 1;
     static int player2 = 2;
     static int player3 = 3;
@@ -30,6 +32,8 @@ class Board extends JFrame{
 		setLayout(new GridBagLayout());
 		getContentPane().add(ButtonFrame2.createComponents());
 		player = player1;
+		JLabel lab1 = new JLabel(EnterPlayers.playerone + " Your turn!", JLabel.LEFT);
+        add(lab1);
 
     }
 
@@ -376,8 +380,11 @@ class Board extends JFrame{
 //	   		
 	
 	   		Board s2=new Board();
-	        
+	   		System.out.println("test");
+	        System.out.println(EnterPlayers.playerone);
 			JPanel p = new JPanel();
+
+
 			//p.add(lab);
 			s2.add(p);
 			//s2.add(lab);
