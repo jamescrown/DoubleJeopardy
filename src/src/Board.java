@@ -259,7 +259,7 @@ class Board extends JFrame{
 			//s2.add(lab);
 			s2.setDefaultCloseOperation(Board.EXIT_ON_CLOSE);
 			s2.setVisible(true);
-			//ButtonViewer1.s.dispose();
+			ButtonViewer1.s.dispose();
    }
 }
 
