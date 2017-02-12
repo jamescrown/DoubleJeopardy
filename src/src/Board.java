@@ -138,7 +138,48 @@ class Board extends JFrame{
          Line2D linJAIL2 = new Line2D.Float(35, 630, 35, 600);
          g2.draw(linJAIL1);
          g2.draw(linJAIL2);
-        
+	    
+         //adding lines for properties on first sprint
+         Line2D linPROP1 = new Line2D.Float(560, 615, 630, 615);
+         Line2D linPROP2 = new Line2D.Float(420, 615, 490, 615);
+         Line2D linPROP3 = new Line2D.Float(280, 615, 350, 615);
+         Line2D linPROP4 = new Line2D.Float(70, 615, 210, 615);
+         g2.draw(linPROP1);  
+         g2.draw(linPROP2);
+         g2.draw(linPROP3);
+         g2.draw(linPROP4);
+         
+         //lines for the second sprint of properties
+         Line2D linPROP5 = new Line2D.Float(54, 540, 54, 600);
+         Line2D linPROP6 = new Line2D.Float(54, 480, 54, 360);
+         Line2D linPROP7 = new Line2D.Float(54, 300, 54, 240);
+         Line2D linPROP8 = new Line2D.Float(54, 180, 54, 60);
+         g2.draw(linPROP5);  
+         g2.draw(linPROP6);
+         g2.draw(linPROP7);
+         g2.draw(linPROP8);
+         
+         //lines for the third sprint of properties
+         Line2D linPROP9 = new Line2D.Float(70, 45, 140, 45);
+         Line2D linPROP10 = new Line2D.Float(210, 45, 350, 45);
+         Line2D linPROP11 = new Line2D.Float(420, 45, 560, 45);
+         Line2D linPROP12 = new Line2D.Float(630, 45, 700, 45);
+         g2.draw(linPROP9);  
+         g2.draw(linPROP10);
+         g2.draw(linPROP11);
+         g2.draw(linPROP12);
+      
+         //lines for the final sprint of properties
+         Line2D linPROP13 = new Line2D.Float(716, 60, 716, 180);
+         Line2D linPROP14 = new Line2D.Float(716, 240, 716, 300);
+         Line2D linPROP15 = new Line2D.Float(716, 420, 716, 480);
+         Line2D linPROP16 = new Line2D.Float(716, 540, 716, 600);
+         g2.draw(linPROP13);  
+         g2.draw(linPROP14);
+         g2.draw(linPROP15);
+         g2.draw(linPROP16);
+         
+	    
        //if beginning
         if (beginning){
         	g2.setColor(Color.RED);
