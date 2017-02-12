@@ -114,5 +114,5 @@ public class EnterPlayers extends JFrame {
 		panel.add(btnStartGame);
 		
 		
-	}
+}
 }
