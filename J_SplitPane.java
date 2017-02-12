@@ -4,7 +4,7 @@ import java.awt.*;
 import javax.swing.*;
 
 public class J_SplitPane extends JFrame {
-
+       	private static final long serialVersionUID = 1L;
 	private JSplitPane splitPaneA;
 	private JSplitPane splitPaneB;
 	private JPanel panel1;
