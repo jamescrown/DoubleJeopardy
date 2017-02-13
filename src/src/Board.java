@@ -39,20 +39,21 @@ class Board extends JFrame{
 
     }
 
-	//james comment some please
+	//This class contains all the graphics for the board itself such as lines and colours , the board is made up of multiple lines 
     public void paint(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
+	    //these lines create the outline of the board alone
         Line2D lin = new Line2D.Float(0, 600, 770, 600);
         Line2D lin1 = new Line2D.Float(0, 60, 770, 60);
         Line2D lin2 = new Line2D.Float(70, 0, 70, 660);
         Line2D lin3 = new Line2D.Float(700, 0, 700, 660);
-
+    //once the lines have been declared you must draw them with the .draw function
         g2.draw(lin);
         g2.draw(lin1);
         g2.draw(lin2);
         g2.draw(lin3);
 
-        
+        //these lines split the bottom row into properties BOT = bottom
         Line2D linBOT0 = new Line2D.Float(140, 660, 140, 600);
         Line2D linBOT1 = new Line2D.Float(210, 660, 210, 600);
         Line2D linBOT2 = new Line2D.Float(280, 660, 280, 600);
@@ -63,6 +64,7 @@ class Board extends JFrame{
         Line2D linBOT7 = new Line2D.Float(630, 660, 630, 600);
         Line2D linBOT8 = new Line2D.Float(700, 660, 700, 600);
         Line2D linBOT9 = new Line2D.Float(770, 660, 770, 600);
+	    //Again we must draw them afterwards
         g2.draw(linBOT0);
         g2.draw(linBOT1);
         g2.draw(linBOT2);
@@ -74,7 +76,7 @@ class Board extends JFrame{
         g2.draw(linBOT8);
         g2.draw(linBOT9);
      
-        
+        //Repeat the same step except for the TOP row , we use the coordinates to distingues the placement of the line 
         Line2D linTOP0 = new Line2D.Float(140, 0, 140, 60);
         Line2D linTOP1 = new Line2D.Float(210, 0, 210, 60);
         Line2D linTOP2 = new Line2D.Float(280, 0, 280, 60);
@@ -97,7 +99,7 @@ class Board extends JFrame{
         g2.draw(linTOP9);
         
         
-        
+        //this represents the RIGHT side of the board
         Line2D linRIT0 = new Line2D.Float(700, 600, 770, 600);
         Line2D linRIT1 = new Line2D.Float(700, 540, 770, 540);
         Line2D linRIT2 = new Line2D.Float(700, 480, 770, 480);
@@ -118,7 +120,7 @@ class Board extends JFrame{
         g2.draw(linRIT7);
         g2.draw(linRIT8);
         g2.draw(linRIT9);
-        
+        // this represents the LEFT side of the board
         Line2D linLEFT0 = new Line2D.Float(0, 600, 70, 600);
         Line2D linLEFT1 = new Line2D.Float(0, 540, 70, 540);
         Line2D linLEFT2 = new Line2D.Float(0, 480, 70, 480);
@@ -140,14 +142,16 @@ class Board extends JFrame{
         g2.draw(linLEFT8);
         g2.draw(linLEFT9);
 	    
+	    //now we must add extra lines for special cases such as the jail and the properties
 	    //adding box for JAIL
 
          g.setColor(Color.orange);
          g.fillRect(35,600,35,30);
          g.setColor(Color.black);
          g.drawRect(35,600,35,30);
-        
+        //the properties could be written using lines but it is more efficient to write them as rectangles that are filled in with colours
 //first group of properties
+	    //each block of code here represents one property , the colour is set for the rectangle , then the coordinates , then the outline colour and coordinates
          g.setColor(Color.lightGray);
          g.fillRect(630,600,70,15);
          g.setColor(Color.black);
@@ -253,7 +257,7 @@ class Board extends JFrame{
          g.setColor(Color.black);
          g.drawRect(700,240,16,60);
          
-   //final group
+   //final group ... there are only two properties in the first and last group so there are only two blocks of code
          g.setColor(Color.blue);
          g.fillRect(700,420,16,60);
          g.setColor(Color.black);
