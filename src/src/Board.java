@@ -4,12 +4,13 @@ import javax.swing.border.LineBorder;
 
 import java.awt.*;
 import java.awt.geom.*;
-//first attempt
+
 
 class Board extends JFrame{
 	
 	static int roll;
 	
+	//starting coordinates for the player pieces
 	static int a = 720;		
     static int b = 620;
     
@@ -17,8 +18,8 @@ class Board extends JFrame{
     static int player1 = 1;
     static int player2 = 2;
     static int player3 = 3;
-    int player;
-    static boolean beginning = true;
+    static int player;
+    static boolean beginning = true;//has any player rolled yet
     
 
 	private static final long serialVersionUID = 1L;
@@ -32,12 +33,13 @@ class Board extends JFrame{
 		setSize(FRAME_WIDTH, FRAME_HEIGHT);
 		setLayout(new GridBagLayout());
 		getContentPane().add(ButtonFrame2.createComponents());
-		player = player1;
+		player = player1; //for the next sprint we will work on changing between players. for now player 1 moves
 		JLabel lab1 = new JLabel(EnterPlayers.playerOne + " Your turn!", JLabel.LEFT);
         add(lab1);
 
     }
 
+	//james comment some please
     public void paint(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
         Line2D lin = new Line2D.Float(0, 600, 770, 600);
@@ -262,7 +264,7 @@ class Board extends JFrame{
          g.setColor(Color.black);
          g.drawRect(700,540,16,60);
 	    
-       //if beginning
+       //if beginning then place all the pieces in the start position
         if (beginning){
         	g2.setColor(Color.RED);
             g2.fillOval(a, b, 20, 20);
@@ -270,7 +272,7 @@ class Board extends JFrame{
             g2.fillOval(a, 610, 20, 20);
             g2.setColor(Color.GREEN);
             g2.fillOval(a, 630, 20, 20);
-            beginning = false;
+            beginning = false; //no longer the beginning
             
         }
         
@@ -293,11 +295,13 @@ class Board extends JFrame{
         
        
     }
-    
+   
+    //function to move the pieces around the board
    public static void movePieces(int roll, int n, int n2){
 	  int x;
 	  
 	  int corner;
+	  //these are the corner coordinates
 	  if ((a == 720 && b == 620) || (a == 20 && b ==620)|| (a == 20 && b == 20) || (a == 720 && b == 20)){
 		  corner = 1;
 	  }
@@ -305,7 +309,7 @@ class Board extends JFrame{
 		  corner = 0;
 	  }
 	  
-	  
+	  //if between go and jail move left across the bottom of the board
 	  if (b==620 && a<=720 && !(b==620 && a==20)){
 		  
 	   for (x = 0; x < roll; x++){
@@ -313,7 +317,7 @@ class Board extends JFrame{
 			   a-=70;
 		   }
 		   if(a==20 && (corner == 1 || corner == 0)){
-			   corner = 2;
+			   corner = 2; //i added this to make sure we count the corner as a space too
 		   }
 		   else if(a==20 && corner == 2){
 			   b -= 60;
@@ -321,7 +325,8 @@ class Board extends JFrame{
 	   }
 	   }
 	   
-	   else if (a == 20 && b<=620 && !(a == 20 && b == 20)){
+	  //if between jail and top left corner, move upwards
+	  else if (a == 20 && b<=620 && !(a == 20 && b == 20)){
 		   
 		   for (x = 0; x < roll; x++){
 			   if(b>20){
@@ -336,7 +341,8 @@ class Board extends JFrame{
 		   }
 	   }
 	   
-	   else if (b == 20 && a <= 720 && !(a == 720 && b == 20)){
+	  //if between top left and top right, move right 
+	  else if (b == 20 && a <= 720 && !(a == 720 && b == 20)){
 		   
 		   for (x = 0; x < roll; x++){
 			   if(a<720){
@@ -352,7 +358,7 @@ class Board extends JFrame{
 		   }
 	   }
 	   
-	   
+	  //if btween top right corner and go, move downwards 
 	   else if (a == 720 && b <= 620 && !(a == 720 && b == 620)){
 		   
 		   for (x = 0; x < roll; x++){
@@ -370,23 +376,26 @@ class Board extends JFrame{
 	   }
 		  	
 	  	
-
+	  		//create an updated board that has moved the piece
+	  		//ideally we would work towards somehow repainting or revalidating so we dont have to create a whole new panel each time
 	   		Board s2=new Board();
 			s2.setDefaultCloseOperation(Board.EXIT_ON_CLOSE);
-			
 			s2.setVisible(true);
 			
-			JFrame frame = new JFrame();
+		//information panel
+		//next time we would like to use split pane instead of separate jframe
+		JFrame frame = new JFrame();
 	    frame.setLayout(new GridBagLayout());
 	    JPanel panel = new JPanel();
-	    JLabel jlabel = new JLabel("Player 1: " + EnterPlayers.playerOne + " rolled a " + String.valueOf(n) + " + " + String.valueOf(n2) + "= " + String.valueOf(roll));
+	    //player number name and dice roll
+	    JLabel jlabel = new JLabel("Player " + player + " : " + EnterPlayers.playerOne + " rolled a " + String.valueOf(n) + " + " + String.valueOf(n2) + "= " + String.valueOf(roll));
 	    panel.add(jlabel);
-	    panel.setBorder(new LineBorder(Color.BLACK)); // make it easy to see
+	    panel.setBorder(new LineBorder(Color.BLACK)); 
 	    frame.add(panel, new GridBagConstraints());
 	    frame.setSize(300, 150);
-	    frame.setLocation(800, 400);
+	    frame.setLocation(800, 400); //placed to the right of the board frame
 	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    frame.setVisible(true);
-			EnterPlayers.s.dispose();
+		EnterPlayers.s.dispose();
    }
 }
