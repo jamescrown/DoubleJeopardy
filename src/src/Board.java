@@ -1,5 +1,6 @@
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 
 import java.awt.*;
 import java.awt.geom.*;
@@ -32,7 +33,7 @@ class Board extends JFrame{
 		setLayout(new GridBagLayout());
 		getContentPane().add(ButtonFrame2.createComponents());
 		player = player1;
-		JLabel lab1 = new JLabel(EnterPlayers.playerone + " Your turn!", JLabel.LEFT);
+		JLabel lab1 = new JLabel(EnterPlayers.playerOne + " Your turn!", JLabel.LEFT);
         add(lab1);
 
     }
@@ -368,29 +369,24 @@ class Board extends JFrame{
 		   }
 	   }
 		  	
-	   		
-//	   		JLabel lab  = new JLabel();
-//	   		
-//	   		if(n == n2){
-//				lab.setText("Doubles! You rolled " + String.valueOf(n) + " + " + String.valueOf(n2) + "= " + String.valueOf(roll));
-//			}
-//			else{
-//				lab.setText("You rolled " + String.valueOf(n) + "+" + String.valueOf(n2) + "= " + String.valueOf(roll));
-//			}
-//	   		
-	
+	  	
+
 	   		Board s2=new Board();
-	   		System.out.println("test");
-	        System.out.println(EnterPlayers.playerone);
-			JPanel p = new JPanel();
-
-
-			//p.add(lab);
-			s2.add(p);
-			//s2.add(lab);
 			s2.setDefaultCloseOperation(Board.EXIT_ON_CLOSE);
+			
 			s2.setVisible(true);
+			
+			JFrame frame = new JFrame();
+	    frame.setLayout(new GridBagLayout());
+	    JPanel panel = new JPanel();
+	    JLabel jlabel = new JLabel("Player 1: " + EnterPlayers.playerOne + " rolled a " + String.valueOf(n) + " + " + String.valueOf(n2) + "= " + String.valueOf(roll));
+	    panel.add(jlabel);
+	    panel.setBorder(new LineBorder(Color.BLACK)); // make it easy to see
+	    frame.add(panel, new GridBagConstraints());
+	    frame.setSize(300, 150);
+	    frame.setLocation(800, 400);
+	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    frame.setVisible(true);
 			EnterPlayers.s.dispose();
    }
 }
-
