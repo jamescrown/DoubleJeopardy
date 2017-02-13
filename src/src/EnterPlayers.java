@@ -14,15 +14,15 @@ public class EnterPlayers extends JFrame {
 	private JFrame frame;
 
 	
-	//comment this code Desiree
+	
 	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
+		EventQueue.invokeLater(new Runnable() {  // invokeLater will excute a runnable(EnterPlayers)later which is currently on a queue right now.
 			public void run() {
 				try {
-					  EnterPlayers window = new EnterPlayers();
-					  window.frame.setVisible(true);
+					  EnterPlayers window = new EnterPlayers(); // initialising name of object.
+					  window.frame.setVisible(true); // displays "EnterPlayers" window. 
 				}   catch (Exception e) {
-					e.printStackTrace();
+					e.printStackTrace(); // tracks an Exception.
 				}
 			}
 		});
@@ -96,9 +96,9 @@ public class EnterPlayers extends JFrame {
 			}
 		});
 		
-		//comment please Desiree
-		btnStartGame.setBounds(90, 200, 200, 30);
-		panel.add(btnStartGame);
+		
+		btnStartGame.setBounds(90, 200, 200, 30); // this sets the position of the "StartGame" button.. SetBounds(x,y,width,height)
+		panel.add(btnStartGame); // adds button to panel.
 		
 		
 	}
