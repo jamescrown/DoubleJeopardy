@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import javax.swing.*;
 
 public class Monopoly {
 
@@ -44,8 +45,20 @@ public class Monopoly {
 	}
 	
 	public static void main (String args[]) {	
+		//bank account code to open accounts and get starting money/print
+				BankAccount Player1 = new BankAccount(1500);
+				double balance = Player1.getBalance();
+				BankAccount Player2 = new BankAccount(1500);
+				double balance2 = Player2.getBalance();
+				BankAccount Player3 = new BankAccount(1500);
+				double balance3 = Player3.getBalance();
+				JOptionPane.showMessageDialog(null,"player1 contains :  $" +balance);
+				JOptionPane.showMessageDialog(null,"player2 contains :  $" +balance2);
+				JOptionPane.showMessageDialog(null,"player3 contains :  $" +balance3);
+				//myFirstAccount.withdraw(200);
+				
 		Monopoly game = new Monopoly();		
-		game.tour();
+		//game.tour();
 		game.echo();
 		return;
 	}
