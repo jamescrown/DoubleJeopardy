@@ -1,9 +1,12 @@
+
+
 /**
 A bank account has a balance that can be changed by 
 deposits and withdrawals.
 */
-class BankAccount{  
+public class BankAccount{  
 
+private String name;
 private double balance; 
 /**
    Deposits money into the bank account.
@@ -27,6 +30,12 @@ public void withdraw(double amount) {
 */
 public double getBalance(){  
    return balance; 
+}
+public String getName(){
+	return name;
+}
+public void setName(String playerName){
+	name = playerName;
 }
 
 /**
