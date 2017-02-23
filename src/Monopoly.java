@@ -1,9 +1,10 @@
 import java.util.ArrayList;
+
 import javax.swing.*;
 
 public class Monopoly {
 
-	public static final int MAX_NUM_PLAYERS = 6;
+	public static final int MAX_NUM_PLAYERS = 3;
 	public static final int NUM_SQUARES = 40;
 	
 	private ArrayList<Player> players = new ArrayList<Player>();
@@ -33,7 +34,7 @@ public class Monopoly {
 		return;
 	}
 	
-	private void echo () {
+	public void echo () {
 		String command;
 		ui.display();
 		ui.displayString("ECHO MODE");
@@ -44,22 +45,34 @@ public class Monopoly {
 		return;
 	}
 	
-	public static void main (String args[]) {	
-		//bank account code to open accounts and get starting money/print
-				BankAccount Player1 = new BankAccount(1500);
-				double balance = Player1.getBalance();
+	public static void main (String args[]) throws InterruptedException  {	
+		
+		
+		//get rid of main in start up and call start up from here
+		
+		StartUp  StartUp = new StartUp();      
+		      StartUp.showDialogDemo();
+//		      System.out.println(StartUp.getDone());
+		while (true)
+        {
+            
+			Thread.sleep(500);
+            if (StartUp.getDone()==2){ 
+                BankAccount Player1 = new BankAccount(1500);
+				Player1.setName(StartUp.Player1Name());
 				BankAccount Player2 = new BankAccount(1500);
-				double balance2 = Player2.getBalance();
+				Player2.setName(StartUp.Player2Name());
 				BankAccount Player3 = new BankAccount(1500);
-				double balance3 = Player3.getBalance();
-				JOptionPane.showMessageDialog(null,"player1 contains :  $" +balance);
-				JOptionPane.showMessageDialog(null,"player2 contains :  $" +balance2);
-				JOptionPane.showMessageDialog(null,"player3 contains :  $" +balance3);
-				//myFirstAccount.withdraw(200);
-				
-		Monopoly game = new Monopoly();		
-		//game.tour();
-		game.echo();
-		return;
+				Player3.setName(StartUp.Player3Name());
+	  		JOptionPane.showMessageDialog(null,Player1.getName() + " contains :  $" + Player1.getBalance());
+	  			Monopoly game = new Monopoly();		
+	      		//game.tour();
+	      		game.echo();
+	      		
+	      		
+            }	
+        
+		
+        }
 	}
 }
