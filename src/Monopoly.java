@@ -64,7 +64,7 @@ public class Monopoly {
 				Player2.setName(StartUp.Player2Name());
 				BankAccount Player3 = new BankAccount(1500);
 				Player3.setName(StartUp.Player3Name());
-	  		JOptionPane.showMessageDialog(null,Player1.getName() + " contains :  $" + Player1.getBalance());
+	  		//JOptionPane.showMessageDialog(null,Player1.getName() + " contains :  $" + Player1.getBalance());
 	  			Monopoly game = new Monopoly();		
 	      		//game.tour();
 	      		game.echo();
