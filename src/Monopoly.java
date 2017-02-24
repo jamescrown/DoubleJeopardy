@@ -56,22 +56,83 @@ public class Monopoly {
 				text = ui.getCommand();
 				ui.displayString(text);
 				
+				//int jailCheck = 0;
+				
 				if(text.equals("Roll")) {
+					
 					
 					Random rand = new Random();
 					int roll1 = rand.nextInt(5) + 1;
 					int roll2 = rand.nextInt(5) + 1;
 					int sum = roll1 + roll2;
-					ui.displayString("You rolled a " + sum);
-					
+					if (roll1 == roll2){
+						ui.displayString("You rolled doubles! \n ");
+						//jailCheck++;
+
+						ui.displayString("You rolled a " + roll1 + " and a " + roll2 + " = " + sum);
+						
+					}
+					else{
+					ui.displayString("You rolled a " + roll1 + " and a " + roll2 + " = " + sum);
+					}
 				
+					
+				}
+				else if(text.equalsIgnoreCase("Buy")){
+					ui.displayString("You selected buy \n ");
+					buy();
+				}
+				
+				
+				else if(text.equalsIgnoreCase("Balance")) {
+					ui.displayString(" You selected balance " );
+					//Balance();
+				}
+				
+				else if(text.equalsIgnoreCase("Sell")) {
+					ui.displayString("You selected Sell ");
+					//Sell();
+					
+				}
+				
+				else if(text.equalsIgnoreCase("Help")){
+					ui.displayString("You selected Help ");
+					
+					queryList();
+					
+					
+				}
+				
+				else {
+					 ui.displayString("Invalid Command");// if user enters invalid query.
 				}
 				
 				
 				
-				
-			} while (!text.equals("quit"));
+			} while (!text.equalsIgnoreCase("quit"));
+			
+			
 	  }
+	  
+	  public void queryList(){
+		  
+		  ui.displayString(" Buy ");
+		  ui.displayString(" Sell ");
+		  ui.displayString(" Balance ");
+		  
+	  }
+	  
+	  
+	  public void buy() {
+		  
+		  ui.displayString("Would you like to buy this property? ");
+		  
+		  // Add in James's code.. 
+		  
+	  }
+	  
+	  
+	  
 			 
 			
 			
