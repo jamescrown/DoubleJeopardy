@@ -8,6 +8,8 @@ public class Monopoly {
 	public static final int MAX_NUM_PLAYERS = 3;
 	public static final int NUM_SQUARES = 40;
 	
+	static Properties pr = new Properties();//object for property class
+	
 	private ArrayList<Player> players = new ArrayList<Player>();
 	private UI ui = new UI(players);
 	
@@ -190,7 +192,7 @@ public class Monopoly {
 				Player2.setName(StartUp.Player2Name());
 				BankAccount Player3 = new BankAccount(1500);
 				Player3.setName(StartUp.Player3Name());
-	  		JOptionPane.showMessageDialog(null,Player1.getName() + " contains :  $" + Player1.getBalance());
+	  		//JOptionPane.showMessageDialog(null,Player1.getName() + " contains :  $" + Player1.getBalance());
 	  			Monopoly game = new Monopoly();		
 	  			
 	  			
