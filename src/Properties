@@ -1,164 +1,91 @@
-//james 
-//import java.awt.*;
-//import java.awt.event.*;
-//import java.util.Random;
-//import javax.swing.*;
-
 
 public class Properties {
-//	public static final int NUM_SQUARES = 40;
-//	public static final int TYPE_GO = 0;
-//	public static final int TYPE_SITE = 1;
-//	public static final int TYPE_STATION = 2;
-//	public static final int TYPE_UTILITY = 3;
-//	public static final int TYPE_COMMUNITY = 4;
-//	public static final int TYPE_CHANCE = 5;
-//	public static final int TYPE_JAIL = 6;
-//	public static final int TYPE_PARKING = 7;
-//	public static final int TYPE_GOTO_JAIL = 8;
-//	public static final int TYPE_TAX = 9;
-	
-//	private static final int[] SQUARE_TYPES = {
-//	TYPE_GO, TYPE_SITE, TYPE_COMMUNITY, TYPE_SITE, TYPE_TAX,
-//	TYPE_STATION,TYPE_SITE, TYPE_CHANCE, TYPE_SITE, TYPE_SITE,
-//	TYPE_JAIL,TYPE_SITE, TYPE_UTILITY, TYPE_SITE, TYPE_SITE,
-//	TYPE_STATION,TYPE_SITE, TYPE_COMMUNITY, TYPE_SITE, TYPE_SITE,
-//	TYPE_PARKING,TYPE_SITE, TYPE_CHANCE, TYPE_SITE, TYPE_SITE,
-//	TYPE_STATION,TYPE_SITE, TYPE_SITE, TYPE_UTILITY, TYPE_SITE,
-//	TYPE_GOTO_JAIL,TYPE_SITE, TYPE_SITE, TYPE_COMMUNITY, TYPE_SITE,
-//	TYPE_STATION,TYPE_CHANCE, TYPE_SITE, TYPE_TAX, TYPE_SITE};
-	
-//	private static final String GO_NAME = "GO";
+   //list of all the square names 
 	private static final String[] SITE_NAMES = {
 	"GO","Old Kent Rd","Community Chest","Whitechapel Rd","Income Tax","King's Cross Station","The Angel Islington","Chance",
-	"Euston Rd","Pentonville Rd","Jail","Pall Mall","Electric Company","Whitehall",
+	"Euston Rd","Pentonville Rd","Jail(just visiting)","Pall Mall","Electric Company","Whitehall",
 	"Northumberland Ave","Marylebone Station","Bow St","Community Chest","Marlborough St","Vine St","Free Parking",
 	"Strand","Chance","Fleet St","Trafalgar Sq","Fenchurch St Station","Leicester Sq","Coventry St","Water Works","Piccadilly","Go To Jail"
 	,"Regent St","Oxford St","Community Chest","Bond St","Liverpool St Station","Chance","Park Lane","Super Tax","Mayfair"};
-	
-	private static final int[] SITE_PRICES = {
-	0,50,0,50,0,50,50,0,50,50,
-	0,50,0,50,50,50,50,0,50,50,
-	0,50,0,50,50,50,50,50,0,50,
-	0,50,50,0,50,50,0,50,0,50};
-	
-	private static final int[][] SITE_RENTS = {
-	{2,10,30,90,160,250},{4,20,60,180,320,450},{6,30,90,270,400,550},
-	{6,30,90,270,400,550},{8,40,100,300,450,600},{10,50,150,450,625,750},
-	{10,50,150,450,625,750},{12,60,180,500,700,900},{14,70,200,550,750,950},
-	{25,50,100,200,200,200},{14,70,200,550,750,950},{16,80,220,600,800,1000},
-	{18,90,250,700,875,1050},{4,10,0,0,0,0},{18,90,250,700,875,1050},
-	{25,50,100,200,200,200},{20,100,300,750,925,1100},{25,50,100,200,200,200},
-	{22,110,330,800,975,1150},{22,110,330,800,975,1150},{22,120,360,850,1025,1200},
-	{26,130,390,900,1100,1275},{26,130,390,900,1100,1275},{28,150,450,1000,1200,1400},
-	{25,50,100,200,200,200},{35,175,500,1100,1300,1500}};
-	private static final int[] HOUSE_PRICE = {
-	50,50,50,50,50,
-	100,100,100,100,100,100,
-	150,50,150,150,150,150,150,
-	200,200,200,200,200};
-	private static final int[] SITE_MORTGAGE_VALUE = {
-	50,50,50,50,60,
-	70,70,80,90,90,100,
-	110,110,120,150,150,150,
-	200,200,200,175,200};
-	private static final String[] STATION_NAMES = {
-	"King's Cross Station",
-	"Marylebone Station",
-	"Fenchurch St Station",
-	"Liverpool St Station"};
-	private static final String[] STATION_SHORT_NAMES =
-	{"kings","marylebone","fenchurch","liverpool"};
-	private static final int STATION_PRICE = 200;
-	private static final int[] STATION_RENTS = {25,50,100,200,200,200};
-	private static final int STATION_MORTGAGE_VALUE = 100;
-	private static final String[] UTILITY_NAMES = {"Electric Co","Water Works"};
-	private static final String[] UTILITY_SHORT_NAMES = {"electric","water"};
-	private static final int UTILITY_PRICE = 150;
-	private static final int[] UTILITY_RENTS = {4,10};
-	private static final int UTILITY_MORTGAGE_VALUE = 75;
-	private static final String COMMUNITY_NAME = "Community Chest";
-	private static final String CHANCE_NAME = "Chance";
-	private static final String JAIL_NAME = "Jail (Just Visiting)";
-	private static final String PARKING_NAME = "Free Parking";
-	private static final String GOTO_JAIL_NAME = "Go To Jail";
-	private static final String[] TAX_NAMES = {"Income Tax", "Super Tax"};
-	private static final int[] TAX_AMOUNTS = {200,100};
-	private static final int COL_BROWN = 0;
-	private static final int COL_LIGHT_BLUE = 1;
-	private static final int COL_PINK = 2;
-	private static final int COL_ORANGE = 3;
-	private static final int COL_RED = 4;
-	private static final int COL_YELLOW = 5;
-	private static final int COL_GREEN = 6;
-	private static final int COL_DARK_BLUE = 7;
-	private static final int[] SITE_COLOURS = {
-	COL_BROWN, COL_BROWN, COL_LIGHT_BLUE, COL_LIGHT_BLUE, COL_LIGHT_BLUE,
-	COL_PINK, COL_PINK, COL_PINK, COL_ORANGE, COL_ORANGE, COL_ORANGE,
-	COL_RED, COL_RED, COL_RED, COL_YELLOW, COL_YELLOW, COL_YELLOW,
-	COL_GREEN, COL_GREEN, COL_GREEN, COL_DARK_BLUE, COL_DARK_BLUE};
-	private static final String[] COLOUR_GROUP_NAME = {"brown","lightblue","pink","orange","red","yellow","green","dark blue"};
-	
-	//private static final int[] NUM_IN_GROUP = {2,3,3,3,3,3,3,2};
-	
-	
-//	public String FindTypeAndBaseInfo(int PositionNumber){
-//		int typeValue = SQUARE_TYPES[PositionNumber];
-//		if(typeValue==0){
-//			return GO_NAME;
-//		} 
-//		else if(typeValue==1){
-//			//property shit for days
-//		}
-//		else if(typeValue==2){
-//			//property shit for days
-//		}
-//		else if(typeValue==3){
-//			//property shit for days
-//		}
-//		else if(typeValue==4){
-//			//property shit for days
-//		}
-//		else if(typeValue==5){
-//			//property shit for days
-//		}
-//		else if(typeValue==6){
-//			//property shit for days
-//		}
-//		else if(typeValue==7){
-//			//property shit for days
-//		}
-//		else if(typeValue==8){
-//			//property shit for days
-//		}
-//		else if(typeValue==9){
-//			//property shit for days
-//		}
-//		else return "failed";
-//	}
-//	
-    public String GetPropertyName(int PositionNumber){
+//function to retrieve name of position square
+	 public String GetPropertyName(int PositionNumber){
 		  return SITE_NAMES[PositionNumber];
 	}
-//	
-//	public int GetPropertyPrice(int PositionNumber){
-//		return SITE_PRICES[PositionNumber];
-//	}
+	
+	 
+	 
+	
+	//site prices
+	private static final int[] SITE_PRICES = {
+	0,40,0,60,0,200,100,0,100,120,
+	0,140,150,140,160,200,180,0,180,200,
+	0,220,0,220,240,200,260,260,150,280,
+	0,300,300,0,320,200,0,350,0,400};
+	//function for site prices
+	public int GetPropertyPrice(int PositionNumber){
+		//if the price is 0 it is because it is not a property therefore return 0 as we do not want it
+		if(SITE_PRICES[PositionNumber]==0){
+			return 0;
+		}
+		else{
+		return SITE_PRICES[PositionNumber];
+		}
+	}
 	
 	
 	
-	//public static final int PropertyNumber = -1;
+	
+	private static final int[] SITE_RENTS = {
+			//rents for all houses/stations/utilities are set at 50 except rent for tax and supertax are 100/200 
+			0,50,0,50,100,50,50,0,50,50,
+			0,50,50,50,50,50,50,0,50,50,
+			0,50,0,50,50,50,50,50,50,50,
+			0,50,50,0,50,50,0,50,200,50};
+	//function to retrieve rent , when rent is 0 it is because it is not a property
+	public int GetPropertyRent(int PositionNumber){
+		if(SITE_RENTS[PositionNumber]==0){
+			return 0;
+		}
+		else{
+			return SITE_RENTS[PositionNumber];
+		}
+	}
 	
 	
-//	public void FindPosition(){
-//		PropertyNumber =Player.getPosition();
-//		
-//	}
-//	
-	//PropertyNumber =Player.getPosition();
+
+	//array of site colours and status' such as station or utility
+	private static final String[] SITE_DETAIL = {
+			"","brown","","brown","","Station","lightblue","",
+			"lightblue","lightblue","","pink","Utility","pink",
+			"pink","Station","orange","","orange","orange","",
+			"red","","red","red","Station","yellow","yellow","Utility","yellow",""
+			,"green","green","","green","Station","","dark blue","","dark blue"};
+	
+	public String GetPropertyDetail(int PositionNumber){
+		if(SITE_DETAIL[PositionNumber]==null){
+			return "No Detail";
+		}
+		else{
+			return SITE_DETAIL[PositionNumber];
+		}
+	}
 	
 	
-	//serious notes, ive two ways of doing this.. 1. I find a way to get the type of square and then figure out which property it is from that type 
-	// OR 2. I could fill the property name arrays to 40 members, many of which are null values , but it will allow me to search for the name using the position instead
 	
+	//selling prices
+	private static final int[] SITE_MORTGAGE = {
+			0,100,0,100,100,100,100,0,100,100,
+			0,100,100,100,100,100,100,0,100,100,
+			0,100,0,100,100,100,100,100,100,100,
+			0,100,100,0,100,100,0,100,100,100};
+	
+    public int GetPropertyMotgage(int PositionNumber){
+		if(SITE_MORTGAGE[PositionNumber]==0){
+			return 0;
+		}
+		else{
+			return SITE_MORTGAGE[PositionNumber];
+		}
+	}
 }
+
