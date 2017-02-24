@@ -3,10 +3,12 @@ public class Player {
 	
 	private int position;
 	public String name;
+	private double balance; 
 	
-	Player () {
+	Player (double initialBalance) {
 		position = 0;
 		name = "";
+		balance = initialBalance;
 		return;
 	}
 	
@@ -22,6 +24,18 @@ public class Player {
 	
 	public int getPosition () {
 		return position;
+	}
+	
+	public void deposit(double amount) {  
+		   balance = balance + amount;
+	}
+	
+	public void withdraw(double amount) {  
+		   balance = balance - amount;
+	}
+	
+	public double getBalance(){  
+		   return balance; 
 	}
 	
 	public void setName(String playername){

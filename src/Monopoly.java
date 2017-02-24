@@ -7,17 +7,26 @@ public class Monopoly {
 
 	public static final int MAX_NUM_PLAYERS = 3;
 	public static final int NUM_SQUARES = 40;
+	static int p ;
+	
+	
 	
 	static Properties pr = new Properties();
 	
 	private  ArrayList<Player> players = new ArrayList<Player>();
 	private UI ui = new UI(players);
 	
+	
+	
 	Monopoly () {
 		for (int p=0; p<MAX_NUM_PLAYERS; p++) {
-			players.add(new Player());
-			players.get(p).setName(StartUp.Player1Name());
-		}		
+			players.add(new Player(1500));
+		}
+		players.get(0).setName(StartUp.Player1Name());
+		players.get(1).setName(StartUp.Player2Name());
+		players.get(2).setName(StartUp.Player3Name());
+		
+		
 		ui.display();
 		return;
 	}
@@ -49,97 +58,128 @@ public class Monopoly {
 		return;
 	}
 	  
-	  public void input() {
+	  public void input(int p) {
 	
 		  	String text;
 			ui.display(); 
-			ui.displayString("TEST");
-			for (int p=0; p<MAX_NUM_PLAYERS; p++) {
-				ui.displayString("Your turn, " + players.get(p).getName());
+			int jailTest = 0;
+			boolean rolled = false;
+			
+			//go through the players
+			
+			if(p == MAX_NUM_PLAYERS){
+				p = 0;
+			}
+			
+			ui.displayString("Your turn, " + players.get(p).getName());
+				
 				do {
 					ui.displayString("What would you like to do?");
+					
 					text = ui.getCommand();
 					ui.displayString("You chose : " + text);
 				
+					//if statements for inputs
+					
 					if(text.equalsIgnoreCase("Roll")) {
-					
-						int jailTest = 0;
-						roll(jailTest, p);
-					
-				
+						
+						if (rolled == true && jailTest == 0){
+							ui.displayString("Sorry, You've already Rolled!");
+						}
+						else{
+						
+						//tests how many times in a row you have rolled doubles
+						jailTest = roll(jailTest, p);
+						
+						if (jailTest > 0 && jailTest < 3){
+							ui.displayString("Doubles! You can roll again!");
+						}
+						
+						else if (jailTest == 3){
+							ui.displayString("\nUh Oh, You rolled doubles three times in a row!\nOff to Jail!");
+							//set position as jail
+							break;
+						}
+						//displays info on the property you are on
+						ui.displayString("You landed on:\n" + Properties.GetPropertyName(players.get(p).getPosition()));
+						ui.displayString("Price = " + Properties.GetPropertyPrice(players.get(p).getPosition()));
+						rolled = true;
+						}	
 					}
 					else if (text.equalsIgnoreCase("Buy")){
-						//buy();
+						buy(p);
 					}
 					else if (text.equalsIgnoreCase("Balance")){
-						//displayBalance();
+						ui.displayString("$" + players.get(p).getBalance());
 					}
 					else if (text.equalsIgnoreCase("Sell")){
-						//sell();
+						sell(p);
 					}
 					else if (text.equalsIgnoreCase("Help")){
 						queryList();
+						//displays info on the property you are on
+						ui.displayString("You landed on:\n" + Properties.GetPropertyName(players.get(p).getPosition()));
+						ui.displayString("Price = " + Properties.GetPropertyPrice(players.get(p).getPosition()));
+						
 					}
-					else if (text.equalsIgnoreCase("End Roll")){
-						break;
+					else if (text.equalsIgnoreCase("End Turn")){
+						ui.displayString("Turn over");
 					}
 					else{
 						ui.displayString("Invalid Command. Enter Help for a query list.");
 					}
 					
-					ui.displayString("You landed on:\n" + Properties.GetPropertyName(players.get(p).getPosition()));
-					ui.displayString("Price = " + Properties.GetPropertyPrice(players.get(p).getPosition()));
-					
-			} while (!text.equals("quit"));
-			break;	
+				
+			} while (!text.equals("quit") && !text.equals("End Turn"));
+			
+		p++;
+		input(p);
+				
 	  }
-	  }
+	  
 	
 	  public void queryList(){
-		  ui.displayString("Roll\nBuy\nSell\nPayRent\nBalance");
+		  ui.displayString("Valid commands:\nRoll\nBuy\nSell\nPayRent\nBalance\nEndRoll");
 	  }
 	  
-	  public void buy(){
-		  ui.displayString("Would you like to buy this property? ");
-		  //add in James code...
+	  public void buy(int player){
+		  ui.displayString("Congratulations! You now own this property.");
+		  int price = Properties.GetPropertyPrice(players.get(player).getPosition());
+		  players.get(player).withdraw(price);
+		  ui.displayString("Your new bank balance is $" + players.get(player).getBalance());
+		  
+	  }
+	  public void sell(int player){
+		  int price = Properties.GetPropertyPrice(players.get(player).getPosition());
+		  ui.displayString("You Sold "+ Properties.GetPropertyName(players.get(p).getPosition()) + " for $" + price);
+		  players.get(player).deposit(price);
+		  ui.displayString("Your new bank balance is $" + players.get(player).getBalance());
+		  
 	  }
 	  
-	  public void roll(int jailTest, int p){
+	  public int roll(int jailTest, int p){
 		  	
 		  	Random rand = new Random();
 			int roll1 = rand.nextInt(5) + 1;
 			int roll2 = rand.nextInt(5) + 1;
 			int sum = roll1 + roll2;
 			
-			//fix so that it stops before rolling again when you roll doubles
-			if (roll1 == roll2 && jailTest < 3){
-				jailTest++;
-				ui.displayString("You rolled a " + roll1 + " and a " + roll2 + " = " + sum);
+			ui.displayString("You rolled a " + roll1 + " and a " + roll2 + " = " + sum);
+			
+				players.get(p).move(sum);
+				ui.display();
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					System.out.println("Sleep exeception.");
+				} 
 				
-				ui.displayString("Doubles! \nRolling again!");
-				players.get(p).move(sum);
-				ui.display();
-				try {
-					Thread.sleep(500);
-				} catch (InterruptedException e) {
-					System.out.println("Sleep exeception.");
-				} 
-				roll(jailTest, p);
+			if(roll1 == roll2){//doubles
+				jailTest++;
 			}
-			else if (roll1 == roll2 && jailTest == 3){
-				ui.displayString("\nUh Oh, You rolled doubles three times in a row!\nOff to Jail!");
-				//set position as jail
-			}
-			else{
-				ui.displayString("You rolled a " + roll1 + " and a " + roll2 + " = " + sum);
-				players.get(p).move(sum);
-				ui.display();
-				try {
-					Thread.sleep(500);
-				} catch (InterruptedException e) {
-					System.out.println("Sleep exeception.");
-				} 
-			}
+			
+				return jailTest;
+			
 	  }
 	
 	public static void main (String args[]) throws InterruptedException  {	
@@ -153,23 +193,13 @@ public class Monopoly {
             
 			Thread.sleep(500);
             if (StartUp.getDone()==2){ 
-                BankAccount Player1 = new BankAccount(1500);
-				Player1.setName(StartUp.Player1Name());
-				//players.get(0).setName(StartUp.Player1Name());
-				BankAccount Player2 = new BankAccount(1500);
-				Player2.setName(StartUp.Player2Name());
-				//players.get(1).setName(StartUp.Player2Name());
-				BankAccount Player3 = new BankAccount(1500);
-				Player3.setName(StartUp.Player3Name());
-				//players.get(2).setName(StartUp.Player3Name());
-				
-	  		JOptionPane.showMessageDialog(null,Player1.getName() + " contains :  $" + Player1.getBalance());
-	  			Monopoly game = new Monopoly();		
+                
+            	Monopoly game = new Monopoly();		
 	  			
 	  			
 	      		//game.tour();
 	      		//game.echo();
-	  			game.input();
+	  			game.input(p);
 	      		
 	      		
             }	

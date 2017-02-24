@@ -7,9 +7,9 @@ import java.util.Random;
 import javax.swing.*;
  
 public class StartUp {
-   public String PlayerOne;
-   public String PlayerTwo;
-   public String PlayerThree;
+   public static String PlayerOne;
+   public static String PlayerTwo;
+   public static String PlayerThree;
    private JFrame mainFrame;
    private JLabel headerLabel;
    private JLabel statusLabel;
@@ -234,15 +234,15 @@ public class StartUp {
       mainFrame.setVisible(true); 
    }
 
-public String Player1Name(){
+public static String Player1Name(){
 		return PlayerOne;
 	}
 
-public String Player2Name(){
+public static String Player2Name(){
 	return PlayerTwo;
 }
 
-public String Player3Name(){
+public static String Player3Name(){
 	return PlayerThree;
 }
 }
