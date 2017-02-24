@@ -8,6 +8,8 @@ public class Monopoly {
 	public static final int MAX_NUM_PLAYERS = 3;
 	public static final int NUM_SQUARES = 40;
 	
+	static Properties pr = new Properties();
+	
 	private ArrayList<Player> players = new ArrayList<Player>();
 	private UI ui = new UI(players);
 	
@@ -54,20 +56,44 @@ public class Monopoly {
 			for (int p=0; p<MAX_NUM_PLAYERS; p++) {
 				do {
 					text = ui.getCommand();
-					ui.displayString("You chose to: " + text);
+					ui.displayString("You chose : " + text);
 				
-					if(text.equals("Roll")) {
+					if(text.equalsIgnoreCase("Roll")) {
 					
 						int jailTest = 0;
 						roll(jailTest);
 					
 				
 					}
+					else if (text.equalsIgnoreCase("Buy")){
+						//buy();
+					}
+					else if (text.equalsIgnoreCase("Balance")){
+						//displayBalance();
+					}
+					else if (text.equalsIgnoreCase("Sell")){
+						//sell();
+					}
+					else if (text.equalsIgnoreCase("Help")){
+						queryList();
+					}
+					else{
+						ui.displayString("Invalid Command. Enter Help for a query list.");
+					}
 			
 			} while (!text.equals("quit"));
 	  }
 	  }
 	
+	  public void queryList(){
+		  ui.displayString("Roll\nBuy\nSell\nPayRent\nBalance");
+	  }
+	  
+	  public void buy(){
+		  ui.displayString("Would you like to buy this property? ");
+		  //add in James code...
+	  }
+	  
 	  public void roll(int jailTest){
 		  	
 		  	Random rand = new Random();
