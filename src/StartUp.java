@@ -116,88 +116,46 @@ public class StartUp {
         	  if(n1 == 1 && n2 == 1 && n3 == 1){
         		  
         		  //System.out.println("test");
-            	  if ((roll1 > roll2 && roll1 > roll3))
-                  {
-                      if(roll2 > roll3)
-                      {
-                          PlayerOne = first;
-                          PlayerTwo = second;
-                          PlayerThree = third;
-                      }
-                      else
-                    	PlayerOne = first;
-                      	PlayerTwo = third;
-                      	PlayerThree = second;
-                  }
-                  else if ((roll2 > roll1 && roll2 > roll3))
-                  {
-                      if(roll1 > roll3)
-                      {
-                    	  PlayerOne = second;
-                          PlayerTwo = first;
-                          PlayerThree = third;
-                      }
-                      else
-                      {
-                    	  PlayerOne = second;
-                          PlayerTwo = third;
-                          PlayerThree = first;
-                      }
-                  }
-                  else if ((roll3 > roll1 && roll3 > roll2))
-                  {
-                      if(roll1 > roll2)
-                      {
+            	  
+        		  if (roll1 >= roll2){
+            		  if (roll1 >= roll3){
+            			  if (roll2 >= roll3){
+                        	  PlayerOne = first;
+                              PlayerTwo = second;
+                              PlayerThree = third;
+            			  }
+            			  else{
+	                    	  PlayerOne = first;
+	                          PlayerTwo = third;
+	                          PlayerThree = second;
+            			  }
+            		  }
+            		  else{
                     	  PlayerOne = third;
                           PlayerTwo = first;
                           PlayerThree = second;
-                      }
-                      else
+            		  }
+            	  }
+        		  else {
+        			  if(roll2 >= roll3){
+        				  if (roll1 >= roll3){
+	                    	  PlayerOne = second;
+	                          PlayerTwo = first;
+	                          PlayerThree = third;
+        				  }
+        				  else{
+                        	  PlayerOne = second;
+                              PlayerTwo = third;
+                              PlayerThree = first;
+        				  }
+        				  
+        			  }
+        			  else{
                     	  PlayerOne = third;
-                      	  PlayerTwo = second;
-                      	  PlayerThree = first;
-                  }
-                  else if (roll1 == roll2 ){
-                	  if (roll1 > roll3){
-                		  PlayerOne = first;
                           PlayerTwo = second;
-                          PlayerThree = third;
-                	  }
-                	  else{
-                		  PlayerOne = third;
-                          PlayerTwo = first;
-                          PlayerThree = second;
-                	  }
-                  }
-                  else if (roll1 == roll3){
-                	  if (roll1 > roll2){
-                		  PlayerOne = first;
-                          PlayerTwo = third;
-                          PlayerThree = second;
-                	  }
-                	  else{
-                		  PlayerOne = second;
-                          PlayerTwo = first;
-                          PlayerThree = third;
-                	  }
-                  }
-                  else if (roll2 == roll3){
-                	  if(roll2 > roll1){
-                		  PlayerOne = second;
-                          PlayerTwo = third;
                           PlayerThree = first;
-                	  }
-                	  else{
-                		  PlayerOne = first;
-                          PlayerTwo = second;
-                          PlayerThree = third;
-                	  }
-                  }
-                  else{
-                	  PlayerOne = first;
-                  	  PlayerTwo = second;
-                  	  PlayerThree = third;
-                  }
+        			  }
+        		  }
         		  
         		  statusLabel.setText(PlayerOne + " is Player 1. " + PlayerTwo + " is Player 2. " + PlayerThree + " is Player 3.");
         		  controlPanel.add(StartGame);
