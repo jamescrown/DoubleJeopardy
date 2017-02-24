@@ -1,8 +1,6 @@
 import java.util.ArrayList;
 import java.util.Random;
 
-import javax.swing.*;
-
 public class Monopoly {
 
 	public static final int MAX_NUM_PLAYERS = 3;
@@ -31,7 +29,7 @@ public class Monopoly {
 		return;
 	}
 	
-	private void tour () {
+	private void tour() {
 		ui.displayString("TOUR MODE");
 		for (int p=0; p<MAX_NUM_PLAYERS; p++) {
 			for (int i=0; i<NUM_SQUARES; i++) {
@@ -115,6 +113,9 @@ public class Monopoly {
 					else if (text.equalsIgnoreCase("Sell")){
 						sell(p);
 					}
+					else if (text.equalsIgnoreCase("Pay Rent")){
+						//payRent();
+					}
 					else if (text.equalsIgnoreCase("Help")){
 						queryList();
 						//displays info on the property you are on
@@ -139,7 +140,7 @@ public class Monopoly {
 	  
 	
 	  public void queryList(){
-		  ui.displayString("Valid commands:\nRoll\nBuy\nSell\nPayRent\nBalance\nEndRoll");
+		  ui.displayString("Valid commands:\nRoll\nBuy\nSell\nPayRent\nBalance\nEndTurn");
 	  }
 	  
 	  public void buy(int player){
