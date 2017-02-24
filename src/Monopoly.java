@@ -8,8 +8,6 @@ public class Monopoly {
 	public static final int MAX_NUM_PLAYERS = 3;
 	public static final int NUM_SQUARES = 40;
 	
-	static Properties pr = new Properties();//object for property class
-	
 	private ArrayList<Player> players = new ArrayList<Player>();
 	private UI ui = new UI(players);
 	
@@ -53,134 +51,65 @@ public class Monopoly {
 		  	String text;
 			ui.display(); 
 			ui.displayString("TEST");
-			
-			do {
-				text = ui.getCommand();
-				ui.displayString(text);
+			for (int p=0; p<MAX_NUM_PLAYERS; p++) {
+				do {
+					text = ui.getCommand();
+					ui.displayString("You chose to: " + text);
 				
-				//int jailCheck = 0;
+					if(text.equals("Roll")) {
+					
+						int jailTest = 0;
+						roll(jailTest);
+					
 				
-				if(text.equals("Roll")) {
-					
-					
-					Random rand = new Random();
-					int roll1 = rand.nextInt(5) + 1;
-					int roll2 = rand.nextInt(5) + 1;
-					int sum = roll1 + roll2;
-					if (roll1 == roll2){
-						ui.displayString("You rolled doubles! \n ");
-						//jailCheck++;
-
-						ui.displayString("You rolled a " + roll1 + " and a " + roll2 + " = " + sum);
-						
 					}
-					else{
-					ui.displayString("You rolled a " + roll1 + " and a " + roll2 + " = " + sum);
-					}
-				
-					
-				}
-				else if(text.equalsIgnoreCase("Buy")){
-					ui.displayString("You selected buy \n ");
-					buy();
-				}
-				
-				
-				else if(text.equalsIgnoreCase("Balance")) {
-					ui.displayString(" You selected balance " );
-					//Balance();
-				}
-				
-				else if(text.equalsIgnoreCase("Sell")) {
-					ui.displayString("You selected Sell ");
-					//Sell();
-					
-				}
-				
-				else if(text.equalsIgnoreCase("Help")){
-					ui.displayString("You selected Help ");
-					
-					queryList();
-					
-					
-				}
-				
-				else {
-					 ui.displayString("Invalid Command");// if user enters invalid query.
-				}
-				
-				
-				
-			} while (!text.equalsIgnoreCase("quit"));
 			
-			
+			} while (!text.equals("quit"));
 	  }
-	  
-	  public void queryList(){
-		  
-		  ui.displayString(" Buy ");
-		  ui.displayString(" Sell ");
-		  ui.displayString(" Balance ");
-		  
 	  }
-	  
-	  
-	  public void buy() {
-		  
-		  ui.displayString("Would you like to buy this property? ");
-		  
-		  // Add in James's code.. 
-		  
+	
+	  public void roll(int jailTest){
+		  	
+		  	Random rand = new Random();
+			int roll1 = rand.nextInt(5) + 1;
+			int roll2 = rand.nextInt(5) + 1;
+			int sum = roll1 + roll2;
+			
+			if (roll1 == roll2 && jailTest < 3){
+				jailTest++;
+				ui.displayString("You rolled a " + roll1 + " and a " + roll2 + " = " + sum);
+				ui.displayString("Doubles! \nRolling again!");
+				players.get(0).move(sum);
+				ui.display();
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					System.out.println("Sleep exeception.");
+				} 
+				roll(jailTest);
+			}
+			else if (roll1 == roll2 && jailTest == 3){
+				ui.displayString("\nUh Oh, You rolled doubles three times in a row!\nOff to Jail!");
+				//set position as jail
+			}
+			else{
+				ui.displayString("You rolled a " + roll1 + " and a " + roll2 + " = " + sum);
+				players.get(0).move(sum);
+				ui.display();
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					System.out.println("Sleep exeception.");
+				} 
+			}
 	  }
-	  
-	  
-	  
-			 
-			
-			
-				// System.out.println("ROLL"); // person has moved 2 spots.
-			//textArea.setText(" \n  ROLL  "+input); 
-//				
-//			if (text.equals("Buy")) {
-//				
-//				textArea.setText(" \n BUY " +input); 
-//				
-//			}
-//			
-//			
-//			 if (text.equals("Sell")) {
-//				
-//				
-//				textArea.setText(" \n SELL "+input); 
-//			}
-//			
-//			
-//			if(text.equals("Balance")) {
-//				
-//				textArea.setText(" \n BALANCE "+input); 
-//			}
-//			
-//			if(text.equals("Help")) {
-//				
-//				
-//				
-//				textArea.setText(" \n HELP "+input); 
-//			}
-//			
-//			
-//			return;
-//			
-//		}
-//	  }
 	
 	public static void main (String args[]) throws InterruptedException  {	
 		
 		
-		//get rid of main in start up and call start up from here
 		
 		StartUp  StartUp = new StartUp();      
 		      StartUp.showDialogDemo();
-//		      System.out.println(StartUp.getDone());
 		while (true)
         {
             
@@ -192,7 +121,7 @@ public class Monopoly {
 				Player2.setName(StartUp.Player2Name());
 				BankAccount Player3 = new BankAccount(1500);
 				Player3.setName(StartUp.Player3Name());
-	  		//JOptionPane.showMessageDialog(null,Player1.getName() + " contains :  $" + Player1.getBalance());
+	  		JOptionPane.showMessageDialog(null,Player1.getName() + " contains :  $" + Player1.getBalance());
 	  			Monopoly game = new Monopoly();		
 	  			
 	  			
