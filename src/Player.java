@@ -2,9 +2,11 @@
 public class Player {
 	
 	private int position;
+	public String name;
 	
 	Player () {
 		position = 0;
+		name = "";
 		return;
 	}
 	
@@ -21,5 +23,15 @@ public class Player {
 	public int getPosition () {
 		return position;
 	}
+	
+	public void setName(String playername){
+		name = playername;
+	}
+	
+	public String getName(){
+		return name;
+	}
+	
+	
 	
 }
