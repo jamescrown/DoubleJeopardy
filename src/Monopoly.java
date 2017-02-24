@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.swing.*;
 
@@ -34,7 +35,7 @@ public class Monopoly {
 		return;
 	}
 	
-	public void echo () {
+	  public void echo () {
 		String command;
 		ui.display();
 		ui.displayString("ECHO MODE");
@@ -44,6 +45,70 @@ public class Monopoly {
 		} while (!command.equals("quit"));
 		return;
 	}
+	  
+	  public void input() {
+	
+		  	String text;
+			ui.display(); 
+			ui.displayString("TEST");
+			
+			do {
+				text = ui.getCommand();
+				ui.displayString(text);
+				
+				if(text.equals("Roll")) {
+					
+					Random rand = new Random();
+					int roll1 = rand.nextInt(5) + 1;
+					int roll2 = rand.nextInt(5) + 1;
+					int sum = roll1 + roll2;
+					ui.displayString("You rolled a " + sum);
+					
+				
+				}
+				
+				
+				
+				
+			} while (!text.equals("quit"));
+	  }
+			 
+			
+			
+				// System.out.println("ROLL"); // person has moved 2 spots.
+			//textArea.setText(" \n  ROLL  "+input); 
+//				
+//			if (text.equals("Buy")) {
+//				
+//				textArea.setText(" \n BUY " +input); 
+//				
+//			}
+//			
+//			
+//			 if (text.equals("Sell")) {
+//				
+//				
+//				textArea.setText(" \n SELL "+input); 
+//			}
+//			
+//			
+//			if(text.equals("Balance")) {
+//				
+//				textArea.setText(" \n BALANCE "+input); 
+//			}
+//			
+//			if(text.equals("Help")) {
+//				
+//				
+//				
+//				textArea.setText(" \n HELP "+input); 
+//			}
+//			
+//			
+//			return;
+//			
+//		}
+//	  }
 	
 	public static void main (String args[]) throws InterruptedException  {	
 		
@@ -64,10 +129,13 @@ public class Monopoly {
 				Player2.setName(StartUp.Player2Name());
 				BankAccount Player3 = new BankAccount(1500);
 				Player3.setName(StartUp.Player3Name());
-	  		//JOptionPane.showMessageDialog(null,Player1.getName() + " contains :  $" + Player1.getBalance());
+	  		JOptionPane.showMessageDialog(null,Player1.getName() + " contains :  $" + Player1.getBalance());
 	  			Monopoly game = new Monopoly();		
+	  			
+	  			
 	      		//game.tour();
-	      		game.echo();
+	      		//game.echo();
+	  			game.input();
 	      		
 	      		
             }	
