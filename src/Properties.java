@@ -42,7 +42,7 @@ public class Properties {
 			0,50,0,50,50,50,50,50,50,50,
 			0,50,50,0,50,50,0,50,200,50};
 	//function to retrieve rent , when rent is 0 it is because it is not a property
-	public int GetPropertyRent(int PositionNumber){
+	public static int GetPropertyRent(int PositionNumber){
 		if(SITE_RENTS[PositionNumber]==0){
 			return 0;
 		}

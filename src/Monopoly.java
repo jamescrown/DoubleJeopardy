@@ -62,6 +62,9 @@ public class Monopoly {
 			ui.display(); 
 			int jailTest = 0;
 			boolean rolled = false;
+			int youOwn = 0;
+			int theyOwn = -1;
+			int noOneOwns = 0;
 			
 			//go through the players
 			
@@ -100,22 +103,64 @@ public class Monopoly {
 						}
 						//displays info on the property you are on
 						ui.displayString("You landed on:\n" + Properties.GetPropertyName(players.get(p).getPosition()));
+						//check if owned if owned say you must pay rent, otherwise display price
+						
+						for(int pls = 0; pls < MAX_NUM_PLAYERS; pls++){
+							//owned by any player
+							if(players.get(pls).owned(players.get(p).getPosition())){
+								if(pls == p){
+									ui.displayString("You already own this property!");
+									youOwn++;
+								}
+								else{
+									ui.displayString(players.get(pls).getName() + " owns this property.\nYou must pay them rent.");
+									theyOwn = pls;
+								}
+							}
+							else{
+								ui.displayString("No one owns this property");
+								noOneOwns++;
+							}
+						}
+						
+						ui.displayString(" " + noOneOwns);
+						ui.displayString("Owned? " + players.get(p).owned(players.get(p).getPosition()));
 						ui.displayString("Price = " + Properties.GetPropertyPrice(players.get(p).getPosition()));
 						rolled = true;
 						}	
 					}
+					
 					else if (text.equalsIgnoreCase("Buy")){
-						buy(p);
+						if (noOneOwns != 0 && (players.get(p).owned(players.get(p).getPosition()) == false)){
+							buy(p);
+						}
+						else{
+							ui.displayString("You Can't Buy This Property");
+						}
 					}
+					
 					else if (text.equalsIgnoreCase("Balance")){
 						ui.displayString("$" + players.get(p).getBalance());
 					}
+					
 					else if (text.equalsIgnoreCase("Sell")){
-						sell(p);
+						if (youOwn == 1 || players.get(p).owned(players.get(p).getPosition())){
+							sell(p);
+						}
+						else{
+							ui.displayString("You Can't sell a property you don't own");
+						}
 					}
+					
 					else if (text.equalsIgnoreCase("Pay Rent")){
-						//payRent();
+						if (theyOwn == 1){
+							payRent(p, theyOwn);
+						}
+						else{
+							ui.displayString("You don't need to pay rent!");
+						}
 					}
+					
 					else if (text.equalsIgnoreCase("Help")){
 						queryList();
 						//displays info on the property you are on
@@ -123,9 +168,11 @@ public class Monopoly {
 						ui.displayString("Price = " + Properties.GetPropertyPrice(players.get(p).getPosition()));
 						
 					}
+					
 					else if (text.equalsIgnoreCase("End Turn")){
 						ui.displayString("Turn over");
 					}
+					
 					else{
 						ui.displayString("Invalid Command. Enter Help for a query list.");
 					}
@@ -148,14 +195,28 @@ public class Monopoly {
 		  int price = Properties.GetPropertyPrice(players.get(player).getPosition());
 		  players.get(player).withdraw(price);
 		  ui.displayString("Your new bank balance is $" + players.get(player).getBalance());
+		  players.get(player).addToProperties(players.get(player).getPosition());
 		  
 	  }
+	  
 	  public void sell(int player){
+		  //can only sell if you own it
 		  int price = Properties.GetPropertyPrice(players.get(player).getPosition());
 		  ui.displayString("You Sold "+ Properties.GetPropertyName(players.get(p).getPosition()) + " for $" + price);
 		  players.get(player).deposit(price);
 		  ui.displayString("Your new bank balance is $" + players.get(player).getBalance());
+		  players.get(player).sellProperty(players.get(player).getPosition());
 		  
+	  }
+	  
+	  public void payRent(int player, int theyOwn){
+		  int rent = Properties.GetPropertyRent(players.get(player).getPosition());
+		  ui.displayString("You have paid $" + rent + " rent to " + players.get(theyOwn).getName());
+		  //increase his account
+		  players.get(theyOwn).deposit(rent);
+		  //decrease your account
+		  players.get(player).withdraw(rent);
+		  ui.displayString("Your new bank balance is $" + players.get(player).getBalance());
 	  }
 	  
 	  public int roll(int jailTest, int p){
