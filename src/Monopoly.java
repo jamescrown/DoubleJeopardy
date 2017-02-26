@@ -41,7 +41,7 @@ public class Monopoly {
 //				try {
 //					Thread.sleep(500);
 //				} catch (InterruptedException e) {
-//					System.out.println("Sleep exeception.");
+//					System.out.println("Sleep exception.");
 //				} 
 //			}
 //		}
@@ -150,9 +150,19 @@ public class Monopoly {
 						}
 					}
 					
-					else if (text.equalsIgnoreCase("Balance")){
+					else if (text.equalsIgnoreCase("Balance")){ // allows to check balance
 						ui.displayString("$" + players.get(p).getBalance());
 					}
+					
+					
+					else if (text.equalsIgnoreCase("Check Property")){   //allows to check property players owned 
+						
+																				// fixing this line?? doesn't work.
+						ui.displayString("You own the following properties " + players.get(p).owned(players.get(p).getPosition())); 
+						
+					}
+					
+					
 					
 					else if (text.equalsIgnoreCase("Sell")){
 						if (youOwn == 1 || players.get(p).owned(players.get(p).getPosition())){
@@ -171,6 +181,8 @@ public class Monopoly {
 							ui.displayString("You don't need to pay rent!");
 						}
 					}
+					
+						
 					
 					else if (text.equalsIgnoreCase("Help")){
 						queryList();
@@ -202,7 +214,7 @@ public class Monopoly {
 	  
 	
 	  public void queryList(){
-		  ui.displayString("Valid commands:\nRoll\nBuy\nSell\nPayRent\nBalance\nEndTurn\nQuit\n");
+		  ui.displayString("Valid commands:\nRoll\nBuy\nSell\nPayRent\nBalance\nEndTurn\nQuit\nCheckProperty\n");
 	  }
 	  
 	  public void buy(int player){
