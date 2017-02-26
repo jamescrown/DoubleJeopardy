@@ -1,28 +1,19 @@
-import java.awt.BorderLayout;
-import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Random;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.text.DefaultCaret;
 
 public class Monopoly {
 
 	public static final int MAX_NUM_PLAYERS = 3;
 	public static final int NUM_SQUARES = 40;
 	static int p ;
-	private static final int TEXT_AREA_HEIGHT = 40;
-	private static final int CHARACTER_WIDTH = 39;
-	private static final int FONT_SIZE = 14;
-	
-	
-	
 	static Properties pr = new Properties();
 	
 	private  ArrayList<Player> players = new ArrayList<Player>();
@@ -286,7 +277,7 @@ public class Monopoly {
 		  if(choice == 0){
 			  	
 			  JFrame frame2 = new JFrame("Winner");
-			  GridLayout experimentLayout = new GridLayout(0,MAX_NUM_PLAYERS);
+			  GridLayout experimentLayout = new GridLayout(0,MAX_NUM_PLAYERS+1);
 			  frame2.setLayout(experimentLayout);
 			  	
 			  String[] info = new String[MAX_NUM_PLAYERS];
@@ -305,17 +296,27 @@ public class Monopoly {
 			  		
 			  	}
 			  
-			    JLabel label = new JLabel(("<html>Bank Balance = $" + players.get(0).getBalance() + "<br><br>" + info[0] + 
+			    JLabel label = new JLabel(("<html>PLAYER 1: " + players.get(0).getName() + "<br><br>Bank Balance = $" + players.get(0).getBalance() + "<br><br>" + info[0] + 
 			    		"<br>" + "Total Property Value = $" + propertyValue[0] + "<br><br>Total Balance = $" + (players.get(0).getBalance() + propertyValue[0]) + "</html>"), JLabel.CENTER);
-			    JLabel label2 = new JLabel(("<html>Bank Balance = $" + players.get(1).getBalance() + "<br><br>" + info[1] + 
+			    JLabel label2 = new JLabel(("<html>PLAYER 2" + players.get(1).getName() + "<br><br>Bank Balance = $" + players.get(1).getBalance() + "<br><br>" + info[1] + 
 			    		"<br>" + "Total Property Value = $" + propertyValue[1] + "<br><br>Total Balance = $" + (players.get(1).getBalance() + propertyValue[1]) + "</html>"), JLabel.CENTER);
-			    JLabel label3 = new JLabel(("<html>Bank Balance = $" + players.get(2).getBalance() + "<br><br>" + info[2] + 
+			    JLabel label3 = new JLabel(("<html>PLAYER 3" + players.get(2).getName() + "<br><br>Bank Balance = $" + players.get(2).getBalance() + "<br><br>" + info[2] + 
 			    		"<br>" + "Total Property Value = $" + propertyValue[2] + "<br><br>Total Balance = $" + (players.get(2).getBalance() + propertyValue[2]) + "</html>"), JLabel.CENTER);
 			    
 			    frame2.add(label);
 			    frame2.add(label2);
 			    frame2.add(label3);
 			    frame2.setSize(600, 500); 
+			    final JButton Quit = new JButton("Quit");
+			    
+			    
+			    Quit.addActionListener(new ActionListener() {
+			          public void actionPerformed(ActionEvent e) {
+			        	  System.exit(0);
+			          }
+			          });
+			    
+			    frame2.add(Quit);
 			    frame2.setVisible(true); // Display the frame
 			  
 		  }
@@ -324,6 +325,7 @@ public class Monopoly {
 		  }
 	  
 	  }
+	  
 	
 	public static void main (String args[]) throws InterruptedException  {	
 		
