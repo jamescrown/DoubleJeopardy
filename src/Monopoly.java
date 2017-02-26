@@ -1,14 +1,25 @@
+import java.awt.BorderLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.Random;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.text.DefaultCaret;
 
 public class Monopoly {
 
 	public static final int MAX_NUM_PLAYERS = 3;
 	public static final int NUM_SQUARES = 40;
 	static int p ;
+	private static final int TEXT_AREA_HEIGHT = 40;
+	private static final int CHARACTER_WIDTH = 39;
+	private static final int FONT_SIZE = 14;
 	
 	
 	
@@ -208,7 +219,7 @@ public class Monopoly {
 	  
 	
 	  public void queryList(){
-		  ui.displayString("Valid commands:\nRoll\nBuy\nSell\nPay Rent\nBalance\nDone\nQuit\n");
+		  ui.displayString("Valid commands:\nRoll\nBuy\nSell\nPay Rent\nBalance\nCheck Property\nDone\nQuit\n");
 	  }
 	  
 	  public void buy(int player){
@@ -266,13 +277,47 @@ public class Monopoly {
 	  }
 	  
 	  public void quit(){
+		  
 		  JFrame frame = new JFrame();
 		  String[] options = new String[2];
 		  options[0] = new String("Yes");
 		  options[1] = new String("No");
 		  int choice = JOptionPane.showOptionDialog(frame.getContentPane(), "Are you sure you want to quit?", "Quit", 0, JOptionPane.INFORMATION_MESSAGE, null, options, null);
 		  if(choice == 0){
-			  System.exit(0);
+			  	
+			  JFrame frame2 = new JFrame("Winner");
+			  GridLayout experimentLayout = new GridLayout(0,MAX_NUM_PLAYERS);
+			  frame2.setLayout(experimentLayout);
+			  	
+			  String[] info = new String[MAX_NUM_PLAYERS];
+			  int[] propertyValue = new int[MAX_NUM_PLAYERS];
+			  
+			  	for(int p = 0; p<MAX_NUM_PLAYERS; p++){
+			  		int[] positionsOwned = players.get(p).allPropertiesOwned();
+			  		String[] properties = new String[positionsOwned.length];
+			  		info[p] = "";
+			  		propertyValue[p] = 0;
+			  		for(int i = 0; i <positionsOwned.length; i++){
+			  			properties[i] = (Properties.GetPropertyName(positionsOwned[i])+ " $" + Properties.GetPropertyPrice(positionsOwned[i]));
+			  			info[p] += ("<br>" + properties[i]);
+			  			propertyValue[p] += Properties.GetPropertyPrice(positionsOwned[i]);
+			  		}
+			  		
+			  	}
+			  
+			    JLabel label = new JLabel(("<html>Bank Balance = $" + players.get(0).getBalance() + "<br><br>" + info[0] + 
+			    		"<br>" + "Total Property Value = $" + propertyValue[0] + "<br><br>Total Balance = $" + (players.get(0).getBalance() + propertyValue[0]) + "</html>"), JLabel.CENTER);
+			    JLabel label2 = new JLabel(("<html>Bank Balance = $" + players.get(1).getBalance() + "<br><br>" + info[1] + 
+			    		"<br>" + "Total Property Value = $" + propertyValue[1] + "<br><br>Total Balance = $" + (players.get(1).getBalance() + propertyValue[1]) + "</html>"), JLabel.CENTER);
+			    JLabel label3 = new JLabel(("<html>Bank Balance = $" + players.get(2).getBalance() + "<br><br>" + info[2] + 
+			    		"<br>" + "Total Property Value = $" + propertyValue[2] + "<br><br>Total Balance = $" + (players.get(2).getBalance() + propertyValue[2]) + "</html>"), JLabel.CENTER);
+			    
+			    frame2.add(label);
+			    frame2.add(label2);
+			    frame2.add(label3);
+			    frame2.setSize(600, 500); 
+			    frame2.setVisible(true); // Display the frame
+			  
 		  }
 		  else{
 			  return;
