@@ -1,6 +1,9 @@
 import java.util.ArrayList;
 import java.util.Random;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 public class Monopoly {
 
 	public static final int MAX_NUM_PLAYERS = 3;
@@ -29,21 +32,21 @@ public class Monopoly {
 		return;
 	}
 	
-	private void tour() {
-		ui.displayString("TOUR MODE");
-		for (int p=0; p<MAX_NUM_PLAYERS; p++) {
-			for (int i=0; i<NUM_SQUARES; i++) {
-				players.get(p).move(+1);
-				ui.display();
-				try {
-					Thread.sleep(500);
-				} catch (InterruptedException e) {
-					System.out.println("Sleep exeception.");
-				} 
-			}
-		}
-		return;
-	}
+//	private void tour() {
+//		ui.displayString("TOUR MODE");
+//		for (int p=0; p<MAX_NUM_PLAYERS; p++) {
+//			for (int i=0; i<NUM_SQUARES; i++) {
+//				players.get(p).move(+1);
+//				ui.display();
+//				try {
+//					Thread.sleep(500);
+//				} catch (InterruptedException e) {
+//					System.out.println("Sleep exeception.");
+//				} 
+//			}
+//		}
+//		return;
+//	}
 	
 	  public void echo () {
 		String command;
@@ -83,7 +86,7 @@ public class Monopoly {
 					//if statements for inputs
 					
 					if(text.equalsIgnoreCase("Roll")) {
-						
+						//have a look at this clo problems with doubles
 						if (rolled == true && jailTest == 0){
 							ui.displayString("Sorry, You've already Rolled!");
 						}
@@ -102,7 +105,15 @@ public class Monopoly {
 							break;
 						}
 						//displays info on the property you are on
-						ui.displayString("You landed on:\n" + Properties.GetPropertyName(players.get(p).getPosition()));
+						if(players.get(p).getPosition() == 0){
+							ui.displayString("You've landed on GO!\n Collect $200");
+							players.get(p).deposit(200);
+							ui.displayString("Your new bank balance is $" + players.get(p).getBalance());
+						}
+						else{
+							ui.displayString("You landed on:\n" + Properties.GetPropertyName(players.get(p).getPosition()));
+						}
+						
 						//check if owned if owned say you must pay rent, otherwise display price
 						
 						for(int pls = 0; pls < MAX_NUM_PLAYERS; pls++){
@@ -123,9 +134,9 @@ public class Monopoly {
 							}
 						}
 						
-						ui.displayString(" " + noOneOwns);
-						ui.displayString("Owned? " + players.get(p).owned(players.get(p).getPosition()));
-						ui.displayString("Price = " + Properties.GetPropertyPrice(players.get(p).getPosition()));
+//						ui.displayString(" " + noOneOwns);
+//						ui.displayString("Owned? " + players.get(p).owned(players.get(p).getPosition()));
+//						ui.displayString("Price = " + Properties.GetPropertyPrice(players.get(p).getPosition()));
 						rolled = true;
 						}	
 					}
@@ -173,12 +184,16 @@ public class Monopoly {
 						ui.displayString("Turn over");
 					}
 					
+					else if (text.equalsIgnoreCase("Quit")){
+						quit();
+					}
+					
 					else{
 						ui.displayString("Invalid Command. Enter Help for a query list.");
 					}
 					
 				
-			} while (!text.equals("quit") && !text.equals("End Turn"));
+			} while (!text.equals("End Turn"));
 			
 		p++;
 		input(p);
@@ -187,7 +202,7 @@ public class Monopoly {
 	  
 	
 	  public void queryList(){
-		  ui.displayString("Valid commands:\nRoll\nBuy\nSell\nPayRent\nBalance\nEndTurn");
+		  ui.displayString("Valid commands:\nRoll\nBuy\nSell\nPayRent\nBalance\nEndTurn\nQuit\n");
 	  }
 	  
 	  public void buy(int player){
@@ -242,6 +257,21 @@ public class Monopoly {
 			
 				return jailTest;
 			
+	  }
+	  
+	  public void quit(){
+		  JFrame frame = new JFrame();
+		  String[] options = new String[2];
+		  options[0] = new String("Yes");
+		  options[1] = new String("No");
+		  int choice = JOptionPane.showOptionDialog(frame.getContentPane(), "Are you sure you want to quit?", "Quit", 0, JOptionPane.INFORMATION_MESSAGE, null, options, null);
+		  if(choice == 0){
+			  System.exit(0);
+		  }
+		  else{
+			  return;
+		  }
+	  
 	  }
 	
 	public static void main (String args[]) throws InterruptedException  {	
