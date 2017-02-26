@@ -6,7 +6,7 @@ import javax.swing.JOptionPane;
 
 public class Monopoly {
 
-	public static final int MAX_NUM_PLAYERS = 3;
+	public static final int MAX_NUM_PLAYERS = 3; // number of players variable
 	public static final int NUM_SQUARES = 40;
 	static int p ;
 	
@@ -80,7 +80,7 @@ public class Monopoly {
 				do {
 					ui.displayString("What would you like to do?");
 					
-					text = ui.getCommand();
+					text = ui.getCommand(); // get command in whatever displayed in text.
 					ui.displayString("You chose : " + text);
 				
 					//if statements for inputs
@@ -141,6 +141,7 @@ public class Monopoly {
 						}	
 					}
 					
+					// allows to buy property if not owned, otherwise can't buy if owned
 					else if (text.equalsIgnoreCase("Buy")){
 						if (noOneOwns != 0 && (players.get(p).owned(players.get(p).getPosition()) == false)){
 							buy(p);
@@ -157,11 +158,11 @@ public class Monopoly {
 					
 					else if (text.equalsIgnoreCase("Check Property")){   //allows to check property players owned 
 						
-																				// fixing this line?? doesn't work.
-						ui.displayString("You own the following properties " + players.get(p).owned(players.get(p).getPosition())); 
-						
+						// something wrong with this line. not displaying property own, only position on player.
+						ui.displayString(" You,  " +players.get(p).getName() +  " own the following properties " 
+						+Properties.GetPropertyName(players.get(p).getPosition())); 
+								
 					}
-					
 					
 					
 					else if (text.equalsIgnoreCase("Sell")){
@@ -209,7 +210,7 @@ public class Monopoly {
 			
 		p++;
 		input(p);
-				
+					
 	  }
 	  
 	
@@ -245,6 +246,15 @@ public class Monopoly {
 		  players.get(player).withdraw(rent);
 		  ui.displayString("Your new bank balance is $" + players.get(player).getBalance());
 	  }
+	  
+	  // check property own.
+	  public void checkProperty(int player, int theyOwn) {
+		  String check = Properties.GetPropertyName(players.get(player).getPosition());
+		  ui.displayString( " You own " +check + "the following properties " +players.get(theyOwn).getName() );
+		  
+		  
+	  }
+	 
 	  
 	  public int roll(int jailTest, int p){
 		  	
