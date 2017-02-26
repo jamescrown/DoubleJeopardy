@@ -28,42 +28,42 @@ public class InfoPanel extends JPanel {
 	public void addText (String text ) {
 		textArea.setText(textArea.getText()+"\n"+text);
 		
-		String input = textArea.getText();
+//		String input = textArea.getText();
 		
-		
-		if(text.equals("Roll")) {
-			  		
-			// Enter Dice Code
-		}
-			// System.out.println("ROLL"); // person has moved 2 spots.
-		textArea.setText(" \n  ROLL  "+input); 
-			
-		if (text.equals("Buy")) {
-			
-			textArea.setText(" \n BUY " +input); 
-			
-		}
-		
-		
-		 if (text.equals("Sell")) {
-			
-			
-			textArea.setText(" \n SELL "+input); 
-		}
-		
-		
-		if(text.equals("Balance")) {
-			
-			textArea.setText(" \n Balance "+input); 
-		}
-		
-		if(text.equals("HELP")) {
-			
-			
-			
-			textArea.setText(" \n Help "+input); 
-		}
-		
+//		
+////		if(text.equals("Roll")) {
+////			  		
+////			// Enter Dice Code
+////		}
+////			// System.out.println("ROLL"); // person has moved 2 spots.
+////		textArea.setText(" \n  ROLL  "+input); 
+////			
+////		if (text.equals("Buy")) {
+////			
+////			textArea.setText(" \n BUY " +input); 
+////			
+//		}
+//		
+//		
+//		 if (text.equals("Sell")) {
+//			
+//			
+//			textArea.setText(" \n SELL "+input); 
+//		}
+//		
+//		
+//		if(text.equals("Balance")) {
+//			
+//			textArea.setText(" \n Balance "+input); 
+//		}
+//		
+//		if(text.equals("HELP")) {
+//			
+//			
+//			
+//			textArea.setText(" \n Help "+input); 
+//		}
+//		
 		
 		
 		return;
