@@ -6,7 +6,7 @@ import javax.swing.JOptionPane;
 
 public class Monopoly {
 
-	public static final int MAX_NUM_PLAYERS = 3; // number of players variable
+	public static final int MAX_NUM_PLAYERS = 3;
 	public static final int NUM_SQUARES = 40;
 	static int p ;
 	
@@ -41,7 +41,7 @@ public class Monopoly {
 //				try {
 //					Thread.sleep(500);
 //				} catch (InterruptedException e) {
-//					System.out.println("Sleep exception.");
+//					System.out.println("Sleep exeception.");
 //				} 
 //			}
 //		}
@@ -63,8 +63,8 @@ public class Monopoly {
 	
 		  	String text;
 			ui.display(); 
-			int jailTest = 0;
-			boolean rolled = false;
+			int doubles = 0;
+			int rolled = 0;
 			int youOwn = 0;
 			int theyOwn = -1;
 			int noOneOwns = 0;
@@ -80,30 +80,26 @@ public class Monopoly {
 				do {
 					ui.displayString("What would you like to do?");
 					
-					text = ui.getCommand(); // get command in whatever displayed in text.
+					text = ui.getCommand();
 					ui.displayString("You chose : " + text);
 				
 					//if statements for inputs
 					
 					if(text.equalsIgnoreCase("Roll")) {
 						//have a look at this clo problems with doubles
-						if (rolled == true && jailTest == 0){
+						if ((rolled != 0 && doubles == 0) || rolled > doubles){
 							ui.displayString("Sorry, You've already Rolled!");
 						}
 						else{
 						
 						//tests how many times in a row you have rolled doubles
-						jailTest = roll(jailTest, p);
+						doubles = roll(doubles, p);
+						ui.displayString("doubles value " + doubles);
 						
-						if (jailTest > 0 && jailTest < 3){
+						if (doubles > rolled && doubles > 0){
 							ui.displayString("Doubles! You can roll again!");
 						}
 						
-						else if (jailTest == 3){
-							ui.displayString("\nUh Oh, You rolled doubles three times in a row!\nOff to Jail!");
-							//set position as jail
-							break;
-						}
 						//displays info on the property you are on
 						if(players.get(p).getPosition() == 0){
 							ui.displayString("You've landed on GO!\n Collect $200");
@@ -112,6 +108,8 @@ public class Monopoly {
 						}
 						else{
 							ui.displayString("You landed on:\n" + Properties.GetPropertyName(players.get(p).getPosition()));
+							ui.displayString("Price = " + Properties.GetPropertyPrice(players.get(p).getPosition()));
+							
 						}
 						
 						//check if owned if owned say you must pay rent, otherwise display price
@@ -129,21 +127,19 @@ public class Monopoly {
 								}
 							}
 							else{
-								ui.displayString("No one owns this property");
 								noOneOwns++;
 							}
 						}
 						
-//						ui.displayString(" " + noOneOwns);
-//						ui.displayString("Owned? " + players.get(p).owned(players.get(p).getPosition()));
-//						ui.displayString("Price = " + Properties.GetPropertyPrice(players.get(p).getPosition()));
-						rolled = true;
+						if (noOneOwns > 0){
+							ui.displayString("No one owns this property");
+						}
+						rolled++;
 						}	
 					}
 					
-					// allows to buy property if not owned, otherwise can't buy if owned
 					else if (text.equalsIgnoreCase("Buy")){
-						if (noOneOwns != 0 && (players.get(p).owned(players.get(p).getPosition()) == false)){
+						if (noOneOwns != 0 && (players.get(p).owned(players.get(p).getPosition()) == false) && ((Properties.GetPropertyPrice(players.get(p).getPosition()) != 0))){
 							buy(p);
 						}
 						else{
@@ -151,19 +147,9 @@ public class Monopoly {
 						}
 					}
 					
-					else if (text.equalsIgnoreCase("Balance")){ // allows to check balance
+					else if (text.equalsIgnoreCase("Balance")){
 						ui.displayString("$" + players.get(p).getBalance());
 					}
-					
-					
-					else if (text.equalsIgnoreCase("Check Property")){   //allows to check property players owned 
-						
-						// something wrong with these 2 lines, not displaying property own, only position on player.
-						ui.displayString(" You,  " +players.get(p).getName() +  " own the following properties " 
-						+Properties.GetPropertyName(players.get(p).getPosition())); 
-								
-					}
-					
 					
 					else if (text.equalsIgnoreCase("Sell")){
 						if (youOwn == 1 || players.get(p).owned(players.get(p).getPosition())){
@@ -183,8 +169,6 @@ public class Monopoly {
 						}
 					}
 					
-						
-					
 					else if (text.equalsIgnoreCase("Help")){
 						queryList();
 						//displays info on the property you are on
@@ -192,8 +176,17 @@ public class Monopoly {
 						ui.displayString("Price = " + Properties.GetPropertyPrice(players.get(p).getPosition()));
 						
 					}
+					else if (text.equalsIgnoreCase("Check Property")){   
+						ui.displayString("You own the following properties: ");
+						//returning an integer array = property positions owned
+						int[] positionsOwned = players.get(p).allPropertiesOwned();
+						for(int i = 0; i <positionsOwned.length; i++){
+							ui.displayString("" + Properties.GetPropertyName(positionsOwned[i]));
+						}
+						
+					}
 					
-					else if (text.equalsIgnoreCase("End Turn")){
+					else if (text.equalsIgnoreCase("Done")){
 						ui.displayString("Turn over");
 					}
 					
@@ -206,16 +199,16 @@ public class Monopoly {
 					}
 					
 				
-			} while (!text.equals("End Turn"));
+			} while (!text.equalsIgnoreCase("Done"));
 			
 		p++;
 		input(p);
-					
+				
 	  }
 	  
 	
 	  public void queryList(){
-		  ui.displayString("Valid commands:\nRoll\nBuy\nSell\nPayRent\nBalance\nEndTurn\nQuit\nCheckProperty\n");
+		  ui.displayString("Valid commands:\nRoll\nBuy\nSell\nPay Rent\nBalance\nDone\nQuit\n");
 	  }
 	  
 	  public void buy(int player){
@@ -247,16 +240,7 @@ public class Monopoly {
 		  ui.displayString("Your new bank balance is $" + players.get(player).getBalance());
 	  }
 	  
-	  // check property own.
-	  public void checkProperty(int player, int theyOwn) {
-		  String check = Properties.GetPropertyName(players.get(player).getPosition());
-		  ui.displayString( " You own " +check + "the following properties " +players.get(theyOwn).getName() );
-		  
-		  
-	  }
-	 
-	  
-	  public int roll(int jailTest, int p){
+	  public int roll(int doubles, int p){
 		  	
 		  	Random rand = new Random();
 			int roll1 = rand.nextInt(5) + 1;
@@ -274,10 +258,10 @@ public class Monopoly {
 				} 
 				
 			if(roll1 == roll2){//doubles
-				jailTest++;
+				doubles++;
 			}
 			
-				return jailTest;
+				return doubles;
 			
 	  }
 	  

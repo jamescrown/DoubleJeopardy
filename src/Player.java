@@ -22,6 +22,26 @@ public class Player {
 		return false;
 	}
 	
+	public int[] allPropertiesOwned(){
+		int numberOwned = 0;
+		for(int i = 0; i<properties.length; i++){
+			if(properties[i] != 0){
+				numberOwned++;
+			}
+		}
+		
+		int[] ownedProperties = new int[numberOwned];
+		int j = 0;
+		for(int i = 0; i<properties.length; i++){	
+				if(properties[i] != 0){
+					ownedProperties[j] = properties[i];
+					j++;
+				}
+		}
+		
+		return ownedProperties;
+	}
+	
 	public void addToProperties(int position){
 		for(int i = 0; i<properties.length; i++){
 			if(properties[i] == 0){
