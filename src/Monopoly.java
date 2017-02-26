@@ -158,7 +158,7 @@ public class Monopoly {
 					
 					else if (text.equalsIgnoreCase("Check Property")){   //allows to check property players owned 
 						
-						// something wrong with this line. not displaying property own, only position on player.
+						// something wrong with these 2 lines, not displaying property own, only position on player.
 						ui.displayString(" You,  " +players.get(p).getName() +  " own the following properties " 
 						+Properties.GetPropertyName(players.get(p).getPosition())); 
 								
