@@ -31,9 +31,11 @@ public void withdraw(double amount) {
 public double getBalance(){  
    return balance; 
 }
+	//Function that returns the name of the bank account holder
 public String getName(){
 	return name;
 }
+	//function that sets the name of the bank account holder
 public void setName(String playerName){
 	name = playerName;
 }
