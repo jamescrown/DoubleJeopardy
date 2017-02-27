@@ -149,7 +149,7 @@ public class Monopoly {
 					}
 					
 					else if (text.equalsIgnoreCase("Buy")){
-						if (noOneOwns != 0 && (players.get(p).owned(players.get(p).getPosition()) == false) && ((Properties.GetPropertyPrice(players.get(p).getPosition()) != 0))){
+						if (noOneOwns != 0 && theyOwn==-1 && (players.get(p).owned(players.get(p).getPosition()) == false) && ((Properties.GetPropertyPrice(players.get(p).getPosition()) != 0))){
 							buy(p);
 						}
 						else{
