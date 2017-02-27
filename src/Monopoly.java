@@ -97,18 +97,7 @@ public class Monopoly {
 						//tests how many times in a row you have rolled doubles
 						doubles = roll(doubles, p);
 						ui.displayString("doubles value " + doubles);
-							//code that checks if youve looped the board and gives cash as reward
-							if (players.get(p).getPosition() > Monopoly.NUM_SQUARES) {
-							players.get(p).resetPosition();
-							ui.displayString("You've passed GO!\n Collect $200");
-							players.get(p).deposit(200);
-							ui.displayString("Your new bank balance is $" + players.get(p).getBalance());
-						}else if(players.get(p).getPosition() == Monopoly.NUM_SQUARES){
-							players.get(p).resetPosition();
-							ui.displayString("You've landed on GO!\n Collect $200");
-							players.get(p).deposit(200);
-							ui.displayString("Your new bank balance is $" + players.get(p).getBalance());
-						}
+							
 						
 						if (doubles > rolled && doubles > 0){
 							ui.displayString("Doubles! You can roll again!");
@@ -260,6 +249,18 @@ public class Monopoly {
 			ui.displayString("You rolled a " + roll1 + " and a " + roll2 + " = " + sum);
 			
 				players.get(p).move(sum);
+		  //code that checks if youve looped the board and gives cash as reward
+		  if (players.get(p).getPosition() > Monopoly.NUM_SQUARES) {
+					players.get(p).resetPosition();
+					ui.displayString("You've passed GO!\n Collect $200");
+					players.get(p).deposit(200);
+					ui.displayString("Your new bank balance is $" + players.get(p).getBalance());
+				}else if(players.get(p).getPosition() == Monopoly.NUM_SQUARES){
+					players.get(p).resetPosition();
+					ui.displayString("You've landed on GO!\n Collect $200");
+					players.get(p).deposit(200);
+					ui.displayString("Your new bank balance is $" + players.get(p).getBalance());
+				}
 				ui.display();
 				try {
 					Thread.sleep(500);
