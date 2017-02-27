@@ -305,16 +305,37 @@ public class Monopoly {
 			  		
 			  	}
 			  
-			    JLabel label = new JLabel(("<html>PLAYER 1: " + players.get(0).getName() + "<br><br>Bank Balance = $" + players.get(0).getBalance() + "<br><br>" + info[0] + 
+			   JLabel label = new JLabel(("<html>PLAYER 1: " + players.get(0).getName() + "<br><br>Bank Balance = $" + players.get(0).getBalance() + "<br><br>" + info[0] + 
 			    		"<br>" + "Total Property Value = $" + propertyValue[0] + "<br><br>Total Balance = $" + (players.get(0).getBalance() + propertyValue[0]) + "</html>"), JLabel.CENTER);
-			    JLabel label2 = new JLabel(("<html>PLAYER 2" + players.get(1).getName() + "<br><br>Bank Balance = $" + players.get(1).getBalance() + "<br><br>" + info[1] + 
+			    JLabel label2 = new JLabel(("<html>PLAYER 2:" + players.get(1).getName() + "<br><br>Bank Balance = $" + players.get(1).getBalance() + "<br><br>" + info[1] + 
 			    		"<br>" + "Total Property Value = $" + propertyValue[1] + "<br><br>Total Balance = $" + (players.get(1).getBalance() + propertyValue[1]) + "</html>"), JLabel.CENTER);
-			    JLabel label3 = new JLabel(("<html>PLAYER 3" + players.get(2).getName() + "<br><br>Bank Balance = $" + players.get(2).getBalance() + "<br><br>" + info[2] + 
+			    JLabel label3 = new JLabel(("<html>PLAYER 3:" + players.get(2).getName() + "<br><br>Bank Balance = $" + players.get(2).getBalance() + "<br><br>" + info[2] + 
 			    		"<br>" + "Total Property Value = $" + propertyValue[2] + "<br><br>Total Balance = $" + (players.get(2).getBalance() + propertyValue[2]) + "</html>"), JLabel.CENTER);
+			    //labels for the winner , they are just stated here but not printed
+			    JLabel label4 = new JLabel(("The Winner is " + players.get(0).getName() ), JLabel.CENTER);
+			    JLabel label5 = new JLabel(("The Winner is " + players.get(1).getName() ), JLabel.CENTER);
+			    JLabel label6 = new JLabel(("The Winner is " + players.get(2).getName() ), JLabel.CENTER);
+			    JLabel label7 = new JLabel(("NO WINNER"), JLabel.CENTER);
+			    // the labels above will be printed if its player has the most money and property value
+			    if((players.get(0).getBalance() + propertyValue[0])>(players.get(1).getBalance() + propertyValue[1]) && (players.get(0).getBalance() + propertyValue[0]) > (players.get(2).getBalance() + propertyValue[2])){
+			    	frame2.add(label4);
+			    
+			    }
+			    else if((players.get(1).getBalance() + propertyValue[1])>(players.get(0).getBalance() + propertyValue[0]) && (players.get(1).getBalance() + propertyValue[1]) > (players.get(2).getBalance() + propertyValue[2])){
+			    	frame2.add(label5);
+			    }
+			    else if((players.get(2).getBalance() + propertyValue[2])>(players.get(1).getBalance() + propertyValue[1]) && (players.get(0).getBalance() + propertyValue[0]) < (players.get(2).getBalance() + propertyValue[2])){
+			    	frame2.add(label6);
+			    }
+			    else{
+			    	frame2.add(label7);
+			    }
+			    
 			    
 			    frame2.add(label);
 			    frame2.add(label2);
 			    frame2.add(label3);
+			    
 			    frame2.setSize(600, 500); 
 			    final JButton Quit = new JButton("Quit");
 			    
