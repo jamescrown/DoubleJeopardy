@@ -11,22 +11,28 @@ import javax.swing.JOptionPane;
 
 public class Monopoly {
 
-	public static final int MAX_NUM_PLAYERS = 3;
+	public static final int MAX_NUM_PLAYERS = 3; // number of players variable, only works up to 3 players. will work on how to get from 2-6 players in next sprint.
+		
 	public static final int NUM_SQUARES = 40;
 	static int p ;
+	
 	static Properties pr = new Properties();
 	
-	private  ArrayList<Player> players = new ArrayList<Player>();
-	private UI ui = new UI(players);
+	private  ArrayList<Player> players = new ArrayList<Player>(); // array list. 
+	
+	private UI ui = new UI(players); // object called from UI class.
 	
 	
 	
 	Monopoly () {
 		for (int p=0; p<MAX_NUM_PLAYERS; p++) {
+		//	players.add(new Player(10));
 			players.add(new Player(1500));
 		}
 		players.get(0).setName(StartUp.Player1Name());
 		players.get(1).setName(StartUp.Player2Name());
+	//	players.get(2).setName(StartUp.Player3Name());
+		
 		
 		if(MAX_NUM_PLAYERS == 3){
 			players.get(2).setName(StartUp.Player3Name());
@@ -94,12 +100,12 @@ public class Monopoly {
 				do {
 					ui.displayString("What would you like to do?");
 					
-					text = ui.getCommand();
+					text = ui.getCommand(); // get command from whatever is type in text by user.
 					ui.displayString("You chose : " + text);
 				
 					//if statements for inputs
 					
-					if(text.equalsIgnoreCase("Roll")) {
+					if(text.equalsIgnoreCase("Roll")) { // Roll if Statement when user types Roll
 						//have a look at this clo problems with doubles
 						if ((rolled != 0 && doubles == 0) || rolled > doubles){
 							ui.displayString("Sorry, You've already Rolled!");
@@ -132,7 +138,9 @@ public class Monopoly {
 									ui.displayString("You already own this property!");
 									youOwn++;
 								}
-								else{
+								
+								else
+								{
 									ui.displayString(players.get(pls).getName() + " owns this property.\nYou must pay them rent.");
 									theyOwn = pls;
 								}
@@ -149,63 +157,64 @@ public class Monopoly {
 						}	
 					}
 					
-					else if (text.equalsIgnoreCase("Buy")){
+					else if (text.equalsIgnoreCase("Buy")){ // Buy if Statement when user types Buy
 						if (noOneOwns != 0 && theyOwn==-1 && (players.get(p).owned(players.get(p).getPosition()) == false) && ((Properties.GetPropertyPrice(players.get(p).getPosition()) != 0))){
-							buy(p);
+							buy(p);  
 						}
 						else{
 							ui.displayString("You Can't Buy This Property");
 						}
 					}
 					
-					else if (text.equalsIgnoreCase("Balance")){
-						ui.displayString("$" + players.get(p).getBalance());
+					else if (text.equalsIgnoreCase("Balance")){  // Balance if Statement when user types Balance
+						ui.displayString("$" + players.get(p).getBalance()); // gets and displays the money of player.
 					}
 					
-					else if (text.equalsIgnoreCase("Sell")){
-						if (youOwn == 1 || players.get(p).owned(players.get(p).getPosition())){
+					else if (text.equalsIgnoreCase("Sell")){ // Sell if Statement when user types Sell.
+						if (youOwn == 1 || players.get(p).owned(players.get(p).getPosition())){ // if a player owns property, then they can sell it.
 							sell(p);
 						}
-						else{
+						else{ 
 							ui.displayString("You Can't sell a property you don't own");
 						}
 					}
 					
-					else if (text.equalsIgnoreCase("Pay Rent")){
+					else if (text.equalsIgnoreCase("Pay Rent")){ // Roll if statement user types in Pay Rent, if they land on someone's property.
 						if (theyOwn != -1){
-							payRent(p, theyOwn);
+							payRent(p, theyOwn); // if land on someone's property,  then pay rent
 						}
-						else{
+						else{ // otherwise, don't need to pay.
 							ui.displayString("You don't need to pay rent!");
 						}
 					}
 					
-					else if (text.equalsIgnoreCase("Help")){
+					else if (text.equalsIgnoreCase("Help")){ // help If statement. 
 						queryList();
 						//displays info on the property you are on
 						ui.displayString("You landed on:\n" + Properties.GetPropertyName(players.get(p).getPosition()));
 						ui.displayString("Price = " + Properties.GetPropertyPrice(players.get(p).getPosition()));
 						
 					}
-					else if (text.equalsIgnoreCase("Check Property")){   
+					else if (text.equalsIgnoreCase("Check Property")){  // check Property if statement.
 						ui.displayString("You own the following properties: ");
 						//returning an integer array = property positions owned
 						int[] positionsOwned = players.get(p).allPropertiesOwned();
 						for(int i = 0; i <positionsOwned.length; i++){
-							ui.displayString("" + Properties.GetPropertyName(positionsOwned[i]));
+							ui.displayString("" + Properties.GetPropertyName(positionsOwned[i])); // displays properties players own.
 						}
 						
 					}
 					
-					else if (text.equalsIgnoreCase("Done")){
+					else if (text.equalsIgnoreCase("Done")){ // when player is done with their turn, then it's the next player's turn.
 						ui.displayString("Turn over");
 					}
 					
 					else if (text.equalsIgnoreCase("Quit")){
-						quit();
+						quit(); 
 					}
 					
-					else{
+					else{ // displays if player types a command that is not recognized by the program.
+						
 						ui.displayString("Invalid Command. Enter Help for a query list.");
 					}
 					
@@ -219,64 +228,64 @@ public class Monopoly {
 	  }
 	  
 	
-	  public void queryList(){
+	  public void queryList() { //displays the following commands the user only is valid to input.
 		  ui.displayString("Valid commands:\nRoll\nBuy\nSell\nPay Rent\nBalance\nCheck Property\nDone\nQuit\n");
 	  }
 	  
-	  public void buy(int player){
+	  public void buy(int player){ // buy method. 
 		  ui.displayString("Congratulations! You now own this property.");
-		  int price = Properties.GetPropertyPrice(players.get(player).getPosition());
+		  int price = Properties.GetPropertyPrice(players.get(player).getPosition()); // gets the price of the property the player has landed on.
 		  players.get(player).withdraw(price);
-		  ui.displayString("Your new bank balance is $" + players.get(player).getBalance());
+		  ui.displayString("Your new bank balance is $" + players.get(player).getBalance()); // displays player's new balance after buying the property.
 		  players.get(player).addToProperties(players.get(player).getPosition());
 		  
 	  }
 	  
-	  public void sell(int player){
+	  public void sell(int player){ // sell method 
 		  //can only sell if you own it
 		  int price = Properties.GetPropertyPrice(players.get(player).getPosition());
-		  ui.displayString("You Sold "+ Properties.GetPropertyName(players.get(p).getPosition()) + " for $" + price);
-		  players.get(player).deposit(price);
-		  ui.displayString("Your new bank balance is $" + players.get(player).getBalance());
+		  ui.displayString("You Sold "+ Properties.GetPropertyName(players.get(p).getPosition()) + " for $" + price); // displays the property the player has sold.
+		  players.get(player).deposit(price); // increase account of player.
+		  ui.displayString("Your new bank balance is $" + players.get(player).getBalance()); // displays new balance of player.
 		  players.get(player).sellProperty(players.get(player).getPosition());
 		  
 	  }
 	  
-	  public void payRent(int player, int theyOwn){
-		  int rent = Properties.GetPropertyRent(players.get(player).getPosition());
+	  public void payRent(int player, int theyOwn){ // payRent method.
+		  int rent = Properties.GetPropertyRent(players.get(player).getPosition()); // gets the rent of the property.
 		  ui.displayString("You have paid $" + rent + " rent to " + players.get(theyOwn).getName());
-		  //increase his account
-		  players.get(theyOwn).deposit(rent);
-		  //decrease your account
-		  players.get(player).withdraw(rent);
+		  players.get(theyOwn).deposit(rent);   //increase his/her account
+		  players.get(player).withdraw(rent); //decrease your account
 		  ui.displayString("Your new bank balance is $" + players.get(player).getBalance());
 	  }
 	  
 	  public int roll(int doubles, int p){
 		  	
 		  	Random rand = new Random();
-			int roll1 = rand.nextInt(5) + 1;
+			int roll1 = rand.nextInt(5) + 1; // 2 dice rolls. 
 			int roll2 = rand.nextInt(5) + 1;
-			int sum = roll1 + roll2;
+			int sum = roll1 + roll2; // gets the sum of the 2 dice.
 			
 			ui.displayString("You rolled a " + roll1 + " and a " + roll2 + " = " + sum);
 			
 				players.get(p).move(sum);
-		  //code that checks if youve looped the board and gives cash as reward
-		  if (players.get(p).getPosition() > Monopoly.NUM_SQUARES) {
-					players.get(p).resetPosition();
+			//code that checks if you've looped the board and gives cash as reward
+		  if (players.get(p).getPosition() > Monopoly.NUM_SQUARES) { 
+					players.get(p).resetPosition(); // ???
 					ui.displayString("You've passed GO!\n Collect $200");
-					players.get(p).deposit(200);
+					players.get(p).deposit(200); // this increase the player's balance (200$ given by the Banker)
 					ui.displayString("Your new bank balance is $" + players.get(p).getBalance());
-				}else if(players.get(p).getPosition() == Monopoly.NUM_SQUARES){
+			}
+		  else if(players.get(p).getPosition() == Monopoly.NUM_SQUARES){
+				
 					players.get(p).resetPosition();
 					ui.displayString("You've landed on GO!\n Collect $200");
 					players.get(p).deposit(200);
 					ui.displayString("Your new bank balance is $" + players.get(p).getBalance());
 				}
 				ui.display();
-				try {
-					Thread.sleep(500);
+				try {  
+					Thread.sleep(500);   // this doesn't show up until player is ready.
 				} catch (InterruptedException e) {
 					System.out.println("Sleep exeception.");
 				} 
@@ -288,6 +297,8 @@ public class Monopoly {
 				return doubles;
 			
 	  }
+	  
+	  // COMMENT
 	  public void checkWinner(){
 		  if((players.get(0).getBalance() < 0) && (players.get(1).getBalance()) < 0 && (players.get(2).getBalance() > 0)){
 			  ui.displayString("\n\n\nWinner!\n\n");
@@ -320,16 +331,17 @@ public class Monopoly {
 			  	}
 		  }
 	  }
-	  
 	  public void quit(){
 		  
-		  JFrame frame = new JFrame();
+		  JFrame frame = new JFrame(); // displays a JFrame when player inputs the command "Quit"
 		  String[] options = new String[2];
 		  options[0] = new String("Yes");
 		  options[1] = new String("No");
 		  int choice = JOptionPane.showOptionDialog(frame.getContentPane(), "Are you sure you want to quit?", "Quit", 0, JOptionPane.INFORMATION_MESSAGE, null, options, null);
 		  if(choice == 0){
 			  	
+			  
+			  // COMMENT.
 			  JFrame frame2 = new JFrame("Winner");
 			  GridLayout experimentLayout = new GridLayout(0,MAX_NUM_PLAYERS+1);
 			  frame2.setLayout(experimentLayout);
@@ -349,7 +361,8 @@ public class Monopoly {
 			  		}
 			  		
 			  	}
-			  
+			   
+			  	// COMMENT.
 			   JLabel label = new JLabel(("<html>PLAYER 1: " + players.get(0).getName() + "<br><br>Bank Balance = $" + players.get(0).getBalance() + "<br><br>" + info[0] + 
 			    		"<br>" + "Total Property Value = $" + propertyValue[0] + "<br><br>Total Balance = $" + (players.get(0).getBalance() + propertyValue[0]) + "</html>"), JLabel.CENTER);
 			    JLabel label2 = new JLabel(("<html>PLAYER 2:" + players.get(1).getName() + "<br><br>Bank Balance = $" + players.get(1).getBalance() + "<br><br>" + info[1] + 
@@ -407,11 +420,11 @@ public class Monopoly {
 		
 		
 		StartUp  StartUp = new StartUp();      
-		StartUp.showDialogDemo();
+		      StartUp.showDialogDemo();
 		while (true)
         {
             
-			Thread.sleep(500);
+			Thread.sleep(500); 
             if (StartUp.getDone()==2){ 
                 
             	Monopoly game = new Monopoly();		
