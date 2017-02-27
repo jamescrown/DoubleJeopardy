@@ -23,7 +23,7 @@ public class Monopoly {
 	
 	Monopoly () {
 		for (int p=0; p<MAX_NUM_PLAYERS; p++) {
-			players.add(new Player(10));
+			players.add(new Player(1500));
 		}
 		players.get(0).setName(StartUp.Player1Name());
 		players.get(1).setName(StartUp.Player2Name());
