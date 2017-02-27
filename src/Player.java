@@ -1,29 +1,35 @@
 
 public class Player {
 	
+	
+	//keeps track of player name, bank balance, position on the board and properties owned
 	private int position;
 	public String name;
 	private double balance;
-	private int[] properties = new int[30];
+	private int[] properties = new int[30]; //array of property positioned owned
 	
 	Player (double initialBalance) {
-		position = 0;
+		position = 0;//start on go
 		name = "";
 		balance = initialBalance;
 		return;
 	}
-	//send in position number; check if ownedby anyone - int is in the array? true if owned 
+	
+	//this method checks if a property at a certain position is owned by the players
 	public boolean owned(int position){
-		for(int x:properties){
-			if(x == position){
+		for(int x:properties){ 
+			if(x == position){	//goes through the array of properties owned and checks if the current position is in that array
 				return true;
 			}
 		}
 		return false;
 	}
 	
+	//this method returns all the property positions owned by the player
 	public int[] allPropertiesOwned(){
 		int numberOwned = 0;
+		//this for loop calculates the number of properties the player owns
+		//so we can make use of number owned instead of a possibly bigger array of size 30
 		for(int i = 0; i<properties.length; i++){
 			if(properties[i] != 0){
 				numberOwned++;
@@ -34,7 +40,7 @@ public class Player {
 		int j = 0;
 		for(int i = 0; i<properties.length; i++){	
 				if(properties[i] != 0){
-					ownedProperties[j] = properties[i];
+					ownedProperties[j] = properties[i]; //this adds the properties owned to our new array which will contain no zeros(the equivalent of empty spaces in the array)
 					j++;
 				}
 		}
@@ -42,6 +48,7 @@ public class Player {
 		return ownedProperties;
 	}
 	
+	//method adds the property just bought to the array of properties owned
 	public void addToProperties(int position){
 		for(int i = 0; i<properties.length; i++){
 			if(properties[i] == 0){
@@ -51,6 +58,7 @@ public class Player {
 		}
 	}
 	
+	//removes the property from the array of those owned when sold
 	public void sellProperty(int position){
 		for(int i = 0; i<properties.length; i++){
 			if(properties[i] == position){
@@ -59,6 +67,8 @@ public class Player {
 			}
 		}
 	}
+	
+	//moves the player piece
 	public void move (int squares) {
 		position = position + squares;
 		if (position < 0) {
@@ -76,10 +86,12 @@ public class Player {
 		position = position % Monopoly.NUM_SQUARES;
 	}
 	
+	//adds money to the players bank account e.g. when selling a property or receiving rent
 	public void deposit(double amount) {  
 		   balance = balance + amount;
 	}
 	
+	//withdraws money when buying property or paying rent, etc.
 	public void withdraw(double amount) {  
 		   balance = balance - amount;
 	}
@@ -88,6 +100,7 @@ public class Player {
 		   return balance; 
 	}
 	
+	//assigns the names given at startup to the correct players
 	public void setName(String playername){
 		name = playername;
 	}
