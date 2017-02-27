@@ -23,7 +23,7 @@ public class Monopoly {
 	
 	Monopoly () {
 		for (int p=0; p<MAX_NUM_PLAYERS; p++) {
-			players.add(new Player(1500));
+			players.add(new Player(10));
 		}
 		players.get(0).setName(StartUp.Player1Name());
 		players.get(1).setName(StartUp.Player2Name());
@@ -212,6 +212,7 @@ public class Monopoly {
 				
 			} while (!text.equalsIgnoreCase("Done"));
 			
+		checkWinner();
 		p++;
 		input(p);
 				
@@ -286,6 +287,38 @@ public class Monopoly {
 			
 				return doubles;
 			
+	  }
+	  public void checkWinner(){
+		  if((players.get(0).getBalance() < 0) && (players.get(1).getBalance()) < 0 && (players.get(2).getBalance() > 0)){
+			  ui.displayString("\n\n\nWinner!\n\n");
+			  	JFrame frame = new JFrame();
+			  	String[] options = new String[1];
+			  	options[0] = new String("Quit");
+			  	int choice = JOptionPane.showOptionDialog(frame.getContentPane(), players.get(2).getName() + " is the Winner!", "Quit", 0, JOptionPane.INFORMATION_MESSAGE, null, options, null);
+			  	if(choice == 0){
+			  		System.exit(0);
+			  	}
+		  }
+		  if((players.get(0).getBalance() < 0) && (players.get(2).getBalance()) < 0 && (players.get(1).getBalance() > 0)){
+			  ui.displayString("\n\n\nWinner!\n\n");
+			  	JFrame frame = new JFrame();
+			  	String[] options = new String[1];
+			  	options[0] = new String("Quit");
+			  	int choice = JOptionPane.showOptionDialog(frame.getContentPane(), players.get(1).getName() + " is the Winner!", "Quit", 0, JOptionPane.INFORMATION_MESSAGE, null, options, null);
+			  	if(choice == 0){
+			  		System.exit(0);
+			  	}
+		  }
+		  if((players.get(2).getBalance() < 0) && (players.get(1).getBalance()) < 0 && (players.get(0).getBalance() > 0)){
+			  ui.displayString("\n\n\nWinner!\n\n");
+			  	JFrame frame = new JFrame();
+			  	String[] options = new String[1];
+			  	options[0] = new String("Quit");
+			  	int choice = JOptionPane.showOptionDialog(frame.getContentPane(), players.get(0).getName() + " is the Winner!", "Quit", 0, JOptionPane.INFORMATION_MESSAGE, null, options, null);
+			  	if(choice == 0){
+			  		System.exit(0);
+			  	}
+		  }
 	  }
 	  
 	  public void quit(){
