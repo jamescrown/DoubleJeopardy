@@ -63,9 +63,9 @@ public class Player {
 		position = position + squares;
 		if (position < 0) {
 			position = position + Monopoly.NUM_SQUARES;
-		} else if (position >= Monopoly.NUM_SQUARES) {
-			position = position % Monopoly.NUM_SQUARES;
-		}
+		} //else if (position >= Monopoly.NUM_SQUARES) {
+		//	position = position % Monopoly.NUM_SQUARES;
+		//}
 		return;
 	}
 	
