@@ -98,12 +98,16 @@ public class Monopoly {
 						doubles = roll(doubles, p);
 						ui.displayString("doubles value " + doubles);
 							//code that checks if youve looped the board and gives cash as reward
-							if (players.get(p).getPosition() >= Monopoly.NUM_SQUARES) {
+							if (players.get(p).getPosition() > Monopoly.NUM_SQUARES) {
 							players.get(p).resetPosition();
 							ui.displayString("You've passed GO!\n Collect $200");
 							players.get(p).deposit(200);
 							ui.displayString("Your new bank balance is $" + players.get(p).getBalance());
-							
+						}else if(players.get(p).getPosition() == Monopoly.NUM_SQUARES){
+							players.get(p).resetPosition();
+							ui.displayString("You've landed on GO!\n Collect $200");
+							players.get(p).deposit(200);
+							ui.displayString("Your new bank balance is $" + players.get(p).getBalance());
 						}
 						
 						if (doubles > rolled && doubles > 0){
