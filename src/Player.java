@@ -72,6 +72,9 @@ public class Player {
 	public int getPosition () {
 		return position;
 	}
+	public void resetPosition() {
+		position = position % Monopoly.NUM_SQUARES;
+	}
 	
 	public void deposit(double amount) {  
 		   balance = balance + amount;
