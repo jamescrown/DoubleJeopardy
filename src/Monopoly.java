@@ -27,7 +27,19 @@ public class Monopoly {
 		}
 		players.get(0).setName(StartUp.Player1Name());
 		players.get(1).setName(StartUp.Player2Name());
-		players.get(2).setName(StartUp.Player3Name());
+		
+		if(MAX_NUM_PLAYERS == 3){
+			players.get(2).setName(StartUp.Player3Name());
+		}
+//		if(MAX_NUM_PLAYERS == 4){
+//			players.get(3).setName(StartUp.Player4Name());
+//		}
+//		if(MAX_NUM_PLAYERS == 5){
+//			players.get(4).setName(StartUp.Player5Name());
+//		}
+//		if(MAX_NUM_PLAYERS == 6){
+//			players.get(5).setName(StartUp.Player6Name());
+//		}
 		
 		
 		ui.display();
@@ -362,7 +374,7 @@ public class Monopoly {
 		
 		
 		StartUp  StartUp = new StartUp();      
-		      StartUp.showDialogDemo();
+		StartUp.showDialogDemo();
 		while (true)
         {
             
