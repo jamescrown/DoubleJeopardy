@@ -89,7 +89,7 @@ public class Monopoly {
 			int theyOwn = -1;
 			int noOneOwns = 0;
 			
-			//go through the players
+			//loop through the players
 			
 			if(p == MAX_NUM_PLAYERS){
 				p = 0;
@@ -106,7 +106,7 @@ public class Monopoly {
 					//if statements for inputs
 					
 					if(text.equalsIgnoreCase("Roll")) { // Roll if Statement when user types Roll
-						//have a look at this clo problems with doubles
+						
 						if ((rolled != 0 && doubles == 0) || rolled > doubles){
 							ui.displayString("Sorry, You've already Rolled!");
 						}
@@ -114,7 +114,7 @@ public class Monopoly {
 						
 						//tests how many times in a row you have rolled doubles
 						doubles = roll(doubles, p);
-						ui.displayString("doubles value " + doubles);
+						//ui.displayString("doubles value " + doubles);
 							
 						
 						if (doubles > rolled && doubles > 0){
@@ -158,6 +158,7 @@ public class Monopoly {
 					}
 					
 					else if (text.equalsIgnoreCase("Buy")){ // Buy if Statement when user types Buy
+						//can only buy the property if it is eligible and is not already owned
 						if (noOneOwns != 0 && theyOwn==-1 && (players.get(p).owned(players.get(p).getPosition()) == false) && ((Properties.GetPropertyPrice(players.get(p).getPosition()) != 0))){
 							buy(p);  
 						}
@@ -189,7 +190,8 @@ public class Monopoly {
 					}
 					
 					else if (text.equalsIgnoreCase("Help")){ // help If statement. 
-						queryList();
+		
+						queryList();//displays the list of possible inputs
 						//displays info on the property you are on
 						ui.displayString("You landed on:\n" + Properties.GetPropertyName(players.get(p).getPosition()));
 						ui.displayString("Price = " + Properties.GetPropertyPrice(players.get(p).getPosition()));
@@ -200,7 +202,7 @@ public class Monopoly {
 						//returning an integer array = property positions owned
 						int[] positionsOwned = players.get(p).allPropertiesOwned();
 						for(int i = 0; i <positionsOwned.length; i++){
-							ui.displayString("" + Properties.GetPropertyName(positionsOwned[i])); // displays properties players own.
+							ui.displayString("" + Properties.GetPropertyName(positionsOwned[i])); // displays properties players own by finding the names of the position numbers owned
 						}
 						
 					}
@@ -219,11 +221,11 @@ public class Monopoly {
 					}
 					
 				
-			} while (!text.equalsIgnoreCase("Done"));
+			} while (!text.equalsIgnoreCase("Done"));//once player types done we stop taking input from that player
 			
-		checkWinner();
-		p++;
-		input(p);
+		checkWinner(); //checks if there is a winner
+		p++; 
+		input(p); //next player
 				
 	  }
 	  
@@ -235,9 +237,9 @@ public class Monopoly {
 	  public void buy(int player){ // buy method. 
 		  ui.displayString("Congratulations! You now own this property.");
 		  int price = Properties.GetPropertyPrice(players.get(player).getPosition()); // gets the price of the property the player has landed on.
-		  players.get(player).withdraw(price);
+		  players.get(player).withdraw(price); //player pays, so balance decreases
 		  ui.displayString("Your new bank balance is $" + players.get(player).getBalance()); // displays player's new balance after buying the property.
-		  players.get(player).addToProperties(players.get(player).getPosition());
+		  players.get(player).addToProperties(players.get(player).getPosition()); //adds to array of properties owned
 		  
 	  }
 	  
@@ -247,7 +249,7 @@ public class Monopoly {
 		  ui.displayString("You Sold "+ Properties.GetPropertyName(players.get(p).getPosition()) + " for $" + price); // displays the property the player has sold.
 		  players.get(player).deposit(price); // increase account of player.
 		  ui.displayString("Your new bank balance is $" + players.get(player).getBalance()); // displays new balance of player.
-		  players.get(player).sellProperty(players.get(player).getPosition());
+		  players.get(player).sellProperty(players.get(player).getPosition()); //remove from properties owned
 		  
 	  }
 	  
@@ -298,10 +300,13 @@ public class Monopoly {
 			
 	  }
 	  
-	  // Winner algorithm to check who has teh most money when the game has ended and then print out who the winner is etc.
+	  // Winner algorithm to check if two players have negative bank balances, resulting in the other player winning.
+	//does not take into account properties owned
 	  public void checkWinner(){
 		  if((players.get(0).getBalance() < 0) && (players.get(1).getBalance()) < 0 && (players.get(2).getBalance() > 0)){
 			  ui.displayString("\n\n\nWinner!\n\n");
+			  	
+			  	//jframe that displays the name of the winner and a quit button
 			  	JFrame frame = new JFrame();
 			  	String[] options = new String[1];
 			  	options[0] = new String("Quit");
@@ -331,9 +336,12 @@ public class Monopoly {
 			  	}
 		  }
 	  }
-	  public void quit(){
+	 
+	public void quit(){// displays a JFrame when player inputs the command "Quit"
 		  
-		  JFrame frame = new JFrame(); // displays a JFrame when player inputs the command "Quit"
+		
+			//jframe that checks if the player is sure they want to quit. if yes it finds winner, if no it simply returns to input
+		  JFrame frame = new JFrame(); 
 		  String[] options = new String[2];
 		  options[0] = new String("Yes");
 		  options[1] = new String("No");
@@ -399,6 +407,7 @@ public class Monopoly {
 			    
 			    
 			    Quit.addActionListener(new ActionListener() {
+				    //ends the program when the quit button is pressed
 			          public void actionPerformed(ActionEvent e) {
 			        	  System.exit(0);
 			          }
@@ -418,12 +427,12 @@ public class Monopoly {
 	public static void main (String args[]) throws InterruptedException  {	
 		
 		
-		
+		//runs the startup cde
 		StartUp  StartUp = new StartUp();      
-		      StartUp.showDialogDemo();
+		StartUp.showDialogDemo();
 		while (true)
         {
-            
+            //multithreading allows the startup frame and monopoly frame not to be run simultaneously but instead wait
 			Thread.sleep(500); 
             if (StartUp.getDone()==2){ 
                 
