@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
 
 public class Monopoly {
 
-	public static final int MAX_NUM_PLAYERS = 3; // number of players variable, only works up to 3 players. will work on how to get from 2-6 players in next sprint.
+	public static final int MAX_NUM_PLAYERS = 3; // we could get it to have 2-6 players but shouldve changed it early on, ran out of time as we would have to change the entire code which we will do next sprint
 		
 	public static final int NUM_SQUARES = 40;
 	static int p ;
@@ -271,7 +271,7 @@ public class Monopoly {
 				players.get(p).move(sum);
 			//code that checks if you've looped the board and gives cash as reward
 		  if (players.get(p).getPosition() > Monopoly.NUM_SQUARES) { 
-					players.get(p).resetPosition(); // ???
+					players.get(p).resetPosition(); // so here the code will call the reset function which will remove 40 from their position count so we can keep track of where they are and still use the arrays properties
 					ui.displayString("You've passed GO!\n Collect $200");
 					players.get(p).deposit(200); // this increase the player's balance (200$ given by the Banker)
 					ui.displayString("Your new bank balance is $" + players.get(p).getBalance());
@@ -298,7 +298,7 @@ public class Monopoly {
 			
 	  }
 	  
-	  // COMMENT
+	  // Winner algorithm to check who has teh most money when the game has ended and then print out who the winner is etc.
 	  public void checkWinner(){
 		  if((players.get(0).getBalance() < 0) && (players.get(1).getBalance()) < 0 && (players.get(2).getBalance() > 0)){
 			  ui.displayString("\n\n\nWinner!\n\n");
@@ -341,7 +341,7 @@ public class Monopoly {
 		  if(choice == 0){
 			  	
 			  
-			  // COMMENT.
+			  // Shows which player has the most assets and cash together , they are the winner.
 			  JFrame frame2 = new JFrame("Winner");
 			  GridLayout experimentLayout = new GridLayout(0,MAX_NUM_PLAYERS+1);
 			  frame2.setLayout(experimentLayout);
@@ -362,7 +362,7 @@ public class Monopoly {
 			  		
 			  	}
 			   
-			  	// COMMENT.
+			  	// create labels for displaying property values and cash of each player.
 			   JLabel label = new JLabel(("<html>PLAYER 1: " + players.get(0).getName() + "<br><br>Bank Balance = $" + players.get(0).getBalance() + "<br><br>" + info[0] + 
 			    		"<br>" + "Total Property Value = $" + propertyValue[0] + "<br><br>Total Balance = $" + (players.get(0).getBalance() + propertyValue[0]) + "</html>"), JLabel.CENTER);
 			    JLabel label2 = new JLabel(("<html>PLAYER 2:" + players.get(1).getName() + "<br><br>Bank Balance = $" + players.get(1).getBalance() + "<br><br>" + info[1] + 
