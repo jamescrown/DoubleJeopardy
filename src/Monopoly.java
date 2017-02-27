@@ -97,22 +97,26 @@ public class Monopoly {
 						//tests how many times in a row you have rolled doubles
 						doubles = roll(doubles, p);
 						ui.displayString("doubles value " + doubles);
+							//code that checks if youve looped the board and gives cash as reward
+							if (players.get(p).getPosition() >= Monopoly.NUM_SQUARES) {
+							players.get(p).resetPosition();
+							ui.displayString("You've passed GO!\n Collect $200");
+							players.get(p).deposit(200);
+							ui.displayString("Your new bank balance is $" + players.get(p).getBalance());
+							
+						}
 						
 						if (doubles > rolled && doubles > 0){
 							ui.displayString("Doubles! You can roll again!");
 						}
 						
 						//displays info on the property you are on
-						if(players.get(p).getPosition() == 0){
-							ui.displayString("You've landed on GO!\n Collect $200");
-							players.get(p).deposit(200);
-							ui.displayString("Your new bank balance is $" + players.get(p).getBalance());
-						}
-						else{
+					
+						
 							ui.displayString("You landed on:\n" + Properties.GetPropertyName(players.get(p).getPosition()));
 							ui.displayString("Price = " + Properties.GetPropertyPrice(players.get(p).getPosition()));
 							
-						}
+						
 						
 						//check if owned if owned say you must pay rent, otherwise display price
 						
