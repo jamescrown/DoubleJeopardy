@@ -1,5 +1,5 @@
 
-
+//Creates a separate JFrame to take in Players names and decide who goes first based on roll
 import java.awt.*;
 import java.awt.event.*;
 import java.util.Random;
@@ -26,10 +26,7 @@ public class StartUp {
    public StartUp(){
       prepareGUI();
    }
-//   public static void main(String[] args){
-//      StartUp  StartUp = new StartUp();      
-//      StartUp.showDialogDemo();
-//   }
+
    private void prepareGUI(){
       mainFrame = new JFrame("Player Names");
       mainFrame.setSize(400,400);
@@ -39,7 +36,8 @@ public class StartUp {
          public void windowClosing(WindowEvent windowEvent){
             System.exit(0);
          }        
-      });    
+      });  
+      
       headerLabel = new JLabel("", JLabel.CENTER);        
       statusLabel = new JLabel("",JLabel.CENTER);    
       statusLabel.setSize(350,100);
@@ -52,15 +50,17 @@ public class StartUp {
       mainFrame.add(statusLabel);
       mainFrame.setVisible(true);  
    }
+   
    public void showDialogDemo(){                                       
       headerLabel.setText("Please Enter Player Names"); 
       
+      //JOptionPanes to take in the names of the players
       final String first = JOptionPane.showInputDialog(controlPanel, "What's your name? (1/3)");
       final String second = JOptionPane.showInputDialog(controlPanel, "What's your name? (2/3)");
       final String third = JOptionPane.showInputDialog(controlPanel, "What's your name? (3/3)");
 
 
-      
+      //creates buttons which allow each player to roll
       JButton firstroll = new JButton(first + ": Roll");        
       JButton secondroll = new JButton(second + ": Roll");
       JButton thirdroll = new JButton(third + ": Roll");
@@ -69,7 +69,8 @@ public class StartUp {
 
       firstroll.addActionListener(new ActionListener() {
          public void actionPerformed(ActionEvent e) {
-        	if(n1 == 0){
+        	//using n1 to check if the player has already rolled or not
+        	 if(n1 == 0){
         		Random rand = new Random();
         		roll1 = rand.nextInt(5) + 1;
         		statusLabel.setText(first + " rolled a " + roll1);
@@ -112,11 +113,14 @@ public class StartUp {
       EveryoneHasRolled.addActionListener(new ActionListener() {
           public void actionPerformed(ActionEvent e) {
         	  
-        	  
+        	  //checks everyone has rolled
         	  if(n1 == 1 && n2 == 1 && n3 == 1){
         		  
         		  //System.out.println("test");
             	  
+        		  
+        		  //sets PlayerOne, PlayerTwo and PlayerThree as Highest to Lowest dice roll
+        		  //includes edge cases - if two or more people roll same value
         		  if (roll1 >= roll2){
             		  if (roll1 >= roll3){
             			  if (roll2 >= roll3){
@@ -157,7 +161,9 @@ public class StartUp {
         			  }
         		  }
         		  
+        		  //displays which player is which based on the dice rolls
         		  statusLabel.setText(PlayerOne + " is Player 1. " + PlayerTwo + " is Player 2. " + PlayerThree + " is Player 3.");
+        		  //adds the start button
         		  controlPanel.add(StartGame);
         	      mainFrame.setVisible(true); 
         	      
@@ -171,6 +177,7 @@ public class StartUp {
       
       StartGame.addActionListener(new ActionListener() {
           public void actionPerformed(ActionEvent e) {
+        	  //the changing of the variable starting closes this startup panel and opens the monopoly board, via multithreading
         	  starting = 2;
         	  mainFrame.setVisible(false);
           }
@@ -178,13 +185,15 @@ public class StartUp {
       
       
       if (roll1 == 0 || roll2 == 0 || roll3 == 0){
+    	  //this is displayed when startup opens
     		statusLabel.setText("Roll to see who goes first");
       }
       else{
     	 
     	  
     	 }
-
+      
+      //adds the buttons to the panel
       controlPanel.add(firstroll);
       controlPanel.add(secondroll);
       controlPanel.add(thirdroll);
