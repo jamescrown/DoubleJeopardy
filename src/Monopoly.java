@@ -171,7 +171,7 @@ public class Monopoly {
 					}
 					
 					else if (text.equalsIgnoreCase("Pay Rent")){
-						if (theyOwn == 1){
+						if (theyOwn != -1){
 							payRent(p, theyOwn);
 						}
 						else{
