@@ -10,8 +10,11 @@ public class CommandPanel extends JPanel  {
 	
 	private static final long serialVersionUID = 1L;
 	private static final int FONT_SIZE = 14;
+	private static final int CHARACTER_WIDTH = 40;
+	private static final int TEXT_AREA_HEIGHT = 39;
 	
-	private JTextField commandField = new JTextField(); 
+	
+	JTextField commandField = new JTextField(CHARACTER_WIDTH); 
 	private LinkedList<String> commandBuffer = new LinkedList<String>();
 	
 	CommandPanel () {
@@ -29,7 +32,7 @@ public class CommandPanel extends JPanel  {
 		commandField.addActionListener(listener);
 		commandField.setFont(new Font("Times New Roman", Font.PLAIN, FONT_SIZE));
 		setLayout(new BorderLayout());
-		add(commandField, BorderLayout.CENTER);
+		add(commandField, BorderLayout.EAST); // displays Command panel aligned with InfoPanel
 		return;
 	}
 
