@@ -5,14 +5,17 @@ import javax.swing.*;
 import java.awt.*;
 import javax.swing.JTextField;
 
+
 public class CommandPanel extends JPanel  {
 	
 	private static final long serialVersionUID = 1L;
 	private static final int FONT_SIZE = 14;
+	private static final int CHARACTER_WIDTH = 40;
+	private static final int TEXT_AREA_HEIGHT = 39;
 	
-	private JTextField commandField = new JTextField(); 
+	
+	JTextField commandField = new JTextField(CHARACTER_WIDTH); 
 	private LinkedList<String> commandBuffer = new LinkedList<String>();
-	private String string;
 	
 	CommandPanel () {
 		class AddActionListener implements ActionListener {
@@ -21,7 +24,9 @@ public class CommandPanel extends JPanel  {
 					   commandBuffer.add(commandField.getText());
 					   commandField.setText("");
 					   commandBuffer.notify();
+		   
 				   }
+				   
 		           return;
 			   }
 		   }
@@ -29,11 +34,12 @@ public class CommandPanel extends JPanel  {
 		commandField.addActionListener(listener);
 		commandField.setFont(new Font("Times New Roman", Font.PLAIN, FONT_SIZE));
 		setLayout(new BorderLayout());
-		add(commandField, BorderLayout.NORTH);
+		add(commandField, BorderLayout.EAST); // displays Command panel aligned with InfoPanel
 		return;
 	}
 
-	public void inputString() {
+	public String getCommand() {
+		String command;
 		synchronized (commandBuffer) {
 			while (commandBuffer.isEmpty()) {
 				try {
@@ -42,13 +48,9 @@ public class CommandPanel extends JPanel  {
 					e.printStackTrace();
 				}
 			}
-			string = commandBuffer.pop();
+			command = commandBuffer.pop();
 		}
-		return;
+		return command;
 	}
 	
-	public String getString() {
-		return string;
-	}
 }
-
