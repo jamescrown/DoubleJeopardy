@@ -24,7 +24,9 @@ public class CommandPanel extends JPanel  {
 					   commandBuffer.add(commandField.getText());
 					   commandField.setText("");
 					   commandBuffer.notify();
+		   
 				   }
+				   
 		           return;
 			   }
 		   }
