@@ -77,7 +77,7 @@ public class Board {
 	}
 	
 	public boolean isUtilities (int index) {
-		return squares[index] instanceof Transport;
+		return squares[index] instanceof Utilities;
 	}
 	
 }
