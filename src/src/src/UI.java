@@ -259,7 +259,23 @@ public class UI {
 			if (property.isOwned()) {
 				infoPanel.displayString("The property is owned by " + property.getOwner() + ". Rent is " + property.getRent() + CURRENCY + ".");				
 			} else {
-				infoPanel.displayString("The property is not owned. Rent is " + property.getRent() + CURRENCY + ".");								
+				infoPanel.displayString("The property is not owned. Rent is " + property.getRent() + CURRENCY + "." + " Color is " + property.getColor() + ".");								
+			}
+		}
+		if (board.isTransport(player.getPosition())){
+			Transport transport = board.getTransport(player.getPosition());
+			if (transport.isOwned()) {
+				infoPanel.displayString("The property is owned by " + transport.getOwner() + ". Rent is " + transport.getRent() + CURRENCY + ".");				
+			} else {
+				infoPanel.displayString("The property is not owned. Rent is " + transport.getRent() + CURRENCY + ".");								
+			}
+		}
+		if (board.isUtilities(player.getPosition())){
+			Utilities utilities = board.getUtilities(player.getPosition());
+			if (utilities.isOwned()) {
+				infoPanel.displayString("The property is owned by " + utilities.getOwner() + ". Rent is " + utilities.getRent() + CURRENCY + ".");				
+			} else {
+				infoPanel.displayString("The property is not owned. Rent is " + utilities.getRent() + CURRENCY + ".");								
 			}
 		}
 		return;
