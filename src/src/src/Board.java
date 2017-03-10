@@ -60,8 +60,25 @@ public class Board {
 		return (Property) squares[index];
 	}
 	
+	public Transport getTransport (int index) {
+		return (Transport) squares[index];
+	}
+	
+	public Utilities getUtilities (int index) {
+		return (Utilities) squares[index];
+	}
+	
 	public boolean isProperty (int index) {
 		return squares[index] instanceof Property;
 	}
+	
+	public boolean isTransport (int index) {
+		return squares[index] instanceof Transport;
+	}
+	
+	public boolean isUtilities (int index) {
+		return squares[index] instanceof Transport;
+	}
+	
 }
 
