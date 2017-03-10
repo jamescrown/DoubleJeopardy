@@ -60,7 +60,7 @@ public class UI {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.add(boardPanel, BorderLayout.LINE_START);
 		frame.add(infoPanel, BorderLayout.LINE_END);
-		frame.add(commandPanel,BorderLayout.NORTH);
+		infoPanel.add(commandPanel,BorderLayout.NORTH);
 		frame.setResizable(false);
 		frame.setVisible(true);
 		return;
