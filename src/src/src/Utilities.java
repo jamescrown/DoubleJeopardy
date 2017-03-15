@@ -1,16 +1,18 @@
 
-public class Utilities extends Square{
+public class Utilities extends Property{
 
 private boolean isOwned;
 private int value;
 private int rent[];
 private Player owner;
+private static String color;
 
 Utilities (String name, int value, int[] rent) {
-	super(name);
+	super(name, value, rent, color);
 	this.value = value;
 	this.rent = rent;
 	isOwned = false;
+	color = "utilities";
 	return;
 }
 

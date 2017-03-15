@@ -152,7 +152,39 @@ public class Monopoly {
 						} else {
 							ui.displayError(UI.ERR_IS_OWNED);
 						}
-					} else {
+					}
+					else if (board.isTransport(currPlayer.getPosition())) {
+						Transport transport = board.getTransport(currPlayer.getPosition());
+						if (!transport.isOwned()) {
+							if (currPlayer.getBalance() >= transport.getValue()) {				
+								currPlayer.doTransaction(-transport.getValue());
+								ui.displayBankTransaction(currPlayer);
+								currPlayer.boughtTransport(transport);
+								ui.displayLatestProperty(currPlayer);
+							} else {
+								ui.displayError(UI.ERR_INSUFFICIENT_FUNDS);
+							}
+						} else {
+							ui.displayError(UI.ERR_IS_OWNED);
+						}
+					}
+					else if (board.isUtilities(currPlayer.getPosition())) {
+						Utilities utility = board.getUtilities(currPlayer.getPosition());
+						if (!utility.isOwned()) {
+							if (currPlayer.getBalance() >= utility.getValue()) {				
+								currPlayer.doTransaction(-utility.getValue());
+								ui.displayBankTransaction(currPlayer);
+								currPlayer.boughtUtilities(utility);
+								ui.displayLatestProperty(currPlayer);
+							} else {
+								ui.displayError(UI.ERR_INSUFFICIENT_FUNDS);
+							}
+						} else {
+							ui.displayError(UI.ERR_IS_OWNED);
+						}
+					}
+					
+					else {
 						ui.displayError(UI.ERR_NOT_A_PROPERTY);
 					}
 					break;

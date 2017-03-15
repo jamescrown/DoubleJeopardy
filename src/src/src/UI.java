@@ -254,14 +254,6 @@ public class UI {
 	
 	public void displaySquare (Player player, Board board) {
 		infoPanel.displayString(player + " arrives at " + board.getSquare(player.getPosition()).getName() + ".");
-		if (board.isProperty(player.getPosition())) {
-			Property property = board.getProperty(player.getPosition());
-			if (property.isOwned()) {
-				infoPanel.displayString("The property is owned by " + property.getOwner() + ". Rent is " + property.getRent() + CURRENCY + ".");				
-			} else {
-				infoPanel.displayString("The property is not owned. Rent is " + property.getRent() + CURRENCY + "." + " Color is " + property.getColor() + ".");								
-			}
-		}
 		if (board.isTransport(player.getPosition())){
 			Transport transport = board.getTransport(player.getPosition());
 			if (transport.isOwned()) {
@@ -270,7 +262,7 @@ public class UI {
 				infoPanel.displayString("The property is not owned. Rent is " + transport.getRent() + CURRENCY + ".");								
 			}
 		}
-		if (board.isUtilities(player.getPosition())){
+		else if (board.isUtilities(player.getPosition())){
 			Utilities utilities = board.getUtilities(player.getPosition());
 			if (utilities.isOwned()) {
 				infoPanel.displayString("The property is owned by " + utilities.getOwner() + ". Rent is " + utilities.getRent() + CURRENCY + ".");				
@@ -278,6 +270,15 @@ public class UI {
 				infoPanel.displayString("The property is not owned. Rent is " + utilities.getRent() + CURRENCY + ".");								
 			}
 		}
+		else if (board.isProperty(player.getPosition())) {
+			Property property = board.getProperty(player.getPosition());
+			if (property.isOwned()) {
+				infoPanel.displayString("The property is owned by " + property.getOwner() + ". Rent is " + property.getRent() + CURRENCY + ".");				
+			} else {
+				infoPanel.displayString("The property is not owned. Rent is " + property.getRent() + CURRENCY + "." + " Color is " + property.getColor() + ".");								
+			}
+		}
+		
 		return;
 	}
 	

@@ -69,6 +69,16 @@ public class Player {
 		return properties.get(properties.size()-1);
 	}
 	
+	public void boughtTransport (Transport transport){
+		transport.setOwner(this);
+		properties.add(transport);
+	}
+	
+	public void boughtUtilities (Utilities utility){
+		utility.setOwner(this);
+		properties.add(utility);
+	}
+	
 	public ArrayList<Property> getProperties () {
 		return properties;
 	}
