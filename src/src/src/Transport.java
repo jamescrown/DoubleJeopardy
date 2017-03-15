@@ -1,17 +1,20 @@
 
-public class Transport extends Square{
+public class Transport extends Property{
 
 private boolean isOwned;
 private int value;
 private int rent[];
 private Player owner;
+private static String color;
 
 Transport (String name, int value, int[] rent) {
-	super(name);
+	super(name, value, rent, color);
 	this.value = value;
 	this.rent = rent;
 	isOwned = false;
+	color = "transport";
 	return;
+	
 }
 
 public int getValue () {
