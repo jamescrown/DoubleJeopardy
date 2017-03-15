@@ -296,5 +296,9 @@ public class UI {
 		infoPanel.displayString("The following players drew the game " + players);
 		return;
 	}
+	
+	public void clearPanel(){
+		infoPanel.clearPanel();
+	}
 }
 

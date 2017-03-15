@@ -201,6 +201,7 @@ public class Monopoly {
 					if (rollDone) {
 						if (!rentOwed || (rentOwed && rentPaid)) {
 							turnFinished = true;
+							ui.clearPanel();
 						} else {
 							ui.displayError(UI.ERR_RENT_OWED);
 						}
