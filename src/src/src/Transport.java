@@ -42,4 +42,8 @@ public Player getOwner () {
 	return owner;
 }
 
+public String getColor (){
+	return color;
+}
+
 }
