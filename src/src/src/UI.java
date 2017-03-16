@@ -247,7 +247,7 @@ public class UI {
 		} else {
 			infoPanel.displayString(player + " owns the following property...");
 			for (Property p : propertyList) {
-				infoPanel.displayString(p.getName() + ", rent " + p.getRent());				
+				infoPanel.displayString(p.getName() + ", rent " + p.getRent() + ", " + p.getColor());				
 			}
 		}
 	}
@@ -260,6 +260,11 @@ public class UI {
 				infoPanel.displayString("The property is owned by " + transport.getOwner() + ". Rent is " + transport.getRent() + CURRENCY + ".");				
 			} else {
 				infoPanel.displayString("The property is not owned. Rent is " + transport.getRent() + CURRENCY + ".");								
+				//if own another transport square - this could be used for calculating rent
+				if (colorPropertiesOwned(player, "transport") > 0){
+					infoPanel.displayString("You own " + colorPropertiesOwned(player, "transport") + " other properties of type transport");
+				}
+			
 			}
 		}
 		else if (board.isUtilities(player.getPosition())){
@@ -268,6 +273,10 @@ public class UI {
 				infoPanel.displayString("The property is owned by " + utilities.getOwner() + ". Rent is " + utilities.getRent() + CURRENCY + ".");				
 			} else {
 				infoPanel.displayString("The property is not owned. Rent is " + utilities.getRent() + CURRENCY + ".");								
+				//if own another utilities square - this could be used for calculating rent
+				if (colorPropertiesOwned(player, "utilities") > 0){
+					infoPanel.displayString("You own " + colorPropertiesOwned(player, "utilities") + " other properties of type utilities");
+				}
 			}
 		}
 		else if (board.isProperty(player.getPosition())) {
@@ -276,6 +285,10 @@ public class UI {
 				infoPanel.displayString("The property is owned by " + property.getOwner() + ". Rent is " + property.getRent() + CURRENCY + ".");				
 			} else {
 				infoPanel.displayString("The property is not owned. Rent is " + property.getRent() + CURRENCY + "." + " Color is " + property.getColor() + ".");								
+			//if you own another property in that color tell them
+				if (colorPropertiesOwned(player, property.getColor()) > 0){
+					infoPanel.displayString("You own " + colorPropertiesOwned(player, property.getColor()) + " other properties of this color");
+				}
 			}
 		}
 		
@@ -300,5 +313,19 @@ public class UI {
 	public void clearPanel(){
 		infoPanel.clearPanel();
 	}
+	
+	//////this counts how many other properties in this color you already own
+	public int colorPropertiesOwned(Player player, String type){
+		ArrayList<Property> propertyList = player.getProperties();
+		int i = 0;
+		for (Property p : propertyList) {
+			if (p.getColor() == type){
+				i++;
+			}
+		}
+		return i;
+	}
+	
+	
 }
 
