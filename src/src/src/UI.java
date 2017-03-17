@@ -20,6 +20,8 @@ public class UI {
 	public static final int CMD_BALANCE = 7;
 	public static final int CMD_BANKRUPT = 8;
 	public static final int CMD_HELP = 9;
+	//build
+	public static final int CMD_BUILD = 10;
 	
 	public static final int ERR_SYNTAX = 0;
 	public static final int ERR_DOUBLE_ROLL = 1;
@@ -31,6 +33,10 @@ public class UI {
 	public static final int ERR_IS_OWNED = 7;
 	public static final int ERR_SELF_OWNED = 8;
 	public static final int ERR_RENT_OWED= 9;
+	//color error
+	public static final int ERR_NOT_ALL_COLORS = 10;
+	//build error
+	public static final int ERR_CANNOT_BUILD_ON = 11;
 	
 	private final String[] errorMessages = {
 		"Error: Not a valid command.",
@@ -42,7 +48,11 @@ public class UI {
 		"Error: The property is not owned.",
 		"Error: The property is already owned.",
 		"Error: You own the property.",
-		"Error: You owe rent."
+		"Error: You owe rent.",
+		//errors for building
+		"Error: You don't own all the properties in this color.",
+		"Error: You cannot build on this property type."
+		
 	};
 	
 	private JFrame frame = new JFrame();
@@ -137,6 +147,11 @@ public class UI {
 					commandId = CMD_HELP;
 					inputValid = true;
 					break;
+				//build option
+				case "build" :
+					commandId = CMD_BUILD;
+					inputValid = true;
+					break;
 				default:
 					inputValid = false;
 				}
@@ -216,7 +231,12 @@ public class UI {
 	}
 	
 	public void displayCommandHelp () {
-		infoPanel.displayString("Available commands: roll, pay rent, buy, property, balance, done, quit. ");
+		infoPanel.displayString("Available commands: roll, pay rent, buy, property, build balance, done, quit. ");
+		return;
+	}
+	
+	public void build(){
+		//do stuff
 		return;
 	}
 	
@@ -242,13 +262,31 @@ public class UI {
 	
 	public void displayProperty (Player player) {
 		ArrayList<Property> propertyList = player.getProperties();
+		ArrayList<String> allColor = new ArrayList<>();
+		
 		if (propertyList.size() == 0) {
 			infoPanel.displayString(player + " owns no property.");
 		} else {
 			infoPanel.displayString(player + " owns the following property...");
 			for (Property p : propertyList) {
-				infoPanel.displayString(p.getName() + ", rent " + p.getRent() + ", " + p.getColor());				
+				infoPanel.displayString(p.getName() + ", rent " + p.getRent() + ", " + p.getColor());
+				if (colorPropertiesOwned(player, p.getColor())==3){
+					//only add if not already there
+					
+						if(!allColor.contains(p.getColor())){
+							allColor.add(p.getColor());
+						}
+					
+				}
+				else if((p.getColor() == "Brown" || p.getColor() == "Blue") && colorPropertiesOwned(player, p.getColor())==2){
+					if(!allColor.contains(p.getColor())){
+						allColor.add(p.getColor());
+					}
+				}
 			}
+				//displays which of the properties you own all the colors of
+				infoPanel.displayString("You own all the properties of the following colors: " + allColor);
+			
 		}
 	}
 	
