@@ -197,6 +197,12 @@ public class Monopoly {
 				case UI.CMD_HELP :
 					ui.displayCommandHelp();
 					break;
+				//build option
+				case UI.CMD_BUILD :
+					//if else statement must have all the colors to build
+					
+					ui.build();
+					break;
 				case UI.CMD_DONE :
 					if (rollDone) {
 						if (!rentOwed || (rentOwed && rentPaid)) {
