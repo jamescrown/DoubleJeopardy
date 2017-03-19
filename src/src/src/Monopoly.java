@@ -76,6 +76,10 @@ public class Monopoly {
 		boolean rentOwed = false;
 		boolean rentPaid = false;
 		do {
+			if(currPlayer.status==false){// if statement to check if player is bankrupt
+				turnFinished = true;//if yes then end their turn before it begins
+			}
+			else{
 			ui.inputCommand(currPlayer);
 			switch (ui.getCommandId()) {
 				case UI.CMD_ROLL :
@@ -114,16 +118,26 @@ public class Monopoly {
 						if (property.isOwned()) {
 							if (!property.getOwner().equals(currPlayer)) {
 								if (!rentPaid) {
-//									if (currPlayer.getBalance()>=property.getRent()) {
+									if (currPlayer.getBalance()>=property.getRent()) {
 										Player owner = property.getOwner();
 										currPlayer.doTransaction(-property.getRent());
 										owner.doTransaction(+property.getRent());
 										ui.displayTransaction(currPlayer, owner);
 										rentPaid = true;	
 										rentOwed = false;
-//									} else {
-//										ui.displayError(UI.ERR_INSUFFICIENT_FUNDS);										
-//									} 
+								        } else {//if they dont have enough money then run bankrupt command		
+  									    for(Property pr : currPlayer.getProperties())//for each property remove the owner
+  								        {
+  								            pr.removeOwner();
+  								        }
+  									    
+										ui.Bankrupt(currPlayer);//run function from UI class called Bankrupt
+										currPlayer.lost();
+										rentPaid = true;
+										rentOwed = false;
+										turnFinished = true;
+										
+									} 
 								} else {
 									ui.displayError(UI.ERR_RENT_ALREADY_PAID);									
 								}
@@ -219,6 +233,7 @@ public class Monopoly {
 					turnFinished = true;
 					gameOver = true;
 					break;
+			}
 			}
 		} while (!turnFinished);
 		return;
