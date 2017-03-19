@@ -363,6 +363,11 @@ public class UI {
 		}
 		return i;
 	}
+	//bankrupt function to display bankruptcy
+	public void Bankrupt(Player player){
+	
+		infoPanel.displayString(player + " has declared bankruptcy because of insufficient funds");
+	}
 	
 	
 }
