@@ -8,6 +8,7 @@ public class Player {
 	private int amount;
 	private String token;
 	private boolean passedGo;
+	public boolean status=true;//bankruptcy status
 	private ArrayList<Property> properties = new ArrayList<Property>();
 	
 	Player (String name, String token) {
@@ -93,6 +94,12 @@ public class Player {
 	
 	public String toString () {
 		return name + " (" + token + ")";
+	}
+	
+	//status if they have lost remove all funds from account and set status to false , representing bankruptcy
+	public void lost () {
+		status=false;
+		balance = 0;
 	}
 }
 
