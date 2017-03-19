@@ -40,5 +40,9 @@ public class Property extends Square {
 	public String getColor (){
 		return color;
 	}
+	
+	public void removeOwner (){// remove the owner of said property . for example when bankrupt
+		isOwned = false;
+	}
 }
 
