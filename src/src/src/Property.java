@@ -6,6 +6,7 @@ public class Property extends Square {
 	private int rent[];
 	private Player owner;
 	private String color;
+	int i = 0;
 	
 	Property (String name, int value, int[] rent, String color) {
 		super(name);
@@ -21,11 +22,21 @@ public class Property extends Square {
 	}
 	
 	public int getRent () {
-		return rent[0];
+		return rent[i];
 	}
 	
 	public boolean isOwned () {
 		return isOwned;
+	}
+	
+	
+	public void setBuilding(){
+		i++;
+		return ;
+	}
+	
+	public int numberBuildings(){
+		return i;
 	}
 	
 	public void setOwner (Player inPlayer) {
@@ -40,7 +51,6 @@ public class Property extends Square {
 	public String getColor (){
 		return color;
 	}
-	
 	public void removeOwner (){// remove the owner of said property . for example when bankrupt
 		isOwned = false;
 	}

@@ -213,9 +213,7 @@ public class Monopoly {
 					break;
 				//build option
 				case UI.CMD_BUILD :
-					//if else statement must have all the colors to build
-					
-					ui.build();
+					ui.whichProperty(currPlayer, board);
 					break;
 				case UI.CMD_DONE :
 					if (rollDone) {
@@ -234,7 +232,8 @@ public class Monopoly {
 					gameOver = true;
 					break;
 			}
-			}
+			}	
+		
 		} while (!turnFinished);
 		return;
 	}
