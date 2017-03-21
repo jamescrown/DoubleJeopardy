@@ -37,6 +37,8 @@ public class UI {
 	public static final int ERR_NOT_ALL_COLORS = 10;
 	//build error
 	public static final int ERR_CANNOT_BUILD_ON = 11;
+	//max num buildings
+	public static final int ERR_MAX_BUILDINGS = 12;
 	
 	private final String[] errorMessages = {
 		"Error: Not a valid command.",
@@ -51,7 +53,8 @@ public class UI {
 		"Error: You owe rent.",
 		//errors for building
 		"Error: You don't own all the properties in this color.",
-		"Error: You cannot build on this property type."
+		"Error: You cannot build on this property type.",
+		"Error: This property already holds the max number of buildings."
 		
 	};
 	
@@ -62,6 +65,7 @@ public class UI {
 	private String string;
 	private boolean done;
 	private int commandId;
+	private int propertyId;
 
 	UI (ArrayList<Player> players) {
 		boardPanel = new BoardPanel(players);
@@ -231,12 +235,24 @@ public class UI {
 	}
 	
 	public void displayCommandHelp () {
-		infoPanel.displayString("Available commands: roll, pay rent, buy, property, build balance, done, quit. ");
+		infoPanel.displayString("Available commands: roll, pay rent, buy, property, build, balance, done, quit. ");
 		return;
 	}
 	
-	public void build(){
-		//do stuff
+	public void build(Player player, Board board, int propertyId){
+		
+		Property property = board.getProperty(propertyId);
+		//builds property
+		property.setBuilding();
+		if(property.numberBuildings() < 5){
+			infoPanel.displayString("This property now has " + property.numberBuildings() + " houses.");
+			infoPanel.displayString("Rent is now £" + property.getRent());
+		}
+		else if(property.numberBuildings() == 5){
+			infoPanel.displayString("This property now has 1 hotel.");
+			infoPanel.displayString("Rent is now £" + property.getRent());
+		}
+		
 		return;
 	}
 	
@@ -269,7 +285,31 @@ public class UI {
 		} else {
 			infoPanel.displayString(player + " owns the following property...");
 			for (Property p : propertyList) {
-				infoPanel.displayString(p.getName() + ", rent " + p.getRent() + ", " + p.getColor());
+				if (p.getColor()=="transport" || p.getColor()=="utilities"){
+					infoPanel.displayString(p.getName() + ", rent " + p.getRent() + ", " + p.getColor());
+					
+				}
+				else{
+					infoPanel.displayString(p.getName() + ", rent " + p.getRent() + ", " + p.getColor() + ", Number of houses/hotels: " + p.numberBuildings());
+				
+				}
+				
+			}
+			
+			allColor = checkAllColor(player);
+				//displays which of the properties you own all the colors of
+			if(!allColor.isEmpty()){	
+				infoPanel.displayString("You own all the properties of the following colors: " + allColor);
+			}
+			
+		}
+	}
+	
+	public ArrayList<String> checkAllColor(Player player){
+		ArrayList<Property> propertyList = player.getProperties();
+		ArrayList<String> allColor = new ArrayList<>();
+		
+		for (Property p : propertyList) {
 				if (colorPropertiesOwned(player, p.getColor())==3){
 					//only add if not already there
 					
@@ -284,10 +324,8 @@ public class UI {
 					}
 				}
 			}
-				//displays which of the properties you own all the colors of
-				infoPanel.displayString("You own all the properties of the following colors: " + allColor);
-			
-		}
+		return allColor;
+		
 	}
 	
 	public void displaySquare (Player player, Board board) {
@@ -348,6 +386,12 @@ public class UI {
 		return;
 	}
 	
+	//bankrupt function to display bankruptcy
+	 public void Bankrupt(Player player){
+	 	
+	 		infoPanel.displayString(player + " has declared bankruptcy because of insufficient funds");
+	 	}
+	
 	public void clearPanel(){
 		infoPanel.clearPanel();
 	}
@@ -363,10 +407,388 @@ public class UI {
 		}
 		return i;
 	}
-	//bankrupt function to display bankruptcy
-	public void Bankrupt(Player player){
-	
-		infoPanel.displayString(player + " has declared bankruptcy because of insufficient funds");
+
+	public void whichProperty(Player player, Board board) {
+
+		boolean inputValid = false;
+		Property property = board.getProperty(player.getPosition());
+		do {
+			infoPanel.displayString("On what property would you like to build?");
+			commandPanel.inputString();
+			string = commandPanel.getString();
+			infoPanel.displayString("> " + string);
+			string = commandPanel.getString();
+			string = string.toLowerCase();
+			string = string.trim();
+			string = string.replaceAll("( )+", " ");
+			switch (string) {
+				case "old kent road" :
+					propertyId = 1;
+					inputValid = true;
+					
+					if(checkAllColor(player).contains("Brown")){
+						if(property.numberBuildings()==5){
+							//max num buildings
+							displayError(ERR_MAX_BUILDINGS);
+						}
+						else{
+							build(player, board, propertyId);
+						}
+						
+					}
+					else{
+						displayError(ERR_NOT_ALL_COLORS);
+					}
+					break;
+				case "whitechapel road" :
+					propertyId = 3;
+					inputValid = true;
+					if(checkAllColor(player).contains("Brown")){
+						if(property.numberBuildings()==5){
+							//max num buildings
+							displayError(ERR_MAX_BUILDINGS);
+						}
+						else{
+							build(player, board, propertyId);
+						}
+					}
+					else{
+						displayError(ERR_NOT_ALL_COLORS);
+					}
+					break;
+				case "the angel islington" :
+					propertyId = 6;
+					inputValid = true;
+					if(checkAllColor(player).contains("Cyan")){
+						if(property.numberBuildings()==5){
+							//max num buildings
+							displayError(ERR_MAX_BUILDINGS);
+						}
+						else{
+							build(player, board, propertyId);
+						}
+					}
+					else{
+						displayError(ERR_NOT_ALL_COLORS);
+					}
+					break;
+				case "euston road" :
+					propertyId = 8;
+					inputValid = true;
+					if(checkAllColor(player).contains("Cyan")){
+						if(property.numberBuildings()==5){
+							//max num buildings
+							displayError(ERR_MAX_BUILDINGS);
+						}
+						else{
+							build(player, board, propertyId);
+						}
+					}
+					else{
+						displayError(ERR_NOT_ALL_COLORS);
+					}
+					break;
+				case "pentonville road" :
+					propertyId = 9;
+					inputValid = true;
+					if(checkAllColor(player).contains("Cyan")){
+						if(property.numberBuildings()==5){
+							//max num buildings
+							displayError(ERR_MAX_BUILDINGS);
+						}
+						else{
+							build(player, board, propertyId);
+						}
+					}
+					else{
+						displayError(ERR_NOT_ALL_COLORS);
+					}
+					break;
+				case "pall mall" :
+					propertyId = 11;
+					inputValid = true;
+					if(checkAllColor(player).contains("Pink")){
+						if(property.numberBuildings()==5){
+							//max num buildings
+							displayError(ERR_MAX_BUILDINGS);
+						}
+						else{
+							build(player, board, propertyId);
+						}
+					}
+					else{
+						displayError(ERR_NOT_ALL_COLORS);
+					}
+					break;
+				case "whitehall" :
+					propertyId = 13;
+					inputValid = true;
+					if(checkAllColor(player).contains("Pink")){
+						if(property.numberBuildings()==5){
+							//max num buildings
+							displayError(ERR_MAX_BUILDINGS);
+						}
+						else{
+							build(player, board, propertyId);
+						}
+					}
+					else{
+						displayError(ERR_NOT_ALL_COLORS);
+					}
+					break;
+				case "northumberland avenue" :
+					propertyId = 14;
+					inputValid = true;
+					if(checkAllColor(player).contains("Pink")){
+						if(property.numberBuildings()==5){
+							//max num buildings
+							displayError(ERR_MAX_BUILDINGS);
+						}
+						else{
+							build(player, board, propertyId);
+						}
+					}
+					else{
+						displayError(ERR_NOT_ALL_COLORS);
+					}
+					break;
+				case "bow street" :
+					propertyId = 16;
+					inputValid = true;
+					if(checkAllColor(player).contains("Orange")){
+						if(property.numberBuildings()==5){
+							//max num buildings
+							displayError(ERR_MAX_BUILDINGS);
+						}
+						else{
+							build(player, board, propertyId);
+						}
+					}
+					else{
+						displayError(ERR_NOT_ALL_COLORS);
+					}
+					break;
+				case "marlborough street" :
+					propertyId = 18;
+					inputValid = true;
+					if(checkAllColor(player).contains("Orange")){
+						if(property.numberBuildings()==5){
+							//max num buildings
+							displayError(ERR_MAX_BUILDINGS);
+						}
+						else{
+							build(player, board, propertyId);
+						}
+					}
+					else{
+						displayError(ERR_NOT_ALL_COLORS);
+					}
+					break;
+				case "vine street" :
+					propertyId = 19;
+					inputValid = true;
+					if(checkAllColor(player).contains("Orange")){
+						if(property.numberBuildings()==5){
+							//max num buildings
+							displayError(ERR_MAX_BUILDINGS);
+						}
+						else{
+							build(player, board, propertyId);
+						}
+					}
+					else{
+						displayError(ERR_NOT_ALL_COLORS);
+					}
+					break;
+				case "strand" :
+					propertyId = 21;
+					inputValid = true;
+					if(checkAllColor(player).contains("Red")){
+						if(property.numberBuildings()==5){
+							//max num buildings
+							displayError(ERR_MAX_BUILDINGS);
+						}
+						else{
+							build(player, board, propertyId);
+						}
+					}
+					else{
+						displayError(ERR_NOT_ALL_COLORS);
+					}
+					break;
+				case "fleet street" :
+					propertyId = 23;
+					inputValid = true;
+					if(checkAllColor(player).contains("Red")){
+						if(property.numberBuildings()==5){
+							//max num buildings
+							displayError(ERR_MAX_BUILDINGS);
+						}
+						else{
+							build(player, board, propertyId);
+						}
+					}
+					else{
+						displayError(ERR_NOT_ALL_COLORS);
+					}
+					break;
+				case "trafalgar square" :
+					propertyId = 24;
+					inputValid = true;
+					if(checkAllColor(player).contains("Red")){
+						if(property.numberBuildings()==5){
+							//max num buildings
+							displayError(ERR_MAX_BUILDINGS);
+						}
+						else{
+							build(player, board, propertyId);
+						}
+					}
+					else{
+						displayError(ERR_NOT_ALL_COLORS);
+					}
+					break;
+				case "leicester square" :
+					propertyId = 26;
+					inputValid = true;
+					if(checkAllColor(player).contains("Yellow")){
+						if(property.numberBuildings()==5){
+							//max num buildings
+							displayError(ERR_MAX_BUILDINGS);
+						}
+						else{
+							build(player, board, propertyId);
+						}
+					}
+					else{
+						displayError(ERR_NOT_ALL_COLORS);
+					}
+					break;
+				case "coventry street" :
+					propertyId = 27;
+					inputValid = true;
+					if(checkAllColor(player).contains("Yellow")){
+						if(property.numberBuildings()==5){
+							//max num buildings
+							displayError(ERR_MAX_BUILDINGS);
+						}
+						else{
+							build(player, board, propertyId);
+						}
+					}
+					else{
+						displayError(ERR_NOT_ALL_COLORS);
+					}
+					break;
+				case "piccadilly" :
+					propertyId = 29;
+					inputValid = true;
+					if(checkAllColor(player).contains("Yellow")){
+						if(property.numberBuildings()==5){
+							//max num buildings
+							displayError(ERR_MAX_BUILDINGS);
+						}
+						else{
+							build(player, board, propertyId);
+						}
+					}
+					else{
+						displayError(ERR_NOT_ALL_COLORS);
+					}
+					break;
+				case "regent street" :
+					propertyId = 31;
+					inputValid = true;
+					if(checkAllColor(player).contains("Green")){
+						if(property.numberBuildings()==5){
+							//max num buildings
+							displayError(ERR_MAX_BUILDINGS);
+						}
+						else{
+							build(player, board, propertyId);
+						}
+					}
+					else{
+						displayError(ERR_NOT_ALL_COLORS);
+					}
+					break;
+				case "oxford street" :
+					propertyId = 32;
+					inputValid = true;
+					if(checkAllColor(player).contains("Green")){
+						if(property.numberBuildings()==5){
+							//max num buildings
+							displayError(ERR_MAX_BUILDINGS);
+						}
+						else{
+							build(player, board, propertyId);
+						}
+					}
+					else{
+						displayError(ERR_NOT_ALL_COLORS);
+					}
+					break;
+				case "bond street" :
+					propertyId = 34;
+					inputValid = true;
+					if(checkAllColor(player).contains("Green")){
+						if(property.numberBuildings()==5){
+							//max num buildings
+							displayError(ERR_MAX_BUILDINGS);
+						}
+						else{
+							build(player, board, propertyId);
+						}
+					}
+					else{
+						displayError(ERR_NOT_ALL_COLORS);
+					}
+					break;
+				case "park lane" :
+					propertyId = 37;
+					inputValid = true;
+					if(checkAllColor(player).contains("Blue")){
+						if(property.numberBuildings()==5){
+							//max num buildings
+							displayError(ERR_MAX_BUILDINGS);
+						}
+						else{
+							build(player, board, propertyId);
+						}
+					}
+					else{
+						displayError(ERR_NOT_ALL_COLORS);
+					}
+					break;
+				case "mayfair" :
+					propertyId = 39;
+					inputValid = true;
+					if(checkAllColor(player).contains("Blue")){
+						if(property.numberBuildings()==5){
+							//max num buildings
+							displayError(ERR_MAX_BUILDINGS);
+						}
+						else{
+							build(player, board, propertyId);
+						}
+					}
+					else{
+						displayError(ERR_NOT_ALL_COLORS);
+					}
+					break;
+				default:
+					inputValid = false;
+				}
+			if (!inputValid) {
+				displayError(ERR_CANNOT_BUILD_ON);
+			}
+		} while (!inputValid);
+		if (commandId == CMD_DONE) {
+			done = true;
+		} else {
+			done = false;
+		}		
+		return;
 	}
 	
 	
