@@ -125,7 +125,10 @@ public class Monopoly {
 										ui.displayTransaction(currPlayer, owner);
 										rentPaid = true;	
 										rentOwed = false;
-								        } else {//if they dont have enough money then run bankrupt command		
+								        } 
+		
+									
+										else {//if they dont have enough money then run bankrupt command		
   									    for(Property pr : currPlayer.getProperties())//for each property remove the owner
   								        {
   								            pr.removeOwner();
@@ -137,8 +140,22 @@ public class Monopoly {
 										rentOwed = false;
 										turnFinished = true;
 										
-									} 
-								} else {
+										}
+									
+									for(Property pr : currPlayer.getProperties())//when property mortgage, suspend rent.
+								        {
+								            pr.suspendRent();
+								        }
+									ui.displayMortgage(currPlayer, board);  //
+									currPlayer.lost();
+									rentPaid = false;
+									rentOwed = false;
+									turnFinished = true;
+								
+				
+								} 
+								
+								else {
 									ui.displayError(UI.ERR_RENT_ALREADY_PAID);									
 								}
 							} else {
@@ -151,6 +168,8 @@ public class Monopoly {
 						ui.displayError(UI.ERR_NOT_A_PROPERTY);
 					}
 					break;
+					
+					
 				case UI.CMD_BUY :
 					if (board.isProperty(currPlayer.getPosition())) {
 						Property property = board.getProperty(currPlayer.getPosition());
@@ -167,6 +186,8 @@ public class Monopoly {
 							ui.displayError(UI.ERR_IS_OWNED);
 						}
 					}
+					
+					
 					else if (board.isTransport(currPlayer.getPosition())) {
 						Transport transport = board.getTransport(currPlayer.getPosition());
 						if (!transport.isOwned()) {
@@ -201,10 +222,16 @@ public class Monopoly {
 					else {
 						ui.displayError(UI.ERR_NOT_A_PROPERTY);
 					}
+					
+					
+		
 					break;
+				
+		
 				case UI.CMD_BALANCE :
 					ui.displayBalance(currPlayer);
 					break;
+					
 				case UI.CMD_PROPERTY :
 					ui.displayProperty(currPlayer);
 					break;
@@ -215,6 +242,66 @@ public class Monopoly {
 				case UI.CMD_BUILD :
 					ui.whichProperty(currPlayer, board);
 					break;
+					
+				case UI.CMD_MORTGAGE : // mortgage option.
+					
+					if(board.isMortgaged(currPlayer.getPosition())) {
+						Property p = board.getProperty(currPlayer.getPosition());
+						if(!p.isOwned()){
+							if(currPlayer.getBalance() >=p.getValue()) 
+							{
+								currPlayer.doTransaction(-p.getValue()/2);
+								ui.displayBankTransaction(currPlayer);
+								currPlayer.boughtProperty(p);
+								ui.displayMortgage(currPlayer,board);
+							}
+							
+//							if (board.isProperty(currPlayer.getPosition())) {
+//								Property property = board.getProperty(currPlayer.getPosition());
+//								if (property.isOwned()) {
+//									if (!property.getOwner().equals(currPlayer)) {
+//										if (!rentPaid) {
+//											if (currPlayer.getBalance()>=property.getRent()) 
+//											{
+//												Player owner = property.getOwner();
+//												currPlayer.doTransaction(-property.getRent());
+//												owner.doTransaction(+property.getRent());
+//												ui.displayTransaction(currPlayer, owner);
+//												rentPaid = false;	
+//												rentOwed = false;
+//										        } 
+//											
+//											else {		
+//		  									    for(Property pr : currPlayer.getProperties()) {
+//	  	
+//		  								            pr.suspendRent();
+//		  								        }
+//		  									    
+//												ui.displayMortgage(currPlayer, board); 
+//												currPlayer.lost();
+//												rentPaid = false;
+//												rentOwed = false;
+//												turnFinished = true;
+//											}
+										
+												
+										} else {
+								ui.displayError(UI.ERR_INSUFFICIENT_FUNDS);
+							
+						}
+							} else {
+							ui.displayError(UI.ERR_MORTG_OWNED);
+						}
+					
+			///	else {
+				//			ui.displayError(UI.ERR_IS_OWNED);
+				//		}
+							
+						
+					
+							break;
+							
+					
 				case UI.CMD_DONE :
 					if (rollDone) {
 						if (!rentOwed || (rentOwed && rentPaid)) {
@@ -273,3 +360,4 @@ public class Monopoly {
 	}
 
 }
+
