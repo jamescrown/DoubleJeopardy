@@ -22,6 +22,7 @@ public class UI {
 	public static final int CMD_HELP = 9;
 	//build
 	public static final int CMD_BUILD = 10;
+	public static final int CMD_MORTGAGE = 11; // mortgage
 	
 	public static final int ERR_SYNTAX = 0;
 	public static final int ERR_DOUBLE_ROLL = 1;
@@ -39,6 +40,7 @@ public class UI {
 	public static final int ERR_CANNOT_BUILD_ON = 11;
 	//max num buildings
 	public static final int ERR_MAX_BUILDINGS = 12;
+	public static final int ERR_MORTG_OWNED = 13;
 	
 	private final String[] errorMessages = {
 		"Error: Not a valid command.",
@@ -54,7 +56,8 @@ public class UI {
 		//errors for building
 		"Error: You don't own all the properties in this color.",
 		"Error: You cannot build on this property type.",
-		"Error: This property already holds the max number of buildings."
+		"Error: This property already holds the max number of buildings.",
+		"Error: This property is already mortgaged. "
 		
 	};
 	
@@ -156,6 +159,12 @@ public class UI {
 					commandId = CMD_BUILD;
 					inputValid = true;
 					break;
+	
+				case "mortgage":   // mortgage option.
+					commandId = CMD_MORTGAGE;
+					inputValid = true;
+					break;
+					
 				default:
 					inputValid = false;
 				}
@@ -235,7 +244,7 @@ public class UI {
 	}
 	
 	public void displayCommandHelp () {
-		infoPanel.displayString("Available commands: roll, pay rent, buy, property, build, balance, done, quit. ");
+		infoPanel.displayString("Available commands: roll, pay rent, buy, mortgage, property, build, balance, done, quit. ");
 		return;
 	}
 	
@@ -246,11 +255,11 @@ public class UI {
 		property.setBuilding();
 		if(property.numberBuildings() < 5){
 			infoPanel.displayString("This property now has " + property.numberBuildings() + " houses.");
-			infoPanel.displayString("Rent is now £" + property.getRent());
+			infoPanel.displayString("Rent is now Â£" + property.getRent());
 		}
 		else if(property.numberBuildings() == 5){
 			infoPanel.displayString("This property now has 1 hotel.");
-			infoPanel.displayString("Rent is now £" + property.getRent());
+			infoPanel.displayString("Rent is now Â£" + property.getRent());
 		}
 		
 		return;
@@ -280,6 +289,7 @@ public class UI {
 		ArrayList<Property> propertyList = player.getProperties();
 		ArrayList<String> allColor = new ArrayList<>();
 		
+		
 		if (propertyList.size() == 0) {
 			infoPanel.displayString(player + " owns no property.");
 		} else {
@@ -301,6 +311,8 @@ public class UI {
 			if(!allColor.isEmpty()){	
 				infoPanel.displayString("You own all the properties of the following colors: " + allColor);
 			}
+			
+		
 			
 		}
 	}
@@ -327,6 +339,8 @@ public class UI {
 		return allColor;
 		
 	}
+	
+
 	
 	public void displaySquare (Player player, Board board) {
 		infoPanel.displayString(player + " arrives at " + board.getSquare(player.getPosition()).getName() + ".");
@@ -368,6 +382,25 @@ public class UI {
 			}
 		}
 		
+		
+	
+		return;
+	}
+	
+
+	
+	public void displayMortgage(Player player, Board board) { // DISPLAY THE MORTGAGE 
+		if(board.isMortgaged(player.getPosition()))	 //  else if... property mortgaged.	
+		{
+		     Property property = board.getProperty(player.getPosition());
+		      if(property.isMortgaged(player))
+		      {
+			  	 infoPanel.displayString(player +  "has mortgaged "  + player.getLatestProperty() + "." ); // recognize property.
+			    	  
+			   } // therefore, suspend rent. 
+		}
+		
+	
 		return;
 	}
 	
@@ -790,7 +823,10 @@ public class UI {
 		}		
 		return;
 	}
+
+	
+
+	
 	
 	
 }
-
