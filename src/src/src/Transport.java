@@ -3,6 +3,7 @@ public class Transport extends Property{
 
 private boolean isOwned;
 private int value;
+private int mortgage[];
 private int rent[];
 private Player owner;
 private static String color;
@@ -27,6 +28,13 @@ public int getRent () {
 	//etc.
 	return rent[0];
 }
+public int getMortgage() { // gets the mortgage value.
+	//if own 1 return mortgage[0];
+	//if own 2 return rent[1];
+	//etc.
+	return mortgage[0];
+}
+	
 
 public boolean isOwned () {
 	return isOwned;
@@ -35,6 +43,12 @@ public boolean isOwned () {
 public void setOwner (Player inPlayer) {
 	owner = inPlayer;
 	isOwned = true;
+	return;
+}
+
+public void setOwnerMortgage (Player inPlayer) {
+	owner = inPlayer;
+	isOwned = false;
 	return;
 }
 
