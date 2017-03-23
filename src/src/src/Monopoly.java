@@ -142,17 +142,7 @@ public class Monopoly {
 										
 										}
 									
-									for(Property pr : currPlayer.getProperties())//when property mortgage, suspend rent.
-								        {
-								            pr.suspendRent();
-								        }
-									ui.displayMortgage(currPlayer, board);  //
-									currPlayer.lost();
-									rentPaid = false;
-									rentOwed = false;
-									turnFinished = true;
 								
-				
 								} 
 								
 								else {
@@ -242,65 +232,6 @@ public class Monopoly {
 				case UI.CMD_BUILD :
 					ui.whichProperty(currPlayer, board);
 					break;
-					
-				case UI.CMD_MORTGAGE : // mortgage option.
-					
-					if(board.isMortgaged(currPlayer.getPosition())) {
-						Property p = board.getProperty(currPlayer.getPosition());
-						if(!p.isOwned()){
-							if(currPlayer.getBalance() >=p.getValue()) 
-							{
-								currPlayer.doTransaction(-p.getValue()/2);
-								ui.displayBankTransaction(currPlayer);
-								currPlayer.boughtProperty(p);
-								ui.displayMortgage(currPlayer,board);
-							}
-							
-//							if (board.isProperty(currPlayer.getPosition())) {
-//								Property property = board.getProperty(currPlayer.getPosition());
-//								if (property.isOwned()) {
-//									if (!property.getOwner().equals(currPlayer)) {
-//										if (!rentPaid) {
-//											if (currPlayer.getBalance()>=property.getRent()) 
-//											{
-//												Player owner = property.getOwner();
-//												currPlayer.doTransaction(-property.getRent());
-//												owner.doTransaction(+property.getRent());
-//												ui.displayTransaction(currPlayer, owner);
-//												rentPaid = false;	
-//												rentOwed = false;
-//										        } 
-//											
-//											else {		
-//		  									    for(Property pr : currPlayer.getProperties()) {
-//	  	
-//		  								            pr.suspendRent();
-//		  								        }
-//		  									    
-//												ui.displayMortgage(currPlayer, board); 
-//												currPlayer.lost();
-//												rentPaid = false;
-//												rentOwed = false;
-//												turnFinished = true;
-//											}
-										
-												
-										} else {
-								ui.displayError(UI.ERR_INSUFFICIENT_FUNDS);
-							
-						}
-							} else {
-							ui.displayError(UI.ERR_MORTG_OWNED);
-						}
-					
-			///	else {
-				//			ui.displayError(UI.ERR_IS_OWNED);
-				//		}
-							
-						
-					
-							break;
-							
 					
 				case UI.CMD_DONE :
 					if (rollDone) {
