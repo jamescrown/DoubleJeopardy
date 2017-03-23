@@ -397,12 +397,14 @@ public class UI {
 		      {
 			  	 infoPanel.displayString(player +  "has mortgaged "  + player.getLatestProperty() + "." ); // recognize property.
 			    	  
-			   } // therefore, suspend rent. 
+			   } 
+			
+			// therefore, suspend rent.... 
 		}
-		
-	
+
 		return;
 	}
+	
 	
 	public void displayAssets (Player player) {
 		infoPanel.displayString(player + " has assets of " + player.getAssets() + CURRENCY);
