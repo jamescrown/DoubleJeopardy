@@ -6,14 +6,16 @@ public class Property extends Square {
 	private int rent[];
 	private Player owner;
 	private String color;
+	private int housePrice;
 	int i = 0;
 	
-	Property (String name, int value, int[] rent, String color) {
+	Property (String name, int value, int[] rent, String color, int housePrice) {
 		super(name);
 		this.value = value;
 		this.rent = rent;
 		isOwned = false;
 		this.color = color;
+		this.housePrice = housePrice;
 		return;
 	}
 	
@@ -53,6 +55,9 @@ public class Property extends Square {
 	}
 	public void removeOwner (){// remove the owner of said property . for example when bankrupt
 		isOwned = false;
+	}
+	public int getPrice(){
+		return housePrice;
 	}
 }
 
