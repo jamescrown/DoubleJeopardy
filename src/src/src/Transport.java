@@ -7,6 +7,7 @@ private int mortgage[];
 private int rent[];
 private Player owner;
 private static String color;
+int numberOf = 0;
 
 Transport (String name, int value, int[] rent) {
 	super(name, value, rent, color);
@@ -23,18 +24,25 @@ public int getValue () {
 }
 
 public int getRent () {
-	//if own 1 return rent[0];
-	//if own 2 return rent[1];
-	//etc.
-	return rent[0];
+	return rent[numberOf];
 }
+
 public int getMortgage() { // gets the mortgage value.
 	//if own 1 return mortgage[0];
 	//if own 2 return mortgage[1];
 	//etc.
 	return mortgage[0];
 }
-	
+
+//call this when buying
+public void ownMultiples(int i){
+	numberOf = i-1;
+	return ;
+}
+
+public int numberOwned(){
+	return numberOf+1;
+}
 
 public boolean isOwned () {
 	return isOwned;

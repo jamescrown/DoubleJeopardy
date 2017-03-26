@@ -97,9 +97,9 @@ public class Player {
 	}
 	
 	//status if they have lost remove all funds from account and set status to false , representing bankruptcy
-	public void lost () {
-		status=false;
-		balance = 0;
-	}
+	 public void lost () {
+	 		status=false;
+	 		balance = 0;
+	 }
 }
 
