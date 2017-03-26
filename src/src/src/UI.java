@@ -464,11 +464,17 @@ public class UI {
 	}
 
 	public void whichProperty(Player player, Board board, String buildOrDemolish) {
-
+		ArrayList<Property> propertyList = player.getProperties();
 		boolean inputValid = false;
 		Property property = board.getProperty(player.getPosition());
 		do {
-			infoPanel.displayString("On what property would you like to build/demolish a building?");
+			if (buildOrDemolish == "mortgage"){
+				infoPanel.displayString("Which property would you like to mortgage?");
+			}
+			else{
+				infoPanel.displayString("On what property would you like to build/demolish a building?");
+			
+			}
 			commandPanel.inputString();
 			string = commandPanel.getString();
 			infoPanel.displayString("> " + string);
@@ -481,6 +487,10 @@ public class UI {
 					propertyId = 1;
 					inputValid = true;
 					
+					if(buildOrDemolish == "mortgage") //&& owned by player)
+						{
+							//mortgage;
+						}
 					if(checkAllColor(player).contains("Brown")){
 						if(buildOrDemolish == "build" && property.numberBuildings()==5){
 							//max num buildings
