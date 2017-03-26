@@ -67,7 +67,6 @@ public class Player {
 		return;
 	}
 	
-	
 	public void boughtProperty (Property property) {
 		property.setOwner(this);
 		properties.add(property);
@@ -109,9 +108,9 @@ public class Player {
 	 		status=false;
 	 		balance = 0;
 	 }
-	
-	public void mortgage() {
-		status=true;
-	}
+	 
+	 public void mortgage() {
+			status=true;
+		}
 }
 
