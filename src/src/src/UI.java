@@ -247,18 +247,27 @@ public class UI {
 	}
 	
 	public void build(Player player, Board board, int propertyId){
-		
 		Property property = board.getProperty(propertyId);
-		//builds property
-		property.setBuilding();
-		if(property.numberBuildings() < 5){
-			infoPanel.displayString("This property now has " + property.numberBuildings() + " houses.");
-			infoPanel.displayString("Rent is now £" + property.getRent());
+		
+		if (player.getBalance() >= property.getPrice()) {				
+			player.doTransaction(-property.getPrice());
+		
+			//builds property
+			property.setBuilding();
+			if(property.numberBuildings() < 5){
+				infoPanel.displayString("This property now has " + property.numberBuildings() + " houses.");
+				infoPanel.displayString("Rent is now £" + property.getRent());
+			}
+			else if(property.numberBuildings() == 5){
+				infoPanel.displayString("This property now has 1 hotel.");
+				infoPanel.displayString("Rent is now £" + property.getRent());
+			}
 		}
-		else if(property.numberBuildings() == 5){
-			infoPanel.displayString("This property now has 1 hotel.");
-			infoPanel.displayString("Rent is now £" + property.getRent());
+		else{
+			//insufficient funds error
+			displayError(ERR_INSUFFICIENT_FUNDS);
 		}
+		
 		
 		return;
 	}

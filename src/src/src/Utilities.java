@@ -9,7 +9,7 @@ private static String color;
 int numberOf = 0;
 
 Utilities (String name, int value, int[] rent) {
-	super(name, value, rent, color);
+	super(name, value, rent, color, value);
 	this.value = value;
 	this.rent = rent;
 	isOwned = false;
