@@ -242,7 +242,7 @@ public class UI {
 	}
 	
 	public void displayCommandHelp () {
-		infoPanel.displayString("Available commands: roll, pay rent, buy, property, build, balance, done, quit. ");
+		infoPanel.displayString("Available commands: roll, pay rent, buy, mortgage, property, build, balance, done, quit. ");
 		return;
 	}
 	
@@ -256,11 +256,11 @@ public class UI {
 			property.setBuilding();
 			if(property.numberBuildings() < 5){
 				infoPanel.displayString("This property now has " + property.numberBuildings() + " houses.");
-				infoPanel.displayString("Rent is now £" + property.getRent());
+				infoPanel.displayString("Rent is now Â£" + property.getRent());
 			}
 			else if(property.numberBuildings() == 5){
 				infoPanel.displayString("This property now has 1 hotel.");
-				infoPanel.displayString("Rent is now £" + property.getRent());
+				infoPanel.displayString("Rent is now Â£" + property.getRent());
 			}
 		}
 		else{
@@ -391,16 +391,17 @@ public class UI {
 		if(board.isMortgaged(player.getPosition()))	 //  else if... property mortgaged.	
 		{
 		     Property property = board.getProperty(player.getPosition());
-		      //if(property.isMortgaged(player))
+		    if(property.isMortgaged(player))
 		      {
 			  	 infoPanel.displayString(player +  "has mortgaged "  + player.getLatestProperty() + "." ); // recognize property.
 			    	  
-			   } // therefore, suspend rent. 
+			   } //  another player lands on property, therefore, suspend rent. 
+		      
+		      else {
+		    	  infoPanel.displayString(player + "The property has been mortgaged. Rent is suspended. " );    
+		      }
+		     
 		}
-		
-	
-		return;
-	}
 	
 	public void displayAssets (Player player) {
 		infoPanel.displayString(player + " has assets of " + player.getAssets() + CURRENCY);
