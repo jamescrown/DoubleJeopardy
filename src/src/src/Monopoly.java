@@ -274,7 +274,11 @@ public class Monopoly {
 					break;
 				//build option
 				case UI.CMD_BUILD :
-					ui.whichProperty(currPlayer, board);
+					ui.whichProperty(currPlayer, board, "build");
+					ui.displayBankTransaction(currPlayer);
+					break;
+				case UI.CMD_DEMOLISH :
+					ui.whichProperty(currPlayer, board, "demolish");
 					ui.displayBankTransaction(currPlayer);
 					break;
 				case UI.CMD_MORTGAGE : // mortgage option.

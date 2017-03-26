@@ -23,6 +23,8 @@ public class UI {
 	//build
 	public static final int CMD_BUILD = 10;
 	public static final int CMD_MORTGAGE = 11;
+	//sell
+	public static final int CMD_DEMOLISH = 12;
 	
 	public static final int ERR_SYNTAX = 0;
 	public static final int ERR_DOUBLE_ROLL = 1;
@@ -41,6 +43,7 @@ public class UI {
 	//max num buildings
 	public static final int ERR_MAX_BUILDINGS = 12;
 	public static final int ERR_MORTG_OWNED = 13;
+	public static final int ERR_NO_BUILDINGS = 14;
 	
 	private final String[] errorMessages = {
 		"Error: Not a valid command.",
@@ -57,7 +60,8 @@ public class UI {
 		"Error: You don't own all the properties in this color.",
 		"Error: You cannot build on this property type.",
 		"Error: This property already holds the max number of buildings.",
-		"Error: This property is already mortgaged."
+		"Error: This property is already mortgaged.",
+		"Error: There are no properties to demolish"
 		
 	};
 	
@@ -163,6 +167,11 @@ public class UI {
 					commandId = CMD_MORTGAGE;
 					inputValid = true;
 					break;
+				//sell property option
+				case "demolish":
+					commandId = CMD_DEMOLISH;
+					inputValid = true;
+					break;
 				default:
 					inputValid = false;
 				}
@@ -242,7 +251,7 @@ public class UI {
 	}
 	
 	public void displayCommandHelp () {
-		infoPanel.displayString("Available commands: roll, pay rent, buy, property, build, balance, done, quit. ");
+		infoPanel.displayString("Available commands: roll, pay rent, buy, property, build, demolish, balance, done, quit. ");
 		return;
 	}
 	
@@ -270,6 +279,21 @@ public class UI {
 		
 		
 		return;
+	}
+	
+	public void demolish(Player player, Board board, int propertyId){
+		Property property = board.getProperty(propertyId);
+		
+		player.doTransaction(+(property.getPrice()/2));
+		
+		//demolish
+		property.demolishBuilding();
+		infoPanel.displayString("This property now has " + property.numberBuildings() + " houses.");
+		infoPanel.displayString("Rent is now £" + property.getRent());
+		
+		return;
+		
+		
 	}
 	
 	public void displayBalance (Player player) {
@@ -391,7 +415,7 @@ public class UI {
 		if(board.isMortgaged(player.getPosition()))	 //  else if... property mortgaged.	
 		{
 		     Property property = board.getProperty(player.getPosition());
-		      //if(property.isMortgaged(player))
+		      if(property.isMortgaged(player))
 		      {
 			  	 infoPanel.displayString(player +  "has mortgaged "  + player.getLatestProperty() + "." ); // recognize property.
 			    	  
@@ -439,12 +463,12 @@ public class UI {
 		return i;
 	}
 
-	public void whichProperty(Player player, Board board) {
+	public void whichProperty(Player player, Board board, String buildOrDemolish) {
 
 		boolean inputValid = false;
 		Property property = board.getProperty(player.getPosition());
 		do {
-			infoPanel.displayString("On what property would you like to build?");
+			infoPanel.displayString("On what property would you like to build/demolish a building?");
 			commandPanel.inputString();
 			string = commandPanel.getString();
 			infoPanel.displayString("> " + string);
@@ -458,12 +482,22 @@ public class UI {
 					inputValid = true;
 					
 					if(checkAllColor(player).contains("Brown")){
-						if(property.numberBuildings()==5){
+						if(buildOrDemolish == "build" && property.numberBuildings()==5){
 							//max num buildings
 							displayError(ERR_MAX_BUILDINGS);
 						}
+						 if(buildOrDemolish == "demolish" && property.numberBuildings()==0){
+							//no buildings to sell
+							displayError(ERR_NO_BUILDINGS);
+						}
 						else{
-							build(player, board, propertyId);
+							if (buildOrDemolish == "build"){
+								build(player, board, propertyId);
+							}
+							else{
+								demolish(player, board, propertyId);
+							}
+							
 						}
 						
 					}
@@ -475,12 +509,22 @@ public class UI {
 					propertyId = 3;
 					inputValid = true;
 					if(checkAllColor(player).contains("Brown")){
-						if(property.numberBuildings()==5){
+						if(buildOrDemolish == "build" && property.numberBuildings()==5){
 							//max num buildings
 							displayError(ERR_MAX_BUILDINGS);
 						}
+						 if(buildOrDemolish == "demolish" && property.numberBuildings()==0){
+							//no buildings to sell
+							displayError(ERR_NO_BUILDINGS);
+						}
 						else{
-							build(player, board, propertyId);
+							if (buildOrDemolish == "build"){
+								build(player, board, propertyId);
+							}
+							else{
+								demolish(player, board, propertyId);
+							}
+							
 						}
 					}
 					else{
@@ -491,12 +535,22 @@ public class UI {
 					propertyId = 6;
 					inputValid = true;
 					if(checkAllColor(player).contains("Cyan")){
-						if(property.numberBuildings()==5){
+						if(buildOrDemolish == "build" && property.numberBuildings()==5){
 							//max num buildings
 							displayError(ERR_MAX_BUILDINGS);
 						}
+						 if(buildOrDemolish == "demolish" && property.numberBuildings()==0){
+							//no buildings to sell
+							displayError(ERR_NO_BUILDINGS);
+						}
 						else{
-							build(player, board, propertyId);
+							if (buildOrDemolish == "build"){
+								build(player, board, propertyId);
+							}
+							else{
+								demolish(player, board, propertyId);
+							}
+							
 						}
 					}
 					else{
@@ -507,12 +561,22 @@ public class UI {
 					propertyId = 8;
 					inputValid = true;
 					if(checkAllColor(player).contains("Cyan")){
-						if(property.numberBuildings()==5){
+						if(buildOrDemolish == "build" && property.numberBuildings()==5){
 							//max num buildings
 							displayError(ERR_MAX_BUILDINGS);
 						}
+						 if(buildOrDemolish == "demolish" && property.numberBuildings()==0){
+							//no buildings to sell
+							displayError(ERR_NO_BUILDINGS);
+						}
 						else{
-							build(player, board, propertyId);
+							if (buildOrDemolish == "build"){
+								build(player, board, propertyId);
+							}
+							else{
+								demolish(player, board, propertyId);
+							}
+							
 						}
 					}
 					else{
@@ -523,12 +587,22 @@ public class UI {
 					propertyId = 9;
 					inputValid = true;
 					if(checkAllColor(player).contains("Cyan")){
-						if(property.numberBuildings()==5){
+						if(buildOrDemolish == "build" && property.numberBuildings()==5){
 							//max num buildings
 							displayError(ERR_MAX_BUILDINGS);
 						}
+						 if(buildOrDemolish == "demolish" && property.numberBuildings()==0){
+							//no buildings to sell
+							displayError(ERR_NO_BUILDINGS);
+						}
 						else{
-							build(player, board, propertyId);
+							if (buildOrDemolish == "build"){
+								build(player, board, propertyId);
+							}
+							else{
+								demolish(player, board, propertyId);
+							}
+							
 						}
 					}
 					else{
@@ -539,12 +613,22 @@ public class UI {
 					propertyId = 11;
 					inputValid = true;
 					if(checkAllColor(player).contains("Pink")){
-						if(property.numberBuildings()==5){
+						if(buildOrDemolish == "build" && property.numberBuildings()==5){
 							//max num buildings
 							displayError(ERR_MAX_BUILDINGS);
 						}
+						 if(buildOrDemolish == "demolish" && property.numberBuildings()==0){
+							//no buildings to sell
+							displayError(ERR_NO_BUILDINGS);
+						}
 						else{
-							build(player, board, propertyId);
+							if (buildOrDemolish == "build"){
+								build(player, board, propertyId);
+							}
+							else{
+								demolish(player, board, propertyId);
+							}
+							
 						}
 					}
 					else{
@@ -555,12 +639,22 @@ public class UI {
 					propertyId = 13;
 					inputValid = true;
 					if(checkAllColor(player).contains("Pink")){
-						if(property.numberBuildings()==5){
+						if(buildOrDemolish == "build" && property.numberBuildings()==5){
 							//max num buildings
 							displayError(ERR_MAX_BUILDINGS);
 						}
+						 if(buildOrDemolish == "demolish" && property.numberBuildings()==0){
+							//no buildings to sell
+							displayError(ERR_NO_BUILDINGS);
+						}
 						else{
-							build(player, board, propertyId);
+							if (buildOrDemolish == "build"){
+								build(player, board, propertyId);
+							}
+							else{
+								demolish(player, board, propertyId);
+							}
+							
 						}
 					}
 					else{
@@ -571,12 +665,22 @@ public class UI {
 					propertyId = 14;
 					inputValid = true;
 					if(checkAllColor(player).contains("Pink")){
-						if(property.numberBuildings()==5){
+						if(buildOrDemolish == "build" && property.numberBuildings()==5){
 							//max num buildings
 							displayError(ERR_MAX_BUILDINGS);
 						}
+						 if(buildOrDemolish == "demolish" && property.numberBuildings()==0){
+							//no buildings to sell
+							displayError(ERR_NO_BUILDINGS);
+						}
 						else{
-							build(player, board, propertyId);
+							if (buildOrDemolish == "build"){
+								build(player, board, propertyId);
+							}
+							else{
+								demolish(player, board, propertyId);
+							}
+							
 						}
 					}
 					else{
@@ -587,12 +691,22 @@ public class UI {
 					propertyId = 16;
 					inputValid = true;
 					if(checkAllColor(player).contains("Orange")){
-						if(property.numberBuildings()==5){
+						if(buildOrDemolish == "build" && property.numberBuildings()==5){
 							//max num buildings
 							displayError(ERR_MAX_BUILDINGS);
 						}
+						 if(buildOrDemolish == "demolish" && property.numberBuildings()==0){
+							//no buildings to sell
+							displayError(ERR_NO_BUILDINGS);
+						}
 						else{
-							build(player, board, propertyId);
+							if (buildOrDemolish == "build"){
+								build(player, board, propertyId);
+							}
+							else{
+								demolish(player, board, propertyId);
+							}
+							
 						}
 					}
 					else{
@@ -603,12 +717,22 @@ public class UI {
 					propertyId = 18;
 					inputValid = true;
 					if(checkAllColor(player).contains("Orange")){
-						if(property.numberBuildings()==5){
+						if(buildOrDemolish == "build" && property.numberBuildings()==5){
 							//max num buildings
 							displayError(ERR_MAX_BUILDINGS);
 						}
+						 if(buildOrDemolish == "demolish" && property.numberBuildings()==0){
+							//no buildings to sell
+							displayError(ERR_NO_BUILDINGS);
+						}
 						else{
-							build(player, board, propertyId);
+							if (buildOrDemolish == "build"){
+								build(player, board, propertyId);
+							}
+							else{
+								demolish(player, board, propertyId);
+							}
+							
 						}
 					}
 					else{
@@ -619,12 +743,22 @@ public class UI {
 					propertyId = 19;
 					inputValid = true;
 					if(checkAllColor(player).contains("Orange")){
-						if(property.numberBuildings()==5){
+						if(buildOrDemolish == "build" && property.numberBuildings()==5){
 							//max num buildings
 							displayError(ERR_MAX_BUILDINGS);
 						}
+						 if(buildOrDemolish == "demolish" && property.numberBuildings()==0){
+							//no buildings to sell
+							displayError(ERR_NO_BUILDINGS);
+						}
 						else{
-							build(player, board, propertyId);
+							if (buildOrDemolish == "build"){
+								build(player, board, propertyId);
+							}
+							else{
+								demolish(player, board, propertyId);
+							}
+							
 						}
 					}
 					else{
@@ -635,12 +769,22 @@ public class UI {
 					propertyId = 21;
 					inputValid = true;
 					if(checkAllColor(player).contains("Red")){
-						if(property.numberBuildings()==5){
+						if(buildOrDemolish == "build" && property.numberBuildings()==5){
 							//max num buildings
 							displayError(ERR_MAX_BUILDINGS);
 						}
+						 if(buildOrDemolish == "demolish" && property.numberBuildings()==0){
+							//no buildings to sell
+							displayError(ERR_NO_BUILDINGS);
+						}
 						else{
-							build(player, board, propertyId);
+							if (buildOrDemolish == "build"){
+								build(player, board, propertyId);
+							}
+							else{
+								demolish(player, board, propertyId);
+							}
+							
 						}
 					}
 					else{
@@ -651,12 +795,22 @@ public class UI {
 					propertyId = 23;
 					inputValid = true;
 					if(checkAllColor(player).contains("Red")){
-						if(property.numberBuildings()==5){
+						if(buildOrDemolish == "build" && property.numberBuildings()==5){
 							//max num buildings
 							displayError(ERR_MAX_BUILDINGS);
 						}
+						 if(buildOrDemolish == "demolish" && property.numberBuildings()==0){
+							//no buildings to sell
+							displayError(ERR_NO_BUILDINGS);
+						}
 						else{
-							build(player, board, propertyId);
+							if (buildOrDemolish == "build"){
+								build(player, board, propertyId);
+							}
+							else{
+								demolish(player, board, propertyId);
+							}
+							
 						}
 					}
 					else{
@@ -667,12 +821,22 @@ public class UI {
 					propertyId = 24;
 					inputValid = true;
 					if(checkAllColor(player).contains("Red")){
-						if(property.numberBuildings()==5){
+						if(buildOrDemolish == "build" && property.numberBuildings()==5){
 							//max num buildings
 							displayError(ERR_MAX_BUILDINGS);
 						}
+						 if(buildOrDemolish == "demolish" && property.numberBuildings()==0){
+							//no buildings to sell
+							displayError(ERR_NO_BUILDINGS);
+						}
 						else{
-							build(player, board, propertyId);
+							if (buildOrDemolish == "build"){
+								build(player, board, propertyId);
+							}
+							else{
+								demolish(player, board, propertyId);
+							}
+							
 						}
 					}
 					else{
@@ -683,12 +847,22 @@ public class UI {
 					propertyId = 26;
 					inputValid = true;
 					if(checkAllColor(player).contains("Yellow")){
-						if(property.numberBuildings()==5){
+						if(buildOrDemolish == "build" && property.numberBuildings()==5){
 							//max num buildings
 							displayError(ERR_MAX_BUILDINGS);
 						}
+						 if(buildOrDemolish == "demolish" && property.numberBuildings()==0){
+							//no buildings to sell
+							displayError(ERR_NO_BUILDINGS);
+						}
 						else{
-							build(player, board, propertyId);
+							if (buildOrDemolish == "build"){
+								build(player, board, propertyId);
+							}
+							else{
+								demolish(player, board, propertyId);
+							}
+							
 						}
 					}
 					else{
@@ -699,12 +873,22 @@ public class UI {
 					propertyId = 27;
 					inputValid = true;
 					if(checkAllColor(player).contains("Yellow")){
-						if(property.numberBuildings()==5){
+						if(buildOrDemolish == "build" && property.numberBuildings()==5){
 							//max num buildings
 							displayError(ERR_MAX_BUILDINGS);
 						}
+						 if(buildOrDemolish == "demolish" && property.numberBuildings()==0){
+							//no buildings to sell
+							displayError(ERR_NO_BUILDINGS);
+						}
 						else{
-							build(player, board, propertyId);
+							if (buildOrDemolish == "build"){
+								build(player, board, propertyId);
+							}
+							else{
+								demolish(player, board, propertyId);
+							}
+							
 						}
 					}
 					else{
@@ -715,12 +899,22 @@ public class UI {
 					propertyId = 29;
 					inputValid = true;
 					if(checkAllColor(player).contains("Yellow")){
-						if(property.numberBuildings()==5){
+						if(buildOrDemolish == "build" && property.numberBuildings()==5){
 							//max num buildings
 							displayError(ERR_MAX_BUILDINGS);
 						}
+						 if(buildOrDemolish == "demolish" && property.numberBuildings()==0){
+							//no buildings to sell
+							displayError(ERR_NO_BUILDINGS);
+						}
 						else{
-							build(player, board, propertyId);
+							if (buildOrDemolish == "build"){
+								build(player, board, propertyId);
+							}
+							else{
+								demolish(player, board, propertyId);
+							}
+							
 						}
 					}
 					else{
@@ -731,12 +925,22 @@ public class UI {
 					propertyId = 31;
 					inputValid = true;
 					if(checkAllColor(player).contains("Green")){
-						if(property.numberBuildings()==5){
+						if(buildOrDemolish == "build" && property.numberBuildings()==5){
 							//max num buildings
 							displayError(ERR_MAX_BUILDINGS);
 						}
+						 if(buildOrDemolish == "demolish" && property.numberBuildings()==0){
+							//no buildings to sell
+							displayError(ERR_NO_BUILDINGS);
+						}
 						else{
-							build(player, board, propertyId);
+							if (buildOrDemolish == "build"){
+								build(player, board, propertyId);
+							}
+							else{
+								demolish(player, board, propertyId);
+							}
+							
 						}
 					}
 					else{
@@ -747,12 +951,22 @@ public class UI {
 					propertyId = 32;
 					inputValid = true;
 					if(checkAllColor(player).contains("Green")){
-						if(property.numberBuildings()==5){
+						if(buildOrDemolish == "build" && property.numberBuildings()==5){
 							//max num buildings
 							displayError(ERR_MAX_BUILDINGS);
 						}
+						 if(buildOrDemolish == "demolish" && property.numberBuildings()==0){
+							//no buildings to sell
+							displayError(ERR_NO_BUILDINGS);
+						}
 						else{
-							build(player, board, propertyId);
+							if (buildOrDemolish == "build"){
+								build(player, board, propertyId);
+							}
+							else{
+								demolish(player, board, propertyId);
+							}
+							
 						}
 					}
 					else{
@@ -763,12 +977,22 @@ public class UI {
 					propertyId = 34;
 					inputValid = true;
 					if(checkAllColor(player).contains("Green")){
-						if(property.numberBuildings()==5){
+						if(buildOrDemolish == "build" && property.numberBuildings()==5){
 							//max num buildings
 							displayError(ERR_MAX_BUILDINGS);
 						}
+						 if(buildOrDemolish == "demolish" && property.numberBuildings()==0){
+							//no buildings to sell
+							displayError(ERR_NO_BUILDINGS);
+						}
 						else{
-							build(player, board, propertyId);
+							if (buildOrDemolish == "build"){
+								build(player, board, propertyId);
+							}
+							else{
+								demolish(player, board, propertyId);
+							}
+							
 						}
 					}
 					else{
@@ -779,12 +1003,22 @@ public class UI {
 					propertyId = 37;
 					inputValid = true;
 					if(checkAllColor(player).contains("Blue")){
-						if(property.numberBuildings()==5){
+						if(buildOrDemolish == "build" && property.numberBuildings()==5){
 							//max num buildings
 							displayError(ERR_MAX_BUILDINGS);
 						}
+						 if(buildOrDemolish == "demolish" && property.numberBuildings()==0){
+							//no buildings to sell
+							displayError(ERR_NO_BUILDINGS);
+						}
 						else{
-							build(player, board, propertyId);
+							if (buildOrDemolish == "build"){
+								build(player, board, propertyId);
+							}
+							else{
+								demolish(player, board, propertyId);
+							}
+							
 						}
 					}
 					else{
@@ -795,12 +1029,22 @@ public class UI {
 					propertyId = 39;
 					inputValid = true;
 					if(checkAllColor(player).contains("Blue")){
-						if(property.numberBuildings()==5){
+						if(buildOrDemolish == "build" && property.numberBuildings()==5){
 							//max num buildings
 							displayError(ERR_MAX_BUILDINGS);
 						}
+						 if(buildOrDemolish == "demolish" && property.numberBuildings()==0){
+							//no buildings to sell
+							displayError(ERR_NO_BUILDINGS);
+						}
 						else{
-							build(player, board, propertyId);
+							if (buildOrDemolish == "build"){
+								build(player, board, propertyId);
+							}
+							else{
+								demolish(player, board, propertyId);
+							}
+							
 						}
 					}
 					else{
