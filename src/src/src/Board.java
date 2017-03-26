@@ -80,5 +80,9 @@ public class Board {
 		return squares[index] instanceof Utilities;
 	}
 	
+	public boolean isMortgaged(int index) {  
+		return squares[index] instanceof Property;
+	}
+	
 }
 
