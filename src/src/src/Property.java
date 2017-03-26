@@ -3,6 +3,7 @@ public class Property extends Square {
 
 	private boolean isOwned;
 	private int value;
+	private boolean mortgaged;
 	private int rent[];
 	private Player owner;
 	private String color;
@@ -27,6 +28,11 @@ public class Property extends Square {
 		return rent[i];
 	}
 	
+	public int getMortgage() {
+		return mortgage[i];
+	}
+	
+	
 	public boolean isOwned () {
 		return isOwned;
 	}
@@ -47,6 +53,14 @@ public class Property extends Square {
 		return;
 	}
 	
+	public boolean isMortgaged(Player inPlayer) { // gets the mortgaged status of the property.
+		return mortgaged;
+	}
+	
+	public void setMortgage(boolean bool) { //un-mortgages the property.. will use later on.
+		mortgaged = bool;
+	}
+	
 	public Player getOwner () {
 		return owner;
 	}
@@ -54,6 +68,9 @@ public class Property extends Square {
 		return color;
 	}
 	public void removeOwner (){// remove the owner of said property . for example when bankrupt
+		isOwned = false;
+	}
+	public void suspendRent() { // suspend rent when mortgaged.
 		isOwned = false;
 	}
 	public int getPrice(){
