@@ -5,6 +5,7 @@ public class Property extends Square {
 	private int value;
 	private boolean mortgaged;
 	private int rent[];
+	private int mortgage[];
 	private Player owner;
 	private String color;
 	private int housePrice;
