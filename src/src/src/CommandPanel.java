@@ -29,7 +29,7 @@ public class CommandPanel extends JPanel  {
 		commandField.addActionListener(listener);
 		commandField.setFont(new Font("Times New Roman", Font.PLAIN, FONT_SIZE));
 		setLayout(new BorderLayout());
-		add(commandField, BorderLayout.NORTH);
+		add(commandField, BorderLayout.CENTER);
 		return;
 	}
 
@@ -51,4 +51,3 @@ public class CommandPanel extends JPanel  {
 		return string;
 	}
 }
-

@@ -6,6 +6,7 @@ private int value;
 private int rent[];
 private Player owner;
 private static String color;
+int numberOf = 0;
 
 Utilities (String name, int value, int[] rent) {
 	super(name, value, rent, color);
@@ -21,10 +22,17 @@ public int getValue () {
 }
 
 public int getRent () {
-	//return rent[0]*roll;
-	return rent[0];
+	return rent[numberOf];
 }
 
+public void ownMultiples(int i){
+	numberOf = i-1;
+	return ;
+}
+
+public int numberOwned(){
+	return numberOf+1;
+}
 public boolean isOwned () {
 	return isOwned;
 }

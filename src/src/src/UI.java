@@ -22,8 +22,7 @@ public class UI {
 	public static final int CMD_HELP = 9;
 	//build
 	public static final int CMD_BUILD = 10;
-	public static final int CMD_MORTGAGE = 11; // mortgage
-	
+	public static final int CMD_MORTGAGE = 11;
 	
 	public static final int ERR_SYNTAX = 0;
 	public static final int ERR_DOUBLE_ROLL = 1;
@@ -58,7 +57,7 @@ public class UI {
 		"Error: You don't own all the properties in this color.",
 		"Error: You cannot build on this property type.",
 		"Error: This property already holds the max number of buildings.",
-		"Error: This property is already mortgaged. "
+		"Error: This property is already mortgaged."
 		
 	};
 	
@@ -160,12 +159,10 @@ public class UI {
 					commandId = CMD_BUILD;
 					inputValid = true;
 					break;
-					
-				case "mortgage":   // mortgage option.
+				case "mortgage":	//mortgage option
 					commandId = CMD_MORTGAGE;
 					inputValid = true;
-					break;	
-			
+					break;
 				default:
 					inputValid = false;
 				}
@@ -245,7 +242,7 @@ public class UI {
 	}
 	
 	public void displayCommandHelp () {
-		infoPanel.displayString("Available commands: roll, pay rent, buy, mortgage, property, build, balance, done, quit. ");
+		infoPanel.displayString("Available commands: roll, pay rent, buy, property, build, balance, done, quit. ");
 		return;
 	}
 	
@@ -256,11 +253,11 @@ public class UI {
 		property.setBuilding();
 		if(property.numberBuildings() < 5){
 			infoPanel.displayString("This property now has " + property.numberBuildings() + " houses.");
-			infoPanel.displayString("Rent is now Â£" + property.getRent());
+			infoPanel.displayString("Rent is now £" + property.getRent());
 		}
 		else if(property.numberBuildings() == 5){
 			infoPanel.displayString("This property now has 1 hotel.");
-			infoPanel.displayString("Rent is now Â£" + property.getRent());
+			infoPanel.displayString("Rent is now £" + property.getRent());
 		}
 		
 		return;
@@ -290,7 +287,6 @@ public class UI {
 		ArrayList<Property> propertyList = player.getProperties();
 		ArrayList<String> allColor = new ArrayList<>();
 		
-		
 		if (propertyList.size() == 0) {
 			infoPanel.displayString(player + " owns no property.");
 		} else {
@@ -313,8 +309,6 @@ public class UI {
 				infoPanel.displayString("You own all the properties of the following colors: " + allColor);
 			}
 			
-		
-			
 		}
 	}
 	
@@ -323,7 +317,7 @@ public class UI {
 		ArrayList<String> allColor = new ArrayList<>();
 		
 		for (Property p : propertyList) {
-				if (colorPropertiesOwned(player, p.getColor())==3){
+				if (colorPropertiesOwned(player, p.getColor())==3 && p.getColor() != "transport"){
 					//only add if not already there
 					
 						if(!allColor.contains(p.getColor())){
@@ -341,9 +335,7 @@ public class UI {
 		
 	}
 	
-
-	
-	public void displaySquare (Player player, Board board) {
+	public void displaySquare (Player player, Board board, Dice dice) {
 		infoPanel.displayString(player + " arrives at " + board.getSquare(player.getPosition()).getName() + ".");
 		if (board.isTransport(player.getPosition())){
 			Transport transport = board.getTransport(player.getPosition());
@@ -361,7 +353,7 @@ public class UI {
 		else if (board.isUtilities(player.getPosition())){
 			Utilities utilities = board.getUtilities(player.getPosition());
 			if (utilities.isOwned()) {
-				infoPanel.displayString("The property is owned by " + utilities.getOwner() + ". Rent is " + utilities.getRent() + CURRENCY + ".");				
+				infoPanel.displayString("The property is owned by " + utilities.getOwner() + ". Rent is " + utilities.getRent()  + CURRENCY +  " times roll. ");				
 			} else {
 				infoPanel.displayString("The property is not owned. Rent is " + utilities.getRent() + CURRENCY + ".");								
 				//if own another utilities square - this could be used for calculating rent
@@ -383,8 +375,6 @@ public class UI {
 			}
 		}
 		
-		
-	
 		return;
 	}
 	
@@ -392,7 +382,7 @@ public class UI {
 		if(board.isMortgaged(player.getPosition()))	 //  else if... property mortgaged.	
 		{
 		     Property property = board.getProperty(player.getPosition());
-		      if(property.isMortgaged(player))
+		      //if(property.isMortgaged(player))
 		      {
 			  	 infoPanel.displayString(player +  "has mortgaged "  + player.getLatestProperty() + "." ); // recognize property.
 			    	  
@@ -403,7 +393,6 @@ public class UI {
 		return;
 	}
 	
-
 	public void displayAssets (Player player) {
 		infoPanel.displayString(player + " has assets of " + player.getAssets() + CURRENCY);
 		return;
@@ -823,10 +812,7 @@ public class UI {
 		}		
 		return;
 	}
-
-	
-
-	
 	
 	
 }
+
