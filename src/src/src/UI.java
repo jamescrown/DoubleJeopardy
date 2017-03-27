@@ -265,11 +265,11 @@ public class UI {
 			property.setBuilding();
 			if(property.numberBuildings() < 5){
 				infoPanel.displayString("This property now has " + property.numberBuildings() + " houses.");
-				infoPanel.displayString("Rent is now Â£" + property.getRent());
+				infoPanel.displayString("Rent is now £" + property.getRent());
 			}
 			else if(property.numberBuildings() == 5){
 				infoPanel.displayString("This property now has 1 hotel.");
-				infoPanel.displayString("Rent is now Â£" + property.getRent());
+				infoPanel.displayString("Rent is now £" + property.getRent());
 			}
 		}
 		else{
@@ -289,7 +289,7 @@ public class UI {
 		//demolish
 		property.demolishBuilding();
 		infoPanel.displayString("This property now has " + property.numberBuildings() + " houses.");
-		infoPanel.displayString("Rent is now Â£" + property.getRent());
+		infoPanel.displayString("Rent is now £" + property.getRent());
 		
 		return;
 		
@@ -491,6 +491,8 @@ public class UI {
 						{
 						if( player == property.getOwner() ){ //check if they own the property
 							property.setMortgage(true);
+							player.doTransaction(+(property.getValue()/2));
+							
 						 }
 						else{
 							displayError(ERR_NOT_OWNED);
@@ -528,6 +530,7 @@ public class UI {
 					{
 					if( player == property.getOwner() ){ //check if they own the property
 						property.setMortgage(true);
+						player.doTransaction(+(property.getValue()/2));
 					 }
 					else{
 						displayError(ERR_NOT_OWNED);
@@ -564,6 +567,7 @@ public class UI {
 					{
 					if( player == property.getOwner() ){ //check if they own the property
 						property.setMortgage(true);
+						player.doTransaction(+(property.getValue()/2));
 					 }
 					else{
 						displayError(ERR_NOT_OWNED);
@@ -601,6 +605,7 @@ public class UI {
 					{
 					if( player == property.getOwner() ){ //check if they own the property
 						property.setMortgage(true);
+						player.doTransaction(+(property.getValue()/2));
 					 }
 					else{
 						displayError(ERR_NOT_OWNED);
@@ -638,6 +643,7 @@ public class UI {
 					{
 					if( player == property.getOwner() ){ //check if they own the property
 						property.setMortgage(true);
+						player.doTransaction(+(property.getValue()/2));
 					 }
 					else{
 						displayError(ERR_NOT_OWNED);
@@ -675,6 +681,7 @@ public class UI {
 					{
 					if( player == property.getOwner() ){ //check if they own the property
 						property.setMortgage(true);
+						player.doTransaction(+(property.getValue()/2));
 					 }
 					else{
 						displayError(ERR_NOT_OWNED);
@@ -712,6 +719,7 @@ public class UI {
 					{
 					if( player == property.getOwner() ){ //check if they own the property
 						property.setMortgage(true);
+						player.doTransaction(+(property.getValue()/2));
 					 }
 					else{
 						displayError(ERR_NOT_OWNED);
@@ -749,6 +757,7 @@ public class UI {
 					{
 					if( player == property.getOwner() ){ //check if they own the property
 						property.setMortgage(true);
+						player.doTransaction(+(property.getValue()/2));
 					 }
 					else{
 						displayError(ERR_NOT_OWNED);
@@ -786,6 +795,7 @@ public class UI {
 					{
 					if( player == property.getOwner() ){ //check if they own the property
 						property.setMortgage(true);
+						player.doTransaction(+(property.getValue()/2));
 					 }
 					else{
 						displayError(ERR_NOT_OWNED);
@@ -822,6 +832,7 @@ public class UI {
 					{
 					if( player == property.getOwner() ){ //check if they own the property
 						property.setMortgage(true);
+						player.doTransaction(+(property.getValue()/2));
 					 }
 					else{
 						displayError(ERR_NOT_OWNED);
@@ -859,6 +870,7 @@ public class UI {
 					{
 					if( player == property.getOwner() ){ //check if they own the property
 						property.setMortgage(true);
+						player.doTransaction(+(property.getValue()/2));
 					 }
 					else{
 						displayError(ERR_NOT_OWNED);
@@ -897,6 +909,7 @@ public class UI {
 					{
 					if( player == property.getOwner() ){ //check if they own the property
 						property.setMortgage(true);
+						player.doTransaction(+(property.getValue()/2));
 					 }
 					else{
 						displayError(ERR_NOT_OWNED);
@@ -934,6 +947,7 @@ public class UI {
 					{
 					if( player == property.getOwner() ){ //check if they own the property
 						property.setMortgage(true);
+						player.doTransaction(+(property.getValue()/2));
 					 }
 					else{
 						displayError(ERR_NOT_OWNED);
@@ -971,6 +985,7 @@ public class UI {
 					{
 					if( player == property.getOwner() ){ //check if they own the property
 						property.setMortgage(true);
+						player.doTransaction(+(property.getValue()/2));
 					 }
 					else{
 						displayError(ERR_NOT_OWNED);
@@ -1008,6 +1023,7 @@ public class UI {
 					{
 					if( player == property.getOwner() ){ //check if they own the property
 						property.setMortgage(true);
+						player.doTransaction(+(property.getValue()/2));
 					 }
 					else{
 						displayError(ERR_NOT_OWNED);
@@ -1045,6 +1061,7 @@ public class UI {
 					{
 					if( player == property.getOwner() ){ //check if they own the property
 						property.setMortgage(true);
+						player.doTransaction(+(property.getValue()/2));
 					 }
 					else{
 						displayError(ERR_NOT_OWNED);
@@ -1082,6 +1099,7 @@ public class UI {
 					{
 					if( player == property.getOwner() ){ //check if they own the property
 						property.setMortgage(true);
+						player.doTransaction(+(property.getValue()/2));
 					 }
 					else{
 						displayError(ERR_NOT_OWNED);
@@ -1119,6 +1137,7 @@ public class UI {
 					{
 					if( player == property.getOwner() ){ //check if they own the property
 						property.setMortgage(true);
+						player.doTransaction(+(property.getValue()/2));
 					 }
 					else{
 						displayError(ERR_NOT_OWNED);
@@ -1156,6 +1175,7 @@ public class UI {
 					{
 					if( player == property.getOwner() ){ //check if they own the property
 						property.setMortgage(true);
+						player.doTransaction(+(property.getValue()/2));
 					 }
 					else{
 						displayError(ERR_NOT_OWNED);
@@ -1193,6 +1213,7 @@ public class UI {
 					{
 					if( player == property.getOwner() ){ //check if they own the property
 						property.setMortgage(true);
+						player.doTransaction(+(property.getValue()/2));
 					 }
 					else{
 						displayError(ERR_NOT_OWNED);
@@ -1230,6 +1251,7 @@ public class UI {
 					{
 					if( player == property.getOwner() ){ //check if they own the property
 						property.setMortgage(true);
+						player.doTransaction(+(property.getValue()/2));
 					 }
 					else{
 						displayError(ERR_NOT_OWNED);
@@ -1267,6 +1289,7 @@ public class UI {
 					{
 					if( player == property.getOwner() ){ //check if they own the property
 						property.setMortgage(true);
+						player.doTransaction(+(property.getValue()/2));
 					 }
 					else{
 						displayError(ERR_NOT_OWNED);
