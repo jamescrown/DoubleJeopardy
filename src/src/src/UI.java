@@ -265,11 +265,11 @@ public class UI {
 			property.setBuilding();
 			if(property.numberBuildings() < 5){
 				infoPanel.displayString("This property now has " + property.numberBuildings() + " houses.");
-				infoPanel.displayString("Rent is now £" + property.getRent());
+				infoPanel.displayString("Rent is now Â£" + property.getRent());
 			}
 			else if(property.numberBuildings() == 5){
 				infoPanel.displayString("This property now has 1 hotel.");
-				infoPanel.displayString("Rent is now £" + property.getRent());
+				infoPanel.displayString("Rent is now Â£" + property.getRent());
 			}
 		}
 		else{
@@ -289,7 +289,7 @@ public class UI {
 		//demolish
 		property.demolishBuilding();
 		infoPanel.displayString("This property now has " + property.numberBuildings() + " houses.");
-		infoPanel.displayString("Rent is now £" + property.getRent());
+		infoPanel.displayString("Rent is now Â£" + property.getRent());
 		
 		return;
 		
@@ -489,7 +489,12 @@ public class UI {
 					
 					if(buildOrDemolish == "mortgage") //&& owned by player)
 						{
-							//mortgage;
+						if( player == property.getOwner() ){ //check if they own the property
+							property.setMortgage(true);
+						 }
+						else{
+							displayError(ERR_NOT_OWNED);
+						}
 						}
 					if(checkAllColor(player).contains("Brown")){
 						if(buildOrDemolish == "build" && property.numberBuildings()==5){
