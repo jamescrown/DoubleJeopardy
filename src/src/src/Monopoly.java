@@ -117,6 +117,7 @@ public class Monopoly {
 						Property property = board.getProperty(currPlayer.getPosition());
 						if (property.isOwned()) {
 							if (!property.getOwner().equals(currPlayer)) {
+								if(property.isMortgaged(currPlayer) == false){
 								if (!rentPaid) {
 									if (currPlayer.getBalance()>=property.getRent()) {
 										//if utilities rent is mutliplied by roll
@@ -152,6 +153,9 @@ public class Monopoly {
 									} 
 								} else {
 									ui.displayError(UI.ERR_RENT_ALREADY_PAID);									
+								}
+								}else{
+									ui.displayError(UI.ERR_MORTG_OWNED);
 								}
 							} else {
 								ui.displayError(UI.ERR_SELF_OWNED);								
