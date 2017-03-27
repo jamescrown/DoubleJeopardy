@@ -60,7 +60,7 @@ public class UI {
 		"Error: You don't own all the properties in this color.",
 		"Error: You cannot build on this property type.",
 		"Error: This property already holds the max number of buildings.",
-		"Error: This property is already mortgaged.",
+		"Error: This property is mortgaged.",
 		"Error: There are no properties to demolish"
 		
 	};
@@ -495,6 +495,7 @@ public class UI {
 						else{
 							displayError(ERR_NOT_OWNED);
 						}
+						break;
 						}
 					if(checkAllColor(player).contains("Brown")){
 						if(buildOrDemolish == "build" && property.numberBuildings()==5){
@@ -523,6 +524,16 @@ public class UI {
 				case "whitechapel road" :
 					propertyId = 3;
 					inputValid = true;
+					if(buildOrDemolish == "mortgage") //&& owned by player)
+					{
+					if( player == property.getOwner() ){ //check if they own the property
+						property.setMortgage(true);
+					 }
+					else{
+						displayError(ERR_NOT_OWNED);
+					}
+					break;
+					}
 					if(checkAllColor(player).contains("Brown")){
 						if(buildOrDemolish == "build" && property.numberBuildings()==5){
 							//max num buildings
@@ -549,6 +560,16 @@ public class UI {
 				case "the angel islington" :
 					propertyId = 6;
 					inputValid = true;
+					if(buildOrDemolish == "mortgage") //&& owned by player)
+					{
+					if( player == property.getOwner() ){ //check if they own the property
+						property.setMortgage(true);
+					 }
+					else{
+						displayError(ERR_NOT_OWNED);
+					}
+					break;
+					}
 					if(checkAllColor(player).contains("Cyan")){
 						if(buildOrDemolish == "build" && property.numberBuildings()==5){
 							//max num buildings
@@ -575,6 +596,17 @@ public class UI {
 				case "euston road" :
 					propertyId = 8;
 					inputValid = true;
+					
+					if(buildOrDemolish == "mortgage") //&& owned by player)
+					{
+					if( player == property.getOwner() ){ //check if they own the property
+						property.setMortgage(true);
+					 }
+					else{
+						displayError(ERR_NOT_OWNED);
+					}
+					break;
+					}
 					if(checkAllColor(player).contains("Cyan")){
 						if(buildOrDemolish == "build" && property.numberBuildings()==5){
 							//max num buildings
@@ -601,6 +633,17 @@ public class UI {
 				case "pentonville road" :
 					propertyId = 9;
 					inputValid = true;
+					
+					if(buildOrDemolish == "mortgage") //&& owned by player)
+					{
+					if( player == property.getOwner() ){ //check if they own the property
+						property.setMortgage(true);
+					 }
+					else{
+						displayError(ERR_NOT_OWNED);
+					}
+					break;
+					}
 					if(checkAllColor(player).contains("Cyan")){
 						if(buildOrDemolish == "build" && property.numberBuildings()==5){
 							//max num buildings
@@ -627,6 +670,17 @@ public class UI {
 				case "pall mall" :
 					propertyId = 11;
 					inputValid = true;
+					
+					if(buildOrDemolish == "mortgage") //&& owned by player)
+					{
+					if( player == property.getOwner() ){ //check if they own the property
+						property.setMortgage(true);
+					 }
+					else{
+						displayError(ERR_NOT_OWNED);
+					}
+					break;
+					}
 					if(checkAllColor(player).contains("Pink")){
 						if(buildOrDemolish == "build" && property.numberBuildings()==5){
 							//max num buildings
@@ -653,6 +707,17 @@ public class UI {
 				case "whitehall" :
 					propertyId = 13;
 					inputValid = true;
+					
+					if(buildOrDemolish == "mortgage") //&& owned by player)
+					{
+					if( player == property.getOwner() ){ //check if they own the property
+						property.setMortgage(true);
+					 }
+					else{
+						displayError(ERR_NOT_OWNED);
+					}
+					break;
+					}
 					if(checkAllColor(player).contains("Pink")){
 						if(buildOrDemolish == "build" && property.numberBuildings()==5){
 							//max num buildings
@@ -679,6 +744,17 @@ public class UI {
 				case "northumberland avenue" :
 					propertyId = 14;
 					inputValid = true;
+					
+					if(buildOrDemolish == "mortgage") //&& owned by player)
+					{
+					if( player == property.getOwner() ){ //check if they own the property
+						property.setMortgage(true);
+					 }
+					else{
+						displayError(ERR_NOT_OWNED);
+					}
+					break;
+					}
 					if(checkAllColor(player).contains("Pink")){
 						if(buildOrDemolish == "build" && property.numberBuildings()==5){
 							//max num buildings
@@ -705,6 +781,17 @@ public class UI {
 				case "bow street" :
 					propertyId = 16;
 					inputValid = true;
+					
+					if(buildOrDemolish == "mortgage") //&& owned by player)
+					{
+					if( player == property.getOwner() ){ //check if they own the property
+						property.setMortgage(true);
+					 }
+					else{
+						displayError(ERR_NOT_OWNED);
+					}
+					break;
+					}
 					if(checkAllColor(player).contains("Orange")){
 						if(buildOrDemolish == "build" && property.numberBuildings()==5){
 							//max num buildings
@@ -731,6 +818,16 @@ public class UI {
 				case "marlborough street" :
 					propertyId = 18;
 					inputValid = true;
+					if(buildOrDemolish == "mortgage") //&& owned by player)
+					{
+					if( player == property.getOwner() ){ //check if they own the property
+						property.setMortgage(true);
+					 }
+					else{
+						displayError(ERR_NOT_OWNED);
+					}
+					break;
+					}
 					if(checkAllColor(player).contains("Orange")){
 						if(buildOrDemolish == "build" && property.numberBuildings()==5){
 							//max num buildings
@@ -757,6 +854,18 @@ public class UI {
 				case "vine street" :
 					propertyId = 19;
 					inputValid = true;
+					
+					if(buildOrDemolish == "mortgage") //&& owned by player)
+					{
+					if( player == property.getOwner() ){ //check if they own the property
+						property.setMortgage(true);
+					 }
+					else{
+						displayError(ERR_NOT_OWNED);
+					}
+					break;
+					}
+					
 					if(checkAllColor(player).contains("Orange")){
 						if(buildOrDemolish == "build" && property.numberBuildings()==5){
 							//max num buildings
@@ -783,6 +892,17 @@ public class UI {
 				case "strand" :
 					propertyId = 21;
 					inputValid = true;
+					
+					if(buildOrDemolish == "mortgage") //&& owned by player)
+					{
+					if( player == property.getOwner() ){ //check if they own the property
+						property.setMortgage(true);
+					 }
+					else{
+						displayError(ERR_NOT_OWNED);
+					}
+					break;
+					}
 					if(checkAllColor(player).contains("Red")){
 						if(buildOrDemolish == "build" && property.numberBuildings()==5){
 							//max num buildings
@@ -809,6 +929,17 @@ public class UI {
 				case "fleet street" :
 					propertyId = 23;
 					inputValid = true;
+					
+					if(buildOrDemolish == "mortgage") //&& owned by player)
+					{
+					if( player == property.getOwner() ){ //check if they own the property
+						property.setMortgage(true);
+					 }
+					else{
+						displayError(ERR_NOT_OWNED);
+					}
+					break;
+					}
 					if(checkAllColor(player).contains("Red")){
 						if(buildOrDemolish == "build" && property.numberBuildings()==5){
 							//max num buildings
@@ -835,6 +966,17 @@ public class UI {
 				case "trafalgar square" :
 					propertyId = 24;
 					inputValid = true;
+					
+					if(buildOrDemolish == "mortgage") //&& owned by player)
+					{
+					if( player == property.getOwner() ){ //check if they own the property
+						property.setMortgage(true);
+					 }
+					else{
+						displayError(ERR_NOT_OWNED);
+					}
+					break;
+					}
 					if(checkAllColor(player).contains("Red")){
 						if(buildOrDemolish == "build" && property.numberBuildings()==5){
 							//max num buildings
@@ -861,6 +1003,17 @@ public class UI {
 				case "leicester square" :
 					propertyId = 26;
 					inputValid = true;
+					
+					if(buildOrDemolish == "mortgage") //&& owned by player)
+					{
+					if( player == property.getOwner() ){ //check if they own the property
+						property.setMortgage(true);
+					 }
+					else{
+						displayError(ERR_NOT_OWNED);
+					}
+					break;
+					}
 					if(checkAllColor(player).contains("Yellow")){
 						if(buildOrDemolish == "build" && property.numberBuildings()==5){
 							//max num buildings
@@ -887,6 +1040,17 @@ public class UI {
 				case "coventry street" :
 					propertyId = 27;
 					inputValid = true;
+					
+					if(buildOrDemolish == "mortgage") //&& owned by player)
+					{
+					if( player == property.getOwner() ){ //check if they own the property
+						property.setMortgage(true);
+					 }
+					else{
+						displayError(ERR_NOT_OWNED);
+					}
+					break;
+					}
 					if(checkAllColor(player).contains("Yellow")){
 						if(buildOrDemolish == "build" && property.numberBuildings()==5){
 							//max num buildings
@@ -913,6 +1077,17 @@ public class UI {
 				case "piccadilly" :
 					propertyId = 29;
 					inputValid = true;
+					
+					if(buildOrDemolish == "mortgage") //&& owned by player)
+					{
+					if( player == property.getOwner() ){ //check if they own the property
+						property.setMortgage(true);
+					 }
+					else{
+						displayError(ERR_NOT_OWNED);
+					}
+					break;
+					}
 					if(checkAllColor(player).contains("Yellow")){
 						if(buildOrDemolish == "build" && property.numberBuildings()==5){
 							//max num buildings
@@ -939,6 +1114,17 @@ public class UI {
 				case "regent street" :
 					propertyId = 31;
 					inputValid = true;
+					
+					if(buildOrDemolish == "mortgage") //&& owned by player)
+					{
+					if( player == property.getOwner() ){ //check if they own the property
+						property.setMortgage(true);
+					 }
+					else{
+						displayError(ERR_NOT_OWNED);
+					}
+					break;
+					}
 					if(checkAllColor(player).contains("Green")){
 						if(buildOrDemolish == "build" && property.numberBuildings()==5){
 							//max num buildings
@@ -965,6 +1151,17 @@ public class UI {
 				case "oxford street" :
 					propertyId = 32;
 					inputValid = true;
+					
+					if(buildOrDemolish == "mortgage") //&& owned by player)
+					{
+					if( player == property.getOwner() ){ //check if they own the property
+						property.setMortgage(true);
+					 }
+					else{
+						displayError(ERR_NOT_OWNED);
+					}
+					break;
+					}
 					if(checkAllColor(player).contains("Green")){
 						if(buildOrDemolish == "build" && property.numberBuildings()==5){
 							//max num buildings
@@ -991,6 +1188,17 @@ public class UI {
 				case "bond street" :
 					propertyId = 34;
 					inputValid = true;
+					
+					if(buildOrDemolish == "mortgage") //&& owned by player)
+					{
+					if( player == property.getOwner() ){ //check if they own the property
+						property.setMortgage(true);
+					 }
+					else{
+						displayError(ERR_NOT_OWNED);
+					}
+					break;
+					}
 					if(checkAllColor(player).contains("Green")){
 						if(buildOrDemolish == "build" && property.numberBuildings()==5){
 							//max num buildings
@@ -1017,6 +1225,17 @@ public class UI {
 				case "park lane" :
 					propertyId = 37;
 					inputValid = true;
+					
+					if(buildOrDemolish == "mortgage") //&& owned by player)
+					{
+					if( player == property.getOwner() ){ //check if they own the property
+						property.setMortgage(true);
+					 }
+					else{
+						displayError(ERR_NOT_OWNED);
+					}
+					break;
+					}
 					if(checkAllColor(player).contains("Blue")){
 						if(buildOrDemolish == "build" && property.numberBuildings()==5){
 							//max num buildings
@@ -1043,6 +1262,17 @@ public class UI {
 				case "mayfair" :
 					propertyId = 39;
 					inputValid = true;
+					
+					if(buildOrDemolish == "mortgage") //&& owned by player)
+					{
+					if( player == property.getOwner() ){ //check if they own the property
+						property.setMortgage(true);
+					 }
+					else{
+						displayError(ERR_NOT_OWNED);
+					}
+					break;
+					}
 					if(checkAllColor(player).contains("Blue")){
 						if(buildOrDemolish == "build" && property.numberBuildings()==5){
 							//max num buildings
@@ -1066,11 +1296,13 @@ public class UI {
 						displayError(ERR_NOT_ALL_COLORS);
 					}
 					break;
+				
 				default:
 					inputValid = false;
 				}
 			if (!inputValid) {
 				displayError(ERR_CANNOT_BUILD_ON);
+				
 			}
 		} while (!inputValid);
 		if (commandId == CMD_DONE) {
@@ -1083,4 +1315,3 @@ public class UI {
 	
 	
 }
-
