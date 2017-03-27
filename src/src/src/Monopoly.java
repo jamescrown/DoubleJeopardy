@@ -290,6 +290,10 @@ public class Monopoly {
 					ui.whichProperty(currPlayer, board, "mortgage");
 					ui.displayBankTransaction(currPlayer);
 					break;
+				case UI.CMD_UNMORTGAGE : // mortgage option.
+					ui.whichProperty(currPlayer, board, "mortgage");
+					ui.displayBankTransaction(currPlayer);
+					break;
 				case UI.CMD_DONE :
 					if (rollDone) {
 						if (!rentOwed || (rentOwed && rentPaid)) {
