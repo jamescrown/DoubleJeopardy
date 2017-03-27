@@ -5,7 +5,6 @@ public class Property extends Square {
 	private int value;
 	private boolean mortgaged;
 	private int rent[];
-	private int mortgage[];
 	private Player owner;
 	private String color;
 	private int housePrice;
@@ -29,14 +28,9 @@ public class Property extends Square {
 		return rent[i];
 	}
 	
-	public int getMortgage(){
-		return mortgage[i];
-	}
-	
 	public boolean isOwned () {
 		return isOwned;
 	}
-	
 	
 	public void setBuilding(){
 		i++;
