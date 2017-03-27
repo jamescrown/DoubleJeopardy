@@ -170,7 +170,7 @@ public class UI {
 					commandId = CMD_MORTGAGE;
 					inputValid = true;
 					break;
-				case "unmortgage":	//mortgage option
+				case "unmortgage":
 					commandId = CMD_UNMORTGAGE;
 					inputValid = true;
 					break;
@@ -259,7 +259,7 @@ public class UI {
 	
 	public void displayCommandHelp () {
 		infoPanel.displayString("Available commands: roll, pay rent, buy, property, build, demolish, balance, done, quit,mortgage,unmortgage. ");
-		return;
+  		return;
 	}
 	
 	public void build(Player player, Board board, int propertyId){
@@ -272,11 +272,11 @@ public class UI {
 			property.setBuilding();
 			if(property.numberBuildings() < 5){
 				infoPanel.displayString("This property now has " + property.numberBuildings() + " houses.");
-				infoPanel.displayString("Rent is now Â£" + property.getRent());
+				infoPanel.displayString("Rent is now £" + property.getRent());
 			}
 			else if(property.numberBuildings() == 5){
 				infoPanel.displayString("This property now has 1 hotel.");
-				infoPanel.displayString("Rent is now Â£" + property.getRent());
+				infoPanel.displayString("Rent is now £" + property.getRent());
 			}
 		}
 		else{
@@ -296,7 +296,7 @@ public class UI {
 		//demolish
 		property.demolishBuilding();
 		infoPanel.displayString("This property now has " + property.numberBuildings() + " houses.");
-		infoPanel.displayString("Rent is now Â£" + property.getRent());
+		infoPanel.displayString("Rent is now £" + property.getRent());
 		
 		return;
 		
@@ -362,6 +362,7 @@ public class UI {
 			
 		}
 	}
+	
 	public ArrayList<String> checkAllColor(Player player){
 		ArrayList<Property> propertyList = player.getProperties();
 		ArrayList<String> allColor = new ArrayList<>();
@@ -529,6 +530,8 @@ public class UI {
 						{
 						if( player == property.getOwner() ){ //check if they own the property
 							property.setMortgage(true);
+							player.doTransaction(+(property.getValue()/2));
+							
 						 }
 						else{
 							displayError(ERR_NOT_OWNED);
@@ -537,21 +540,19 @@ public class UI {
 						}
 					if(buildOrDemolish == "unmortgage") //&& owned by player)
 					{
-					   if( player == property.getOwner() ){//check if they own the property
-						   if( property.isMortgaged(player) == true){
-						
-						       property.setMortgage(false);				   
-						   }
-						   else{
-							   displayError(ERR_NOT_MORTGAGED);
-						   }
-						  
-					     }
-					   
-					   else{
-						displayError(ERR_NOT_OWNED);
-					}
-					break;
+						 if( player == property.getOwner() ){//check if they own the property
+							 if( property.isMortgaged(player) == true){
+								 	property.setMortgage(false);
+								 	player.doTransaction(-((property.getValue()/100)*110));
+							 }
+							 else{
+								 	displayError(ERR_NOT_MORTGAGED);
+						 	}
+						  }
+						 else{
+							 		displayError(ERR_NOT_OWNED);
+						 }
+						 break;
 					}
 					if(checkAllColor(player).contains("Brown")){
 						if(buildOrDemolish == "build" && property.numberBuildings()==5){
@@ -584,6 +585,7 @@ public class UI {
 					{
 					if( player == property.getOwner() ){ //check if they own the property
 						property.setMortgage(true);
+						player.doTransaction(+(property.getValue()/2));
 					 }
 					else{
 						displayError(ERR_NOT_OWNED);
@@ -592,21 +594,19 @@ public class UI {
 					}
 					if(buildOrDemolish == "unmortgage") //&& owned by player)
 					{
-					   if( player == property.getOwner() ){//check if they own the property
-						   if( property.isMortgaged(player) == true){
-						
-						       property.setMortgage(false);				   
-						   }
-						   else{
-							   displayError(ERR_NOT_MORTGAGED);
-						   }
-						  
-					     }
-					   
-					   else{
-						displayError(ERR_NOT_OWNED);
-					}
-					break;
+						 if( player == property.getOwner() ){//check if they own the property
+							 if( property.isMortgaged(player) == true){
+								 	property.setMortgage(false);
+								 	player.doTransaction(-((property.getValue()/100)*110));
+							 }
+							 else{
+								 	displayError(ERR_NOT_MORTGAGED);
+						 	}
+						  }
+						 else{
+							 		displayError(ERR_NOT_OWNED);
+						 }
+						 break;
 					}
 					if(checkAllColor(player).contains("Brown")){
 						if(buildOrDemolish == "build" && property.numberBuildings()==5){
@@ -638,6 +638,7 @@ public class UI {
 					{
 					if( player == property.getOwner() ){ //check if they own the property
 						property.setMortgage(true);
+						player.doTransaction(+(property.getValue()/2));
 					 }
 					else{
 						displayError(ERR_NOT_OWNED);
@@ -646,21 +647,19 @@ public class UI {
 					}
 					if(buildOrDemolish == "unmortgage") //&& owned by player)
 					{
-					   if( player == property.getOwner() ){//check if they own the property
-						   if( property.isMortgaged(player) == true){
-						
-						       property.setMortgage(false);				   
-						   }
-						   else{
-							   displayError(ERR_NOT_MORTGAGED);
-						   }
-						  
-					     }
-					   
-					   else{
-						displayError(ERR_NOT_OWNED);
-					}
-					break;
+						 if( player == property.getOwner() ){//check if they own the property
+							 if( property.isMortgaged(player) == true){
+								 	property.setMortgage(false);
+								 	player.doTransaction(-((property.getValue()/100)*110));				   
+							 }
+							 else{
+								 	displayError(ERR_NOT_MORTGAGED);
+						 	}
+						  }
+						 else{
+							 		displayError(ERR_NOT_OWNED);
+						 }
+						 break;
 					}
 					if(checkAllColor(player).contains("Cyan")){
 						if(buildOrDemolish == "build" && property.numberBuildings()==5){
@@ -693,6 +692,7 @@ public class UI {
 					{
 					if( player == property.getOwner() ){ //check if they own the property
 						property.setMortgage(true);
+						player.doTransaction(+(property.getValue()/2));
 					 }
 					else{
 						displayError(ERR_NOT_OWNED);
@@ -701,21 +701,19 @@ public class UI {
 					}
 					if(buildOrDemolish == "unmortgage") //&& owned by player)
 					{
-					   if( player == property.getOwner() ){//check if they own the property
-						   if( property.isMortgaged(player) == true){
-						
-						       property.setMortgage(false);				   
-						   }
-						   else{
-							   displayError(ERR_NOT_MORTGAGED);
-						   }
-						  
-					     }
-					   
-					   else{
-						displayError(ERR_NOT_OWNED);
-					}
-					break;
+						 if( player == property.getOwner() ){//check if they own the property
+							 if( property.isMortgaged(player) == true){
+								 	property.setMortgage(false);
+								 	player.doTransaction(-((property.getValue()/100)*110));				   
+							 }
+							 else{
+								 	displayError(ERR_NOT_MORTGAGED);
+						 	}
+						  }
+						 else{
+							 		displayError(ERR_NOT_OWNED);
+						 }
+						 break;
 					}
 					if(checkAllColor(player).contains("Cyan")){
 						if(buildOrDemolish == "build" && property.numberBuildings()==5){
@@ -748,6 +746,7 @@ public class UI {
 					{
 					if( player == property.getOwner() ){ //check if they own the property
 						property.setMortgage(true);
+						player.doTransaction(+(property.getValue()/2));
 					 }
 					else{
 						displayError(ERR_NOT_OWNED);
@@ -756,21 +755,19 @@ public class UI {
 					}
 					if(buildOrDemolish == "unmortgage") //&& owned by player)
 					{
-					   if( player == property.getOwner() ){//check if they own the property
-						   if( property.isMortgaged(player) == true){
-						
-						       property.setMortgage(false);				   
-						   }
-						   else{
-							   displayError(ERR_NOT_MORTGAGED);
-						   }
-						  
-					     }
-					   
-					   else{
-						displayError(ERR_NOT_OWNED);
-					}
-					break;
+						 if( player == property.getOwner() ){//check if they own the property
+							 if( property.isMortgaged(player) == true){
+								 	property.setMortgage(false);
+								 	player.doTransaction(-((property.getValue()/100)*110));				   
+							 }
+							 else{
+								 	displayError(ERR_NOT_MORTGAGED);
+						 	}
+						  }
+						 else{
+							 		displayError(ERR_NOT_OWNED);
+						 }
+						 break;
 					}
 					if(checkAllColor(player).contains("Cyan")){
 						if(buildOrDemolish == "build" && property.numberBuildings()==5){
@@ -803,6 +800,7 @@ public class UI {
 					{
 					if( player == property.getOwner() ){ //check if they own the property
 						property.setMortgage(true);
+						player.doTransaction(+(property.getValue()/2));
 					 }
 					else{
 						displayError(ERR_NOT_OWNED);
@@ -811,21 +809,19 @@ public class UI {
 					}
 					if(buildOrDemolish == "unmortgage") //&& owned by player)
 					{
-					   if( player == property.getOwner() ){//check if they own the property
-						   if( property.isMortgaged(player) == true){
-						
-						       property.setMortgage(false);				   
-						   }
-						   else{
-							   displayError(ERR_NOT_MORTGAGED);
-						   }
-						  
-					     }
-					   
-					   else{
-						displayError(ERR_NOT_OWNED);
-					}
-					break;
+						 if( player == property.getOwner() ){//check if they own the property
+							 if( property.isMortgaged(player) == true){
+								 	property.setMortgage(false);
+								 	player.doTransaction(-((property.getValue()/100)*110));				   
+							 }
+							 else{
+								 	displayError(ERR_NOT_MORTGAGED);
+						 	}
+						  }
+						 else{
+							 		displayError(ERR_NOT_OWNED);
+						 }
+						 break;
 					}
 					if(checkAllColor(player).contains("Pink")){
 						if(buildOrDemolish == "build" && property.numberBuildings()==5){
@@ -858,6 +854,7 @@ public class UI {
 					{
 					if( player == property.getOwner() ){ //check if they own the property
 						property.setMortgage(true);
+						player.doTransaction(+(property.getValue()/2));
 					 }
 					else{
 						displayError(ERR_NOT_OWNED);
@@ -866,21 +863,19 @@ public class UI {
 					}
 					if(buildOrDemolish == "unmortgage") //&& owned by player)
 					{
-					   if( player == property.getOwner() ){//check if they own the property
-						   if( property.isMortgaged(player) == true){
-						
-						       property.setMortgage(false);				   
-						   }
-						   else{
-							   displayError(ERR_NOT_MORTGAGED);
-						   }
-						  
-					     }
-					   
-					   else{
-						displayError(ERR_NOT_OWNED);
-					}
-					break;
+						 if( player == property.getOwner() ){//check if they own the property
+							 if( property.isMortgaged(player) == true){
+								 	property.setMortgage(false);
+								 	player.doTransaction(-((property.getValue()/100)*110));				   
+							 }
+							 else{
+								 	displayError(ERR_NOT_MORTGAGED);
+						 	}
+						  }
+						 else{
+							 		displayError(ERR_NOT_OWNED);
+						 }
+						 break;
 					}
 					if(checkAllColor(player).contains("Pink")){
 						if(buildOrDemolish == "build" && property.numberBuildings()==5){
@@ -913,6 +908,7 @@ public class UI {
 					{
 					if( player == property.getOwner() ){ //check if they own the property
 						property.setMortgage(true);
+						player.doTransaction(+(property.getValue()/2));
 					 }
 					else{
 						displayError(ERR_NOT_OWNED);
@@ -921,21 +917,19 @@ public class UI {
 					}
 					if(buildOrDemolish == "unmortgage") //&& owned by player)
 					{
-					   if( player == property.getOwner() ){//check if they own the property
-						   if( property.isMortgaged(player) == true){
-						
-						       property.setMortgage(false);				   
-						   }
-						   else{
-							   displayError(ERR_NOT_MORTGAGED);
-						   }
-						  
-					     }
-					   
-					   else{
-						displayError(ERR_NOT_OWNED);
-					}
-					break;
+						 if( player == property.getOwner() ){//check if they own the property
+							 if( property.isMortgaged(player) == true){
+								 	property.setMortgage(false);
+								 	player.doTransaction(-((property.getValue()/100)*110));				   
+							 }
+							 else{
+								 	displayError(ERR_NOT_MORTGAGED);
+						 	}
+						  }
+						 else{
+							 		displayError(ERR_NOT_OWNED);
+						 }
+						 break;
 					}
 					if(checkAllColor(player).contains("Pink")){
 						if(buildOrDemolish == "build" && property.numberBuildings()==5){
@@ -968,6 +962,7 @@ public class UI {
 					{
 					if( player == property.getOwner() ){ //check if they own the property
 						property.setMortgage(true);
+						player.doTransaction(+(property.getValue()/2));
 					 }
 					else{
 						displayError(ERR_NOT_OWNED);
@@ -976,21 +971,19 @@ public class UI {
 					}
 					if(buildOrDemolish == "unmortgage") //&& owned by player)
 					{
-					   if( player == property.getOwner() ){//check if they own the property
-						   if( property.isMortgaged(player) == true){
-						
-						       property.setMortgage(false);				   
-						   }
-						   else{
-							   displayError(ERR_NOT_MORTGAGED);
-						   }
-						  
-					     }
-					   
-					   else{
-						displayError(ERR_NOT_OWNED);
-					}
-					break;
+						 if( player == property.getOwner() ){//check if they own the property
+							 if( property.isMortgaged(player) == true){
+								 	property.setMortgage(false);
+								 	player.doTransaction(-((property.getValue()/100)*110));				   
+							 }
+							 else{
+								 	displayError(ERR_NOT_MORTGAGED);
+						 	}
+						  }
+						 else{
+							 		displayError(ERR_NOT_OWNED);
+						 }
+						 break;
 					}
 					if(checkAllColor(player).contains("Orange")){
 						if(buildOrDemolish == "build" && property.numberBuildings()==5){
@@ -1022,6 +1015,7 @@ public class UI {
 					{
 					if( player == property.getOwner() ){ //check if they own the property
 						property.setMortgage(true);
+						player.doTransaction(+(property.getValue()/2));
 					 }
 					else{
 						displayError(ERR_NOT_OWNED);
@@ -1030,21 +1024,19 @@ public class UI {
 					}
 					if(buildOrDemolish == "unmortgage") //&& owned by player)
 					{
-					   if( player == property.getOwner() ){//check if they own the property
-						   if( property.isMortgaged(player) == true){
-						
-						       property.setMortgage(false);				   
-						   }
-						   else{
-							   displayError(ERR_NOT_MORTGAGED);
-						   }
-						  
-					     }
-					   
-					   else{
-						displayError(ERR_NOT_OWNED);
-					}
-					break;
+						 if( player == property.getOwner() ){//check if they own the property
+							 if( property.isMortgaged(player) == true){
+								 	property.setMortgage(false);
+								 	player.doTransaction(-((property.getValue()/100)*110));				   
+							 }
+							 else{
+								 	displayError(ERR_NOT_MORTGAGED);
+						 	}
+						  }
+						 else{
+							 		displayError(ERR_NOT_OWNED);
+						 }
+						 break;
 					}
 					if(checkAllColor(player).contains("Orange")){
 						if(buildOrDemolish == "build" && property.numberBuildings()==5){
@@ -1077,6 +1069,7 @@ public class UI {
 					{
 					if( player == property.getOwner() ){ //check if they own the property
 						property.setMortgage(true);
+						player.doTransaction(+(property.getValue()/2));
 					 }
 					else{
 						displayError(ERR_NOT_OWNED);
@@ -1085,21 +1078,19 @@ public class UI {
 					}
 					if(buildOrDemolish == "unmortgage") //&& owned by player)
 					{
-					   if( player == property.getOwner() ){//check if they own the property
-						   if( property.isMortgaged(player) == true){
-						
-						       property.setMortgage(false);				   
-						   }
-						   else{
-							   displayError(ERR_NOT_MORTGAGED);
-						   }
-						  
-					     }
-					   
-					   else{
-						displayError(ERR_NOT_OWNED);
-					}
-					break;
+						 if( player == property.getOwner() ){//check if they own the property
+							 if( property.isMortgaged(player) == true){
+								 	property.setMortgage(false);
+								 	player.doTransaction(-((property.getValue()/100)*110));				   
+							 }
+							 else{
+								 	displayError(ERR_NOT_MORTGAGED);
+						 	}
+						  }
+						 else{
+							 		displayError(ERR_NOT_OWNED);
+						 }
+						 break;
 					}
 					if(checkAllColor(player).contains("Orange")){
 						if(buildOrDemolish == "build" && property.numberBuildings()==5){
@@ -1132,6 +1123,7 @@ public class UI {
 					{
 					if( player == property.getOwner() ){ //check if they own the property
 						property.setMortgage(true);
+						player.doTransaction(+(property.getValue()/2));
 					 }
 					else{
 						displayError(ERR_NOT_OWNED);
@@ -1140,21 +1132,19 @@ public class UI {
 					}
 					if(buildOrDemolish == "unmortgage") //&& owned by player)
 					{
-					   if( player == property.getOwner() ){//check if they own the property
-						   if( property.isMortgaged(player) == true){
-						
-						       property.setMortgage(false);				   
-						   }
-						   else{
-							   displayError(ERR_NOT_MORTGAGED);
-						   }
-						  
-					     }
-					   
-					   else{
-						displayError(ERR_NOT_OWNED);
-					}
-					break;
+						 if( player == property.getOwner() ){//check if they own the property
+							 if( property.isMortgaged(player) == true){
+								 	property.setMortgage(false);
+								 	player.doTransaction(-((property.getValue()/100)*110));				   
+							 }
+							 else{
+								 	displayError(ERR_NOT_MORTGAGED);
+						 	}
+						  }
+						 else{
+							 		displayError(ERR_NOT_OWNED);
+						 }
+						 break;
 					}
 					if(checkAllColor(player).contains("Red")){
 						if(buildOrDemolish == "build" && property.numberBuildings()==5){
@@ -1187,6 +1177,7 @@ public class UI {
 					{
 					if( player == property.getOwner() ){ //check if they own the property
 						property.setMortgage(true);
+						player.doTransaction(+(property.getValue()/2));
 					 }
 					else{
 						displayError(ERR_NOT_OWNED);
@@ -1195,21 +1186,19 @@ public class UI {
 					}
 					if(buildOrDemolish == "unmortgage") //&& owned by player)
 					{
-					   if( player == property.getOwner() ){//check if they own the property
-						   if( property.isMortgaged(player) == true){
-						
-						       property.setMortgage(false);				   
-						   }
-						   else{
-							   displayError(ERR_NOT_MORTGAGED);
-						   }
-						  
-					     }
-					   
-					   else{
-						displayError(ERR_NOT_OWNED);
-					}
-					break;
+						 if( player == property.getOwner() ){//check if they own the property
+							 if( property.isMortgaged(player) == true){
+								 	property.setMortgage(false);
+								 	player.doTransaction(-((property.getValue()/100)*110));				   
+							 }
+							 else{
+								 	displayError(ERR_NOT_MORTGAGED);
+						 	}
+						  }
+						 else{
+							 		displayError(ERR_NOT_OWNED);
+						 }
+						 break;
 					}
 					if(checkAllColor(player).contains("Red")){
 						if(buildOrDemolish == "build" && property.numberBuildings()==5){
@@ -1242,6 +1231,7 @@ public class UI {
 					{
 					if( player == property.getOwner() ){ //check if they own the property
 						property.setMortgage(true);
+						player.doTransaction(+(property.getValue()/2));
 					 }
 					else{
 						displayError(ERR_NOT_OWNED);
@@ -1250,21 +1240,19 @@ public class UI {
 					}
 					if(buildOrDemolish == "unmortgage") //&& owned by player)
 					{
-					   if( player == property.getOwner() ){//check if they own the property
-						   if( property.isMortgaged(player) == true){
-						
-						       property.setMortgage(false);				   
-						   }
-						   else{
-							   displayError(ERR_NOT_MORTGAGED);
-						   }
-						  
-					     }
-					   
-					   else{
-						displayError(ERR_NOT_OWNED);
-					}
-					break;
+						 if( player == property.getOwner() ){//check if they own the property
+							 if( property.isMortgaged(player) == true){
+								 	property.setMortgage(false);
+								 	player.doTransaction(-((property.getValue()/100)*110));				   
+							 }
+							 else{
+								 	displayError(ERR_NOT_MORTGAGED);
+						 	}
+						  }
+						 else{
+							 		displayError(ERR_NOT_OWNED);
+						 }
+						 break;
 					}
 					if(checkAllColor(player).contains("Red")){
 						if(buildOrDemolish == "build" && property.numberBuildings()==5){
@@ -1297,6 +1285,7 @@ public class UI {
 					{
 					if( player == property.getOwner() ){ //check if they own the property
 						property.setMortgage(true);
+						player.doTransaction(+(property.getValue()/2));
 					 }
 					else{
 						displayError(ERR_NOT_OWNED);
@@ -1305,21 +1294,19 @@ public class UI {
 					}
 					if(buildOrDemolish == "unmortgage") //&& owned by player)
 					{
-					   if( player == property.getOwner() ){//check if they own the property
-						   if( property.isMortgaged(player) == true){
-						
-						       property.setMortgage(false);				   
-						   }
-						   else{
-							   displayError(ERR_NOT_MORTGAGED);
-						   }
-						  
-					     }
-					   
-					   else{
-						displayError(ERR_NOT_OWNED);
-					}
-					break;
+						 if( player == property.getOwner() ){//check if they own the property
+							 if( property.isMortgaged(player) == true){
+								 	property.setMortgage(false);
+								 	player.doTransaction(-((property.getValue()/100)*110));				   
+							 }
+							 else{
+								 	displayError(ERR_NOT_MORTGAGED);
+						 	}
+						  }
+						 else{
+							 		displayError(ERR_NOT_OWNED);
+						 }
+						 break;
 					}
 					if(checkAllColor(player).contains("Yellow")){
 						if(buildOrDemolish == "build" && property.numberBuildings()==5){
@@ -1352,6 +1339,7 @@ public class UI {
 					{
 					if( player == property.getOwner() ){ //check if they own the property
 						property.setMortgage(true);
+						player.doTransaction(+(property.getValue()/2));
 					 }
 					else{
 						displayError(ERR_NOT_OWNED);
@@ -1360,21 +1348,19 @@ public class UI {
 					}
 					if(buildOrDemolish == "unmortgage") //&& owned by player)
 					{
-					   if( player == property.getOwner() ){//check if they own the property
-						   if( property.isMortgaged(player) == true){
-						
-						       property.setMortgage(false);				   
-						   }
-						   else{
-							   displayError(ERR_NOT_MORTGAGED);
-						   }
-						  
-					     }
-					   
-					   else{
-						displayError(ERR_NOT_OWNED);
-					}
-					break;
+						 if( player == property.getOwner() ){//check if they own the property
+							 if( property.isMortgaged(player) == true){
+								 	property.setMortgage(false);
+								 	player.doTransaction(-((property.getValue()/100)*110));				   
+							 }
+							 else{
+								 	displayError(ERR_NOT_MORTGAGED);
+						 	}
+						  }
+						 else{
+							 		displayError(ERR_NOT_OWNED);
+						 }
+						 break;
 					}
 					if(checkAllColor(player).contains("Yellow")){
 						if(buildOrDemolish == "build" && property.numberBuildings()==5){
@@ -1407,6 +1393,7 @@ public class UI {
 					{
 					if( player == property.getOwner() ){ //check if they own the property
 						property.setMortgage(true);
+						player.doTransaction(+(property.getValue()/2));
 					 }
 					else{
 						displayError(ERR_NOT_OWNED);
@@ -1415,21 +1402,19 @@ public class UI {
 					}
 					if(buildOrDemolish == "unmortgage") //&& owned by player)
 					{
-					   if( player == property.getOwner() ){//check if they own the property
-						   if( property.isMortgaged(player) == true){
-						
-						       property.setMortgage(false);				   
-						   }
-						   else{
-							   displayError(ERR_NOT_MORTGAGED);
-						   }
-						  
-					     }
-					   
-					   else{
-						displayError(ERR_NOT_OWNED);
-					}
-					break;
+						 if( player == property.getOwner() ){//check if they own the property
+							 if( property.isMortgaged(player) == true){
+								 	property.setMortgage(false);
+								 	player.doTransaction(-((property.getValue()/100)*110));				   
+							 }
+							 else{
+								 	displayError(ERR_NOT_MORTGAGED);
+						 	}
+						  }
+						 else{
+							 		displayError(ERR_NOT_OWNED);
+						 }
+						 break;
 					}
 					if(checkAllColor(player).contains("Yellow")){
 						if(buildOrDemolish == "build" && property.numberBuildings()==5){
@@ -1462,6 +1447,7 @@ public class UI {
 					{
 					if( player == property.getOwner() ){ //check if they own the property
 						property.setMortgage(true);
+						player.doTransaction(+(property.getValue()/2));
 					 }
 					else{
 						displayError(ERR_NOT_OWNED);
@@ -1470,21 +1456,19 @@ public class UI {
 					}
 					if(buildOrDemolish == "unmortgage") //&& owned by player)
 					{
-					   if( player == property.getOwner() ){//check if they own the property
-						   if( property.isMortgaged(player) == true){
-						
-						       property.setMortgage(false);				   
-						   }
-						   else{
-							   displayError(ERR_NOT_MORTGAGED);
-						   }
-						  
-					     }
-					   
-					   else{
-						displayError(ERR_NOT_OWNED);
-					}
-					break;
+						 if( player == property.getOwner() ){//check if they own the property
+							 if( property.isMortgaged(player) == true){
+								 	property.setMortgage(false);
+								 	player.doTransaction(-((property.getValue()/100)*110));				   
+							 }
+							 else{
+								 	displayError(ERR_NOT_MORTGAGED);
+						 	}
+						  }
+						 else{
+							 		displayError(ERR_NOT_OWNED);
+						 }
+						 break;
 					}
 					if(checkAllColor(player).contains("Green")){
 						if(buildOrDemolish == "build" && property.numberBuildings()==5){
@@ -1517,6 +1501,7 @@ public class UI {
 					{
 					if( player == property.getOwner() ){ //check if they own the property
 						property.setMortgage(true);
+						player.doTransaction(+(property.getValue()/2));
 					 }
 					else{
 						displayError(ERR_NOT_OWNED);
@@ -1525,21 +1510,19 @@ public class UI {
 					}
 					if(buildOrDemolish == "unmortgage") //&& owned by player)
 					{
-					   if( player == property.getOwner() ){//check if they own the property
-						   if( property.isMortgaged(player) == true){
-						
-						       property.setMortgage(false);				   
-						   }
-						   else{
-							   displayError(ERR_NOT_MORTGAGED);
-						   }
-						  
-					     }
-					   
-					   else{
-						displayError(ERR_NOT_OWNED);
-					}
-					break;
+						 if( player == property.getOwner() ){//check if they own the property
+							 if( property.isMortgaged(player) == true){
+								 	property.setMortgage(false);
+								 	player.doTransaction(-((property.getValue()/100)*110));				   
+							 }
+							 else{
+								 	displayError(ERR_NOT_MORTGAGED);
+						 	}
+						  }
+						 else{
+							 		displayError(ERR_NOT_OWNED);
+						 }
+						 break;
 					}
 					if(checkAllColor(player).contains("Green")){
 						if(buildOrDemolish == "build" && property.numberBuildings()==5){
@@ -1572,6 +1555,7 @@ public class UI {
 					{
 					if( player == property.getOwner() ){ //check if they own the property
 						property.setMortgage(true);
+						player.doTransaction(+(property.getValue()/2));
 					 }
 					else{
 						displayError(ERR_NOT_OWNED);
@@ -1580,21 +1564,19 @@ public class UI {
 					}
 					if(buildOrDemolish == "unmortgage") //&& owned by player)
 					{
-					   if( player == property.getOwner() ){//check if they own the property
-						   if( property.isMortgaged(player) == true){
-						
-						       property.setMortgage(false);				   
-						   }
-						   else{
-							   displayError(ERR_NOT_MORTGAGED);
-						   }
-						  
-					     }
-					   
-					   else{
-						displayError(ERR_NOT_OWNED);
-					}
-					break;
+						 if( player == property.getOwner() ){//check if they own the property
+							 if( property.isMortgaged(player) == true){
+								 	property.setMortgage(false);
+								 	player.doTransaction(-((property.getValue()/100)*110));				   
+							 }
+							 else{
+								 	displayError(ERR_NOT_MORTGAGED);
+						 	}
+						  }
+						 else{
+							 		displayError(ERR_NOT_OWNED);
+						 }
+						 break;
 					}
 					if(checkAllColor(player).contains("Green")){
 						if(buildOrDemolish == "build" && property.numberBuildings()==5){
@@ -1627,6 +1609,7 @@ public class UI {
 					{
 					if( player == property.getOwner() ){ //check if they own the property
 						property.setMortgage(true);
+						player.doTransaction(+(property.getValue()/2));
 					 }
 					else{
 						displayError(ERR_NOT_OWNED);
@@ -1635,21 +1618,19 @@ public class UI {
 					}
 					if(buildOrDemolish == "unmortgage") //&& owned by player)
 					{
-					   if( player == property.getOwner() ){//check if they own the property
-						   if( property.isMortgaged(player) == true){
-						
-						       property.setMortgage(false);				   
-						   }
-						   else{
-							   displayError(ERR_NOT_MORTGAGED);
-						   }
-						  
-					     }
-					   
-					   else{
-						displayError(ERR_NOT_OWNED);
-					}
-					break;
+						 if( player == property.getOwner() ){//check if they own the property
+							 if( property.isMortgaged(player) == true){
+								 	property.setMortgage(false);
+								 	player.doTransaction(-((property.getValue()/100)*110));				   
+							 }
+							 else{
+								 	displayError(ERR_NOT_MORTGAGED);
+						 	}
+						  }
+						 else{
+							 		displayError(ERR_NOT_OWNED);
+						 }
+						 break;
 					}
 					if(checkAllColor(player).contains("Blue")){
 						if(buildOrDemolish == "build" && property.numberBuildings()==5){
@@ -1682,6 +1663,7 @@ public class UI {
 					{
 					if( player == property.getOwner() ){ //check if they own the property
 						property.setMortgage(true);
+						player.doTransaction(+(property.getValue()/2));
 					 }
 					else{
 						displayError(ERR_NOT_OWNED);
@@ -1690,21 +1672,19 @@ public class UI {
 					}
 					if(buildOrDemolish == "unmortgage") //&& owned by player)
 					{
-					   if( player == property.getOwner() ){//check if they own the property
-						   if( property.isMortgaged(player) == true){
-						
-						       property.setMortgage(false);				   
-						   }
-						   else{
-							   displayError(ERR_NOT_MORTGAGED);
-						   }
-						  
-					     }
-					   
-					   else{
-						displayError(ERR_NOT_OWNED);
-					}
-					break;
+						 if( player == property.getOwner() ){//check if they own the property
+							 if( property.isMortgaged(player) == true){
+								 	property.setMortgage(false);
+								 	player.doTransaction(-((property.getValue()/100)*110));				   
+							 }
+							 else{
+								 	displayError(ERR_NOT_MORTGAGED);
+						 	}
+						  }
+						 else{
+							 		displayError(ERR_NOT_OWNED);
+						 }
+						 break;
 					}
 					if(checkAllColor(player).contains("Blue")){
 						if(buildOrDemolish == "build" && property.numberBuildings()==5){
