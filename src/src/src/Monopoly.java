@@ -292,8 +292,9 @@ public class Monopoly {
 					break;
 				case UI.CMD_UNMORTGAGE : // mortgage option.
 					ui.whichProperty(currPlayer, board, "unmortgage");
+					//displays last transaction so if there was an error it will still display the last one you did. balance remains same
 					ui.displayBankTransaction(currPlayer);
-					break;
+				break;
 				case UI.CMD_DONE :
 					if (rollDone) {
 						if (!rentOwed || (rentOwed && rentPaid)) {
