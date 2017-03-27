@@ -60,13 +60,6 @@ public class Player {
 		return passedGo;
 	}
 	
-	public void mortgageProperty(Property p) { // mortage a property.
-		p.setOwner(this);
-		p.setMortgage(true);
-		properties.add(p);
-		return;
-	}
-	
 	public void boughtProperty (Property property) {
 		property.setOwner(this);
 		properties.add(property);
@@ -109,8 +102,5 @@ public class Player {
 	 		balance = 0;
 	 }
 	 
-	 public void mortgage() {
-			status=true;
-		}
 }
 
