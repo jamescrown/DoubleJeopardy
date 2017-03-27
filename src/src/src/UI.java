@@ -251,7 +251,7 @@ public class UI {
 	}
 	
 	public void displayCommandHelp () {
-		infoPanel.displayString("Available commands: roll, pay rent, buy, property, build, demolish, balance, done, quit, mortgage, unmortgage. ");
+		infoPanel.displayString("Available commands: roll, pay rent, buy, property, build, demolish, balance, done, quit. ");
 		return;
 	}
 	
@@ -326,12 +326,23 @@ public class UI {
 			infoPanel.displayString(player + " owns the following property...");
 			for (Property p : propertyList) {
 				if (p.getColor()=="transport" || p.getColor()=="utilities"){
-					infoPanel.displayString(p.getName() + ", rent " + p.getRent() + ", " + p.getColor());
+					if (p.isMortgaged(player)){
+						infoPanel.displayString(p.getName() + ", rent " + p.getRent() + ", " + p.getColor() + ", MORTGAGED.");
+					}
+					else{
+						infoPanel.displayString(p.getName() + ", rent " + p.getRent() + ", " + p.getColor());
+					}
 					
 				}
 				else{
-					infoPanel.displayString(p.getName() + ", rent " + p.getRent() + ", " + p.getColor() + ", Number of houses/hotels: " + p.numberBuildings());
+					if (p.isMortgaged(player)){
+						infoPanel.displayString(p.getName() + ", rent " + p.getRent() + ", " + p.getColor() + ", MORTGAGED.");
+					}
+					else{
+						infoPanel.displayString(p.getName() + ", rent " + p.getRent() + ", " + p.getColor() + ", Number of houses/hotels: " + p.numberBuildings());
 				
+					}
+					
 				}
 				
 			}
@@ -373,8 +384,14 @@ public class UI {
 		if (board.isTransport(player.getPosition())){
 			Transport transport = board.getTransport(player.getPosition());
 			if (transport.isOwned()) {
-				infoPanel.displayString("The property is owned by " + transport.getOwner() + ". Rent is " + transport.getRent() + CURRENCY + ".");				
-			} else {
+				if (transport.isMortgaged(player)){
+						infoPanel.displayString("The property is owned by " + transport.getOwner() + ". Rent is suspended.");				
+					}
+				else{
+						infoPanel.displayString("The property is owned by " + transport.getOwner() + ". Rent is " + transport.getRent() + CURRENCY + ".");				
+			
+					}
+				} else {
 				infoPanel.displayString("The property is not owned. Rent is " + transport.getRent() + CURRENCY + ".");								
 				//if own another transport square - this could be used for calculating rent
 				if (colorPropertiesOwned(player, "transport") > 0){
@@ -386,7 +403,13 @@ public class UI {
 		else if (board.isUtilities(player.getPosition())){
 			Utilities utilities = board.getUtilities(player.getPosition());
 			if (utilities.isOwned()) {
-				infoPanel.displayString("The property is owned by " + utilities.getOwner() + ". Rent is " + utilities.getRent()  + CURRENCY +  " times roll. ");				
+				if (utilities.isMortgaged(player)){
+					infoPanel.displayString("The property is owned by " + utilities.getOwner() + ". Rent is suspended.");				
+				}
+			else{
+					infoPanel.displayString("The property is owned by " + utilities.getOwner() + ". Rent is " + utilities.getRent() + CURRENCY + ".");				
+		
+				}
 			} else {
 				infoPanel.displayString("The property is not owned. Rent is " + utilities.getRent() + CURRENCY + ".");								
 				//if own another utilities square - this could be used for calculating rent
@@ -398,7 +421,13 @@ public class UI {
 		else if (board.isProperty(player.getPosition())) {
 			Property property = board.getProperty(player.getPosition());
 			if (property.isOwned()) {
-				infoPanel.displayString("The property is owned by " + property.getOwner() + ". Rent is " + property.getRent() + CURRENCY + ".");				
+				if (property.isMortgaged(player)){
+					infoPanel.displayString("The property is owned by " + property.getOwner() + ". Rent is suspended.");				
+				}
+				else{
+					infoPanel.displayString("The property is owned by " + property.getOwner() + ". Rent is " + property.getRent() + CURRENCY + ".");				
+		
+				}	
 			} else {
 				infoPanel.displayString("The property is not owned. Rent is " + property.getRent() + CURRENCY + "." + " Color is " + property.getColor() + ".");								
 			//if you own another property in that color tell them
