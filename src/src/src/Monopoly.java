@@ -1,87 +1,4 @@
-import java.util.ArrayList;
 
-public class Monopoly {
-
-	public static final int MAX_NUM_PLAYERS = 6;
-	private static final int START_MONEY = 1500;
-	private static final int GO_MONEY = 200;
-	
-	private ArrayList<Player> players = new ArrayList<Player>();
-	private Player currPlayer;
-	private UI ui = new UI(players);
-	private int numPlayers;
-	private Dice dice = new Dice();
-	private boolean gameOver = false;
-	private Board board = new Board();
-	
-	Monopoly () {
-		numPlayers = 0;
-		ui.display();
-		return;
-	}
-	
-	public void inputNames () {
-		do {
-			ui.inputName(numPlayers);
-			if (!ui.isDone()) {
-				players.add(new Player(ui.getString(),ui.getTokenName(numPlayers)));
-				numPlayers++;
-			}
-		} while (!ui.isDone() && numPlayers!=MAX_NUM_PLAYERS);
-		return;
-	}
-	
-	public void giveStartMoney () {
-		for (Player p : players) {
-			p.doTransaction (START_MONEY);
-			ui.displayBankTransaction (p);
-		}
-		return;
-	}
-	
-	public void decideStarter () {
-		ArrayList<Player> inPlayers = new ArrayList<Player>(players), 
-				selectedPlayers = new ArrayList<Player>();
-		boolean tie = false;
-		do {
-			int highestTotal = 0;
-			for (Player p : inPlayers) {
-				dice.roll();
-				ui.displayDice(p,dice);
-				if (dice.getTotal() > highestTotal) {
-					tie = false;
-					highestTotal = dice.getTotal();
-					selectedPlayers.clear();
-					selectedPlayers.add(p);
-				} else if (dice.getTotal() == highestTotal) {
-					tie = true;
-					selectedPlayers.add(p);
-				}
-			}
-			if (tie) {
-				ui.displayRollDraw();
-				inPlayers = new ArrayList<Player>(selectedPlayers);
-				selectedPlayers.clear();
-			}
-		} while (tie);
-		currPlayer = selectedPlayers.get(0);
-		ui.displayRollWinner(currPlayer);
-		ui.display();
-		return;
-	}
-
-	public void processTurn () {
-		boolean turnFinished = false;
-		boolean rollDone = false;
-		boolean rentOwed = false;
-		boolean rentPaid = false;
-		do {
-			if(currPlayer.status==false){// if statement to check if player is bankrupt
-				turnFinished = true;//if yes then end their turn before it begins
-			}
-			else{
-			ui.inputCommand(currPlayer);
-			switch (ui.getCommandId()) {
 				case UI.CMD_ROLL :
 					if (!rollDone) {
 						if (!rentOwed) {
@@ -118,7 +35,7 @@ public class Monopoly {
 						if (property.isOwned()) {
 							if (!property.getOwner().equals(currPlayer)) {
 								if(property.isMortgaged(currPlayer) == false){
-								if (!rentPaid) {
+								 if (!rentPaid) {
 									if (currPlayer.getBalance()>=property.getRent()) {
 										//if utilities rent is mutliplied by roll
 										if (board.isUtilities(currPlayer.getPosition())){
@@ -156,6 +73,7 @@ public class Monopoly {
 								}
 								}else{
 									ui.displayError(UI.ERR_MORTG_OWNED);
+									rentOwed= false;
 								}
 							} else {
 								ui.displayError(UI.ERR_SELF_OWNED);								
@@ -305,45 +223,4 @@ public class Monopoly {
 					turnFinished = true;
 					gameOver = true;
 					break;
-			}
-			}	
-		
-		} while (!turnFinished);
-		return;
-	}
-	
-	public void nextPlayer () {
-		currPlayer = players.get((players.indexOf(currPlayer) + 1) % players.size());
-		return;
-	}
-	
-	public void decideWinner () {
-		ArrayList<Player> playersWithMostAssets = new ArrayList<Player>();
-		int mostAssets = players.get(0).getAssets();
-		for (Player player : players) {
-			ui.displayAssets(player);
-			if (player.getAssets() > mostAssets) {
-				playersWithMostAssets.clear(); 
-				playersWithMostAssets.add(player);
-			} else if (player.getAssets() == mostAssets) {
-				playersWithMostAssets.add(player);
-			}
-		}
-		if (playersWithMostAssets.size() == 1) {
-			ui.displayWinner(playersWithMostAssets.get(0));
-		} else {
-			ui.displayDraw(playersWithMostAssets);
-		}
-		return;
-	}
-	
-	public void displayGameOver () {
-		ui.displayGameOver ();
-		return;
-	}
-	
-	public boolean isGameOver () {
-		return gameOver;
-	}
-
-}
+			
