@@ -251,7 +251,7 @@ public class UI {
 	}
 	
 	public void displayCommandHelp () {
-		infoPanel.displayString("Available commands: roll, pay rent, buy, property, build, demolish, balance, done, quit. ");
+		infoPanel.displayString("Available commands: roll, pay rent, buy, property, build, demolish, balance, done, quit, mortgage, unmortgage. ");
 		return;
 	}
 	
