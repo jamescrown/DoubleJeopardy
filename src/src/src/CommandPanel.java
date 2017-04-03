@@ -5,6 +5,7 @@ import javax.swing.*;
 import java.awt.*;
 import javax.swing.JTextField;
 
+
 public class CommandPanel extends JPanel  {
 	
 	private static final long serialVersionUID = 1L;
@@ -13,6 +14,7 @@ public class CommandPanel extends JPanel  {
 	private JTextField commandField = new JTextField(); 
 	private LinkedList<String> commandBuffer = new LinkedList<String>();
 	private String string;
+	
 	
 	CommandPanel () {
 		class AddActionListener implements ActionListener {
@@ -33,6 +35,7 @@ public class CommandPanel extends JPanel  {
 		return;
 	}
 
+	
 	public void inputString() {
 		synchronized (commandBuffer) {
 			while (commandBuffer.isEmpty()) {
@@ -46,6 +49,7 @@ public class CommandPanel extends JPanel  {
 		}
 		return;
 	}
+	
 	
 	public String getString() {
 		return string;

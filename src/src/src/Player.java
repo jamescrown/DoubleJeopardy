@@ -6,20 +6,47 @@ public class Player {
 	private int position;
 	private int balance;
 	private int amount;
-	private String token;
+	private String tokenName;
+	private int tokenId;
 	private boolean passedGo;
-	public boolean status=true;//bankruptcy status
 	private ArrayList<Property> properties = new ArrayList<Property>();
 	
-	Player (String name, String token) {
+// CONSTRUCTORS
+	
+	Player (String name, String tokenName, int tokenId) {
 		this.name = name;
-		this.token = token;
+		this.tokenName = tokenName;
+		this.tokenId = tokenId;
 		position = 0;
 		balance = 0;
 		passedGo = false;
 		return;
 	}
 	
+	Player (Player player) {   // copy constructor
+		this(player.getName(), player.getTokenName(), player.getTokenId());
+	}
+	
+// METHODS DEALING WITH PLAYER DATA
+	
+	public String getName () {
+		return name;
+	}
+	
+	public String getTokenName () {
+		return tokenName;
+	}
+	
+	public int getTokenId () {
+		return tokenId;
+	}
+	
+// METHODS DEALING WITH TOKEN POSITION
+	
+	public int getPosition () {
+		return position;
+	}
+
 	public void move (int squares) {
 		position = position + squares;
 		if (position >= Board.NUM_SQUARES) {
@@ -33,21 +60,19 @@ public class Player {
 		} 
 		return;
 	}
+
+	public boolean passedGo () {
+		return passedGo;
+	}
+	
+//  METHODS DEALING WITH MONEY
 	
 	public void doTransaction (int amount) {
 		balance = balance + amount;
 		this.amount = amount;
 		return;
 	}
-	
-	public int getPosition () {
-		return position;
-	}
-	
-	public String getName () {
-		return name;
-	}
-	
+		
 	public int getTransaction () {
 		return amount;
 	}
@@ -56,11 +81,17 @@ public class Player {
 		return balance;
 	}
 	
-	public boolean passedGo () {
-		return passedGo;
+	public int getAssets () {
+		int assets = balance;
+		for (Property property: properties) {
+			assets = assets + property.getPrice();
+		}
+		return assets;
 	}
 	
-	public void boughtProperty (Property property) {
+//  METHODS DEALING WITH PROPERTY
+	
+	public void addProperty (Property property) {
 		property.setOwner(this);
 		properties.add(property);
 		return;
@@ -70,37 +101,50 @@ public class Player {
 		return properties.get(properties.size()-1);
 	}
 	
-	public void boughtTransport (Transport transport){
-		transport.setOwner(this);
-		properties.add(transport);
-	}
-	
-	public void boughtUtilities (Utilities utility){
-		utility.setOwner(this);
-		properties.add(utility);
-	}
-	
 	public ArrayList<Property> getProperties () {
 		return properties;
 	}
 	
-	public int getAssets () {
-		int assets = balance;
-		for (Property property: properties) {
-			assets = assets + property.getValue();
+	public boolean isGroupOwner (Site site) {
+		boolean ownsAll = true;
+		ColourGroup colourGroup = site.getColourGroup();
+		for (Site s : colourGroup.getMembers()) {
+			if (!s.isOwned() || (s.isOwned() && s.getOwner() != this))
+				ownsAll = false;
 		}
-		return assets;
+		return ownsAll;
+	}
+	
+	public int getNumStationsOwned () {
+		int numOwned = 0;
+		for (Property p : properties) {
+			if (p instanceof Station) {
+				numOwned++;
+			}
+		}
+		return numOwned;
+	}
+	
+	public int getNumUtilitiesOwned () {
+		int numOwned = 0;
+		for (Property p : properties) {
+			if (p instanceof Utility) {
+				numOwned++;
+			}
+		}
+		return numOwned;
+	}
+	
+// COMMON JAVA METHODS	
+	
+	public boolean equals (String name) {
+		return this.name.toLowerCase() == name;
 	}
 	
 	public String toString () {
-		return name + " (" + token + ")";
+		return name + " (" + tokenName + ")";
 	}
 	
-	//status if they have lost remove all funds from account and set status to false , representing bankruptcy
-	 public void lost () {
-	 		status=false;
-	 		balance = 0;
-	 }
-	 
+
 }
 

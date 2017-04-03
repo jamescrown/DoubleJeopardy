@@ -1,80 +1,93 @@
 
 public class Property extends Square {
 
-	private boolean isOwned;
-	private int value;
-	private boolean mortgaged;
-	private int rent[];
-	private Player owner;
-	private String color;
-	private int housePrice;
-	int i = 0;
+	private static final float MORTGAGE_PREMIUM = 1.1f;
 	
-	Property (String name, int value, int[] rent, String color, int housePrice) {
+	private boolean isOwned;
+	private int price;
+	private Player owner;
+	private String shortName;
+	private boolean mortgaged;
+	private int mortgageValue;
+	
+	Property (String name, int price, String shortName, int mortgageValue) {
 		super(name);
-		this.value = value;
-		this.rent = rent;
+		this.price = price;
+		this.shortName = shortName;
 		isOwned = false;
-		this.color = color;
-		this.housePrice = housePrice;
+		owner = null;
+		mortgaged = false;
+		this.mortgageValue = mortgageValue;
 		return;
 	}
-	
-	public int getValue () {
-		return value;
+		
+// METHODS DEALING WITH PRICE
+
+	public int getPrice () {
+		return price;
 	}
 	
-	public int getRent () {
-		return rent[i];
+// METHODS DEALING WITH RENT : 	
+
+	public int getRent () { // this method is overloaded by the subclasses
+		return 0;  
+	}
+	
+// METHODS DEALING WITH OWNERSHIP
+	
+	public Player getOwner () {
+		return owner;
 	}
 	
 	public boolean isOwned () {
 		return isOwned;
 	}
 	
-	public void setBuilding(){
-		i++;
-		return ;
-	}
-	
-	public void demolishBuilding(){
-		i--;
-		return;
-	}
-	
-	public int numberBuildings(){
-		return i;
-	}
-	
-	public void setOwner (Player inPlayer) {
-		owner = inPlayer;
+	public void setOwner (Player player) {
+		owner = player;
 		isOwned = true;
 		return;
 	}
 	
-	public boolean isMortgaged(Player inPlayer) { // gets the mortgaged status of the property.
+	public void releaseOwnership () {
+		isOwned = false;
+		owner = null;
+		mortgaged = false;
+		return;
+	}
+	
+// METHODS DEALING WITH MORTGAGES
+	
+	public void setMortgaged() {
+		mortgaged = true;
+		return;
+	}
+	
+	public boolean isMortgaged() {
 		return mortgaged;
 	}
-	public void setMortgage(boolean bool){
-		mortgaged = bool;
+	
+	public void setNotMortgaged() {
+		mortgaged = false;
+		return;
 	}
 	
-	public Player getOwner () {
-		return owner;
-	}
-	public String getColor (){
-		return color;
-	}
-	public void removeOwner (){// remove the owner of said property . for example when bankrupt
-		isOwned = false;
+	public int getMortgageValue() {
+		return mortgageValue;
 	}
 	
-	public void suspendRent(){
-		isOwned = false;
+	public int getMortgageRemptionPrice () {
+		return (int) (((float) mortgageValue) * MORTGAGE_PREMIUM);
 	}
-	public int getPrice(){
-		return housePrice;
+	
+// COMMON JAVA METHODS	
+	
+	public boolean equals (String string) {
+		return shortName.equals(string);
 	}
-
+	
+	public String toString () {
+		return super.toString();
+	}
 }
 

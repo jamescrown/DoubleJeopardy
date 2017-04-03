@@ -28,10 +28,8 @@ public class InfoPanel extends JPanel {
 	public void displayString (String text) {
 		textArea.setText(textArea.getText()+"\n"+text);
 	}
-	
+
 	public void clearPanel (){
 		textArea.setText(null);
 	}
-
 }
-
