@@ -88,7 +88,8 @@ public class Monopoly {
 			if (!rentOwed) {
 				dice.roll();
 				ui.displayDice(currPlayer, dice);
-				currPlayer.move(dice.getTotal());
+				//currPlayer.move(dice.getTotal());
+				currPlayer.move(2);
 				ui.display();
 				if (currPlayer.passedGo()) {
 					currPlayer.doTransaction(+GO_MONEY);
@@ -96,6 +97,9 @@ public class Monopoly {
 					ui.displayBankTransaction(currPlayer);
 				}
 				ui.displaySquare(currPlayer, board, dice);
+				if (board.getSquare(currPlayer.getPosition()).getName() == "Income Tax" || board.getSquare(currPlayer.getPosition()).getName() == "Super Tax" ){
+					processTax(board.getSquare(currPlayer.getPosition()).getName());
+				}
 				if (board.getSquare(currPlayer.getPosition()) instanceof Property && 
 						((Property) board.getSquare(currPlayer.getPosition())).isOwned() &&
 						!((Property) board.getSquare(currPlayer.getPosition())).getOwner().equals(currPlayer) ) {
@@ -168,6 +172,7 @@ public class Monopoly {
 		}
 		return;
 	}
+	
 	
 	private void processBuild () {
 		Property property = ui.getInputProperty();
@@ -308,11 +313,31 @@ public class Monopoly {
 		if (rollDone) {
 			if (!rentOwed || (rentOwed && rentPaid)) {
 				turnFinished = true;
+				ui.clearPanel();
 			} else {
 				ui.displayError(UI.ERR_RENT_OWED);
 			}
 		} else {
 			ui.displayError(UI.ERR_NO_ROLL);
+		}
+		return;
+	}
+	
+	public void processTax(String typeTax){
+		ui.displayString("in tax");
+		int taxprice;
+		if (typeTax == "Income Tax"){
+			taxprice = 200;
+		}
+		else{
+			taxprice = 100;
+		}
+		if (currPlayer.getBalance() >= taxprice) {				
+			currPlayer.doTransaction(-taxprice);
+			ui.displayBankTransaction(currPlayer);
+			ui.displayBalance(currPlayer);
+		} else {
+			ui.displayError(UI.ERR_INSUFFICIENT_FUNDS); //must sell things or declare bankrupt
 		}
 		return;
 	}
@@ -372,6 +397,17 @@ public class Monopoly {
 			}
 		} while (!turnFinished);
 		return;
+	}
+	
+	public void payTax(int taxPrice){
+		if (currPlayer.getBalance() >= taxPrice) {				
+			currPlayer.doTransaction(-taxPrice);
+			ui.displayBankTransaction(currPlayer);
+			ui.displayBalance(currPlayer);
+		} else {
+			ui.displayError(UI.ERR_INSUFFICIENT_FUNDS);
+			//if not enough money, must sell things or declare bankrupt
+		}
 	}
 	
 	public void nextPlayer () {

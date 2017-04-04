@@ -236,7 +236,7 @@ public class UI {
 					break;					
 				case "help" :
 					commandId = CMD_HELP;
-					inputValid = hasOneArgument(words);
+					inputValid = hasNoArgument(words);
 					break;
 				case "cheat" :
 					commandId = CMD_CHEAT;
@@ -405,6 +405,7 @@ public class UI {
 				infoPanel.displayString("The property is not owned.");								
 			}
 		}
+		
 		return;
 	}
 	
@@ -455,4 +456,8 @@ public class UI {
 		infoPanel.displayString("The following players drew the game " + players);
 		return;
 	}
+	public void clearPanel(){
+		infoPanel.clearPanel();
+	}
+	
 }
