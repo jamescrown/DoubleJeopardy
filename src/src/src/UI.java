@@ -27,6 +27,7 @@ public class UI {
 	public static final int CMD_REDEEM = 15;
 	public static final int CMD_CHEAT = 16;
 	public static final int CMD_DEMOLISH = 17;
+	public static final int CMD_TAX = 18;
 	
 	public static final int ERR_SYNTAX = 0;
 	public static final int ERR_DOUBLE_ROLL = 1;
@@ -49,6 +50,9 @@ public class UI {
 	public static final int ERR_IS_MORTGAGED = 18;
 	public static final int ERR_IS_NOT_MORTGAGED = 19;
 	public static final int SITE_IS_MORTGAGED = 20;
+	public static final int ERR_TAX_OWED = 21;
+	public static final int ERR_NOT_A_TAX = 22;
+	public static final int ERR_TAX_ALREADY_PAID = 23;
 	
 	private final String[] errorMessages = {
 		"Error: Not a valid command.",
@@ -71,7 +75,10 @@ public class UI {
 		"Error: The site has units on it.",
 		"Error: The property has already been mortgaged.",
 		"Error: The property has not been mortgaged.",
-		"Error: The property has been mortgaged."
+		"Error: The property has been mortgaged.",
+		"Error: You owe tax.",
+		"Error: You don't owe tax.",
+		"Error: You have already paid the tax."
 	};
 	
 	private JFrame frame = new JFrame();
@@ -177,10 +184,16 @@ public class UI {
 					inputValid = hasNoArgument(words);
 					break;
 				case "pay" :
-					commandId = CMD_PAY_RENT;
+					
 					if (hasOneArgument(words) && words[1].equals("rent")) {
+						commandId = CMD_PAY_RENT;
 						inputValid = true;
-					} else {
+					} 
+					else if(hasOneArgument(words) && words[1].equals("tax")){
+						commandId = CMD_TAX;
+						inputValid = true;
+					}
+					else {
 						inputValid = false;
 					}
 					break;
@@ -338,7 +351,7 @@ public class UI {
 	}
 	
 	public void displayCommandHelp () {
-		infoPanel.displayString("Available commands: roll, buy, pay rent, build, demolish, mortgage, redeem, bankrupt, property, balance, done, quit. ");
+		infoPanel.displayString("Available commands: roll, buy, pay rent, pay tax build, demolish, mortgage, redeem, bankrupt, property, balance, done, quit. ");
 		return;
 	}
 	
