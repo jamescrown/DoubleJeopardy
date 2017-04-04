@@ -53,6 +53,7 @@ public class UI {
 	public static final int ERR_TAX_OWED = 21;
 	public static final int ERR_NOT_A_TAX = 22;
 	public static final int ERR_TAX_ALREADY_PAID = 23;
+	public static final int ERR_NEG_BALANCE = 24;
 	
 	private final String[] errorMessages = {
 		"Error: Not a valid command.",
@@ -78,7 +79,8 @@ public class UI {
 		"Error: The property has been mortgaged.",
 		"Error: You owe tax.",
 		"Error: You don't owe tax.",
-		"Error: You have already paid the tax."
+		"Error: You have already paid the tax.",
+		"Error: You can't continue with a negative bank balance."
 	};
 	
 	private JFrame frame = new JFrame();
