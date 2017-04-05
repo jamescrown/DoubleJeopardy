@@ -138,16 +138,16 @@ public class Monopoly {
 				if (!property.getOwner().equals(currPlayer)) {
 					if (!rentPaid) {
 						int rent = property.getRent();
-						if (currPlayer.getBalance()>=rent) {
+						//if (currPlayer.getBalance()>=rent) {
 							Player owner = property.getOwner();
 							currPlayer.doTransaction(-rent);
 							owner.doTransaction(+rent);
 							ui.displayTransaction(currPlayer, owner);
 							rentPaid = true;	
 							rentOwed = false;
-						} else {
-							ui.displayError(UI.ERR_INSUFFICIENT_FUNDS);										
-						} 
+						//} else {
+						//	ui.displayError(UI.ERR_INSUFFICIENT_FUNDS);										
+						//} 
 					} else {
 						ui.displayError(UI.ERR_RENT_ALREADY_PAID);									
 					}
