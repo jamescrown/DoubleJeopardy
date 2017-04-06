@@ -105,6 +105,10 @@ public class Monopoly {
 							taxPaid = false;
 							processTax(board.getSquare(currPlayer.getPosition()).getName());
 						}
+						
+					if(currPlayer.getPosition() == 30 ) { //if player lands on 30
+                           		currPlayer.goToJail(); // goToJail function on Player.
+						}
 						if (board.getSquare(currPlayer.getPosition()) instanceof Property && 
 								((Property) board.getSquare(currPlayer.getPosition())).isOwned() &&
 								!((Property) board.getSquare(currPlayer.getPosition())).getOwner().equals(currPlayer) ) {
