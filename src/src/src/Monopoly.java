@@ -149,31 +149,31 @@ public class Monopoly {
 						//	ui.displayError(UI.ERR_INSUFFICIENT_FUNDS);										
 						//} 
 					} else {
-						ui.displayError(UI.ERR_RENT_ALREADY_PAID);									
+					//	ui.displayError(UI.ERR_RENT_ALREADY_PAID);									
 					}
 				} else {
-					ui.displayError(UI.ERR_SELF_OWNED);								
+				//	ui.displayError(UI.ERR_SELF_OWNED);								
 				}
 			} else {
-				ui.displayError(UI.ERR_NOT_OWNED);							
+			//	ui.displayError(UI.ERR_NOT_OWNED);							
 			}
 		} else {
-			ui.displayError(UI.ERR_NOT_A_PROPERTY);
+		//	ui.displayError(UI.ERR_NOT_A_PROPERTY);
 		}
 		return;
 	}
 	private void processPayTax(){
 		if (board.getSquare(currPlayer.getPosition()).getName() == "Income Tax" || board.getSquare(currPlayer.getPosition()).getName() == "Super Tax" ){
 				
-					if (!taxPaid) {
+					//if (!taxPaid) {
 						processTax(board.getSquare(currPlayer.getPosition()).getName()); 
-					} else {
-						ui.displayError(UI.ERR_TAX_ALREADY_PAID);									
-					}
+					//} else {
+					//	ui.displayError(UI.ERR_TAX_ALREADY_PAID);									
+					//}
 				
 			
 		} else {
-			ui.displayError(UI.ERR_NOT_A_TAX);
+	//		ui.displayError(UI.ERR_NOT_A_TAX);
 		}
 		return;
 	}
@@ -366,15 +366,15 @@ public class Monopoly {
 		else{
 			taxprice = 100;
 		}
-		if (currPlayer.getBalance() >= taxprice) {				
+		//if (currPlayer.getBalance() >= taxprice) {				
 			currPlayer.doTransaction(-taxprice);
 			ui.displayBankTransaction(currPlayer);
 			ui.displayBalance(currPlayer);
 			taxOwed = false;
-		} else {
-			ui.displayError(UI.ERR_INSUFFICIENT_FUNDS); //must sell things or declare bankrupt
-			taxOwed = true;
-		}
+		//} else {
+		//	ui.displayError(UI.ERR_INSUFFICIENT_FUNDS); //must sell things or declare bankrupt
+		//	taxOwed = true;
+		//}
 		return;
 	}
 	
@@ -388,13 +388,14 @@ public class Monopoly {
 			switch (ui.getCommandId()) {
 				case UI.CMD_ROLL :
 					processRoll();
-					break;
-				case UI.CMD_PAY_RENT :
 					processPayRent();
 					break;
-				case UI.CMD_TAX :
-					processPayTax();
-					break;
+			//	case UI.CMD_PAY_RENT :
+			//		processPayRent();
+			//		break;
+			//	case UI.CMD_TAX :
+			//		processPayTax();
+			//		break;
 				case UI.CMD_BUY :
 					processBuy();
 					break;
