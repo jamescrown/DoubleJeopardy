@@ -28,6 +28,12 @@ public class Player {
 		this(player.getName(), player.getTokenName(), player.getTokenId());
 	}
 	
+	public void goToJail(){
+		setPosition(10);
+		inJail = true;
+		return;
+	}
+	
 // METHODS DEALING WITH PLAYER DATA
 	
 	public String getName () {
@@ -47,14 +53,15 @@ public class Player {
 	public int getPosition () {
 		return position;
 	}
+	
+	public void setPosition(int square){
+		position = square;
+		passedGo = false;
+		return;
+	}
 
 	public void move (int squares) {
 		position = position + squares;
-		if(position == 30){ // Position 30 is Go to Jail Square
-			position = position - 20; // then land on Square 10 which is Jail.
-	
-		}
-		
 		if (position >= Board.NUM_SQUARES) {
 			position = position - Board.NUM_SQUARES;
 			passedGo = true;
@@ -150,15 +157,7 @@ public class Player {
 	public String toString () {
 		return name + " (" + tokenName + ")";
 	}
-	public void goToJail() { // go to Jail function.
-	position=10;  // Jail square position
-        inJail=true;
-	return;
-        }
-	public void leaveJail(){
-		inJail=false;
-        }
-	   public boolean jailStatus(){
-	   return inJail;
-        }
+	
+
 }
+
