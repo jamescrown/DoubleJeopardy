@@ -9,6 +9,7 @@ public class Player {
 	private String tokenName;
 	private int tokenId;
 	private boolean passedGo;
+	private boolean inJail=false;
 	private ArrayList<Property> properties = new ArrayList<Property>();
 	
 // CONSTRUCTORS
@@ -151,8 +152,11 @@ public class Player {
 	}
 	public void goToJail() { // go to Jail function.
 	position=10;  // Jail square position
+        inJail=true;
 	return;
 }
+	public void leaveJail(){
+		inJail=false;
 
 }
 
