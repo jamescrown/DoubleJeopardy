@@ -9,7 +9,7 @@ public class Player {
 	private String tokenName;
 	private int tokenId;
 	private boolean passedGo;
-	private boolean inJail=false;
+	public boolean inJail=false;
 	private ArrayList<Property> properties = new ArrayList<Property>();
 	
 // CONSTRUCTORS
