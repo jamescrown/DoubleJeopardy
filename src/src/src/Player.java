@@ -157,6 +157,13 @@ public class Player {
 	public String toString () {
 		return name + " (" + tokenName + ")";
 	}
+			
+	public void leaveJail(){		
+		inJail=false;		
+	}		
+	public boolean jailStatus(){		
+		return inJail;		
+	}
 	
 
 }
