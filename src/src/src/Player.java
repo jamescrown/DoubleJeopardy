@@ -154,9 +154,11 @@ public class Player {
 	position=10;  // Jail square position
         inJail=true;
 	return;
-}
+        }
 	public void leaveJail(){
 		inJail=false;
-
+        }
+	   public boolean jailStatus(){
+	   return inJail;
+        }
 }
-
