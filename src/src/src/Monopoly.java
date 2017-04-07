@@ -20,7 +20,6 @@ public class Monopoly {
 	private boolean rentPaid;
 	private boolean taxPaid;
 	private int doubles;
-	private boolean inJail;
 	
 	Monopoly () {
 		ui.display();
@@ -100,8 +99,8 @@ public class Monopoly {
 						}	
 						
 							if(doubles != 3){
-								currPlayer.move(dice.getTotal());
-								//currPlayer.move(10);
+								//currPlayer.move(dice.getTotal());
+								currPlayer.move(1);
 								ui.display();
 								if (currPlayer.passedGo()) {
 									currPlayer.doTransaction(+GO_MONEY);
@@ -113,17 +112,18 @@ public class Monopoly {
 									taxPaid = false;
 									processTax(board.getSquare(currPlayer.getPosition()).getName());
 								}
+								
 								if(board.getSquare(currPlayer.getPosition()).getName() == "Go To Jail"){
-									currPlayer.setPosition(10); //jail is square 10
+									currPlayer.goToJail(); //jail is square 10
 									ui.displayString("You have been sent to jail");
-									inJail = true;
 									//in jail
 								}
 								if (board.getSquare(currPlayer.getPosition()) instanceof Property && 
 										((Property) board.getSquare(currPlayer.getPosition())).isOwned() &&
 										!((Property) board.getSquare(currPlayer.getPosition())).getOwner().equals(currPlayer) ) {
-											rentOwed = true;
-											rentPaid = false;
+											processPayRent();
+//											rentOwed = true;
+//											rentPaid = false;
 								} else {
 									rentOwed = false;
 								}
@@ -132,8 +132,7 @@ public class Monopoly {
 								}
 							}else{
 								
-								currPlayer.setPosition(10); //jail is square 10
-								inJail = true;
+								currPlayer.goToJail();
 								ui.display();
 								ui.displayString("You rolled doubles 3 times and have been sent to jail");
 							}
@@ -405,7 +404,6 @@ public class Monopoly {
 		rentOwed = false;
 		rentPaid = false;
 		doubles = 0;
-		inJail = false;
 		do {
 			ui.inputCommand(currPlayer);
 			switch (ui.getCommandId()) {

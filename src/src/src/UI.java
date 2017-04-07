@@ -185,20 +185,15 @@ public class UI {
 					commandId = CMD_BUY;
 					inputValid = hasNoArgument(words);
 					break;
-// 				case "pay" :
-					
-// 					if (hasOneArgument(words) && words[1].equals("rent")) {
-// 						commandId = CMD_PAY_RENT;
-// 						inputValid = true;
-// 					} 
-// 					else if(hasOneArgument(words) && words[1].equals("tax")){
-// 						commandId = CMD_TAX;
-// 						inputValid = true;
-// 					}
-// 					else {
-// 						inputValid = false;
-// 					}
-// 					break;
+				case "pay" :
+					if(hasOneArgument(words) && words[1].equals("tax")){
+						commandId = CMD_TAX;
+						inputValid = true;
+					}
+					else {
+						inputValid = false;
+					}
+					break;
 				case "property" :
 					commandId = CMD_PROPERTY;
 					inputValid = hasNoArgument(words);
@@ -353,7 +348,7 @@ public class UI {
 	}
 	
 	public void displayCommandHelp () {
-		infoPanel.displayString("Available commands: roll, buy, pay rent, pay tax build, demolish, mortgage, redeem, bankrupt, property, balance, done, quit. ");
+		infoPanel.displayString("Available commands: roll, buy, pay tax build, demolish, mortgage, redeem, bankrupt, property, balance, done, quit. ");
 		return;
 	}
 	
