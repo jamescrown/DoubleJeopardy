@@ -19,6 +19,8 @@ public class Monopoly {
 	private boolean taxOwed;
 	private boolean rentPaid;
 	private boolean taxPaid;
+	private int doubles;
+	private boolean inJail;
 	
 	Monopoly () {
 		ui.display();
@@ -90,36 +92,51 @@ public class Monopoly {
 			if (!rollDone) {
 				if(!taxOwed){
 					if (!rentOwed) {
+						
 						dice.roll();
 						ui.displayDice(currPlayer, dice);
-						currPlayer.move(dice.getTotal());
-						//currPlayer.move(1);
-						ui.display();
-						if (currPlayer.passedGo()) {
-							currPlayer.doTransaction(+GO_MONEY);
-							ui.displayPassedGo(currPlayer);
-							ui.displayBankTransaction(currPlayer);
-						}
-						ui.displaySquare(currPlayer, board, dice);
-						if (board.getSquare(currPlayer.getPosition()).getName() == "Income Tax" || board.getSquare(currPlayer.getPosition()).getName() == "Super Tax" ){
-							taxPaid = false;
-							processTax(board.getSquare(currPlayer.getPosition()).getName());
-						}
+						if (dice.isDouble()){
+							doubles++;
+						}	
 						
-					if(currPlayer.getPosition() == 30 ) { //if player lands on 30
-                           		currPlayer.goToJail(); // goToJail function on Player.
-						}
-						if (board.getSquare(currPlayer.getPosition()) instanceof Property && 
-								((Property) board.getSquare(currPlayer.getPosition())).isOwned() &&
-								!((Property) board.getSquare(currPlayer.getPosition())).getOwner().equals(currPlayer) ) {
-									rentOwed = true;
-									rentPaid = false;
-						} else {
-							rentOwed = false;
-						}
-						if (!dice.isDouble()) {
-							rollDone = true;
-						}
+							if(doubles != 3){
+								currPlayer.move(dice.getTotal());
+								//currPlayer.move(10);
+								ui.display();
+								if (currPlayer.passedGo()) {
+									currPlayer.doTransaction(+GO_MONEY);
+									ui.displayPassedGo(currPlayer);
+									ui.displayBankTransaction(currPlayer);
+								}
+								ui.displaySquare(currPlayer, board, dice);
+								if (board.getSquare(currPlayer.getPosition()).getName() == "Income Tax" || board.getSquare(currPlayer.getPosition()).getName() == "Super Tax" ){
+									taxPaid = false;
+									processTax(board.getSquare(currPlayer.getPosition()).getName());
+								}
+								if(board.getSquare(currPlayer.getPosition()).getName() == "Go To Jail"){
+									currPlayer.setPosition(10); //jail is square 10
+									ui.displayString("You have been sent to jail");
+									inJail = true;
+									//in jail
+								}
+								if (board.getSquare(currPlayer.getPosition()) instanceof Property && 
+										((Property) board.getSquare(currPlayer.getPosition())).isOwned() &&
+										!((Property) board.getSquare(currPlayer.getPosition())).getOwner().equals(currPlayer) ) {
+											rentOwed = true;
+											rentPaid = false;
+								} else {
+									rentOwed = false;
+								}
+								if (!dice.isDouble()) {
+									rollDone = true;
+								}
+							}else{
+								
+								currPlayer.setPosition(10); //jail is square 10
+								inJail = true;
+								ui.display();
+								ui.displayString("You rolled doubles 3 times and have been sent to jail");
+							}
 					} else {
 						ui.displayError(UI.ERR_RENT_OWED);	
 					}
@@ -149,35 +166,35 @@ public class Monopoly {
 							ui.displayTransaction(currPlayer, owner);
 							rentPaid = true;	
 							rentOwed = false;
-						//} else {
-						//	ui.displayError(UI.ERR_INSUFFICIENT_FUNDS);										
-						//} 
+//						} else {
+//							ui.displayError(UI.ERR_INSUFFICIENT_FUNDS);										
+//						} 
 					} else {
-					//	ui.displayError(UI.ERR_RENT_ALREADY_PAID);									
+						ui.displayError(UI.ERR_RENT_ALREADY_PAID);									
 					}
 				} else {
-				//	ui.displayError(UI.ERR_SELF_OWNED);								
+					ui.displayError(UI.ERR_SELF_OWNED);								
 				}
 			} else {
-			//	ui.displayError(UI.ERR_NOT_OWNED);							
+				ui.displayError(UI.ERR_NOT_OWNED);							
 			}
 		} else {
-		//	ui.displayError(UI.ERR_NOT_A_PROPERTY);
+			ui.displayError(UI.ERR_NOT_A_PROPERTY);
 		}
 		return;
 	}
 	private void processPayTax(){
 		if (board.getSquare(currPlayer.getPosition()).getName() == "Income Tax" || board.getSquare(currPlayer.getPosition()).getName() == "Super Tax" ){
 				
-					//if (!taxPaid) {
+					if (!taxPaid) {
 						processTax(board.getSquare(currPlayer.getPosition()).getName()); 
-					//} else {
-					//	ui.displayError(UI.ERR_TAX_ALREADY_PAID);									
-					//}
+					} else {
+						ui.displayError(UI.ERR_TAX_ALREADY_PAID);									
+					}
 				
 			
 		} else {
-	//		ui.displayError(UI.ERR_NOT_A_TAX);
+			ui.displayError(UI.ERR_NOT_A_TAX);
 		}
 		return;
 	}
@@ -370,15 +387,15 @@ public class Monopoly {
 		else{
 			taxprice = 100;
 		}
-		//if (currPlayer.getBalance() >= taxprice) {				
+		if (currPlayer.getBalance() >= taxprice) {				
 			currPlayer.doTransaction(-taxprice);
 			ui.displayBankTransaction(currPlayer);
 			ui.displayBalance(currPlayer);
 			taxOwed = false;
-		//} else {
-		//	ui.displayError(UI.ERR_INSUFFICIENT_FUNDS); //must sell things or declare bankrupt
-		//	taxOwed = true;
-		//}
+		} else {
+			ui.displayError(UI.ERR_INSUFFICIENT_FUNDS); //must sell things or declare bankrupt
+			taxOwed = true;
+		}
 		return;
 	}
 	
@@ -387,19 +404,20 @@ public class Monopoly {
 		rollDone = false;
 		rentOwed = false;
 		rentPaid = false;
+		doubles = 0;
+		inJail = false;
 		do {
 			ui.inputCommand(currPlayer);
 			switch (ui.getCommandId()) {
 				case UI.CMD_ROLL :
 					processRoll();
-					processPayRent();
 					break;
-			//	case UI.CMD_PAY_RENT :
-			//		processPayRent();
-			//		break;
-			//	case UI.CMD_TAX :
-			//		processPayTax();
-			//		break;
+//				case UI.CMD_PAY_RENT :
+//					processPayRent();
+//					break;
+				case UI.CMD_TAX :
+					processPayTax();
+					break;
 				case UI.CMD_BUY :
 					processBuy();
 					break;
