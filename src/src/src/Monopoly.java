@@ -106,8 +106,8 @@ public class Monopoly {
 						
 							if(doubles != 3){
 								if(!cardMovement){//don't move again if you have moved as the result of a card
-									//currPlayer.move(dice.getTotal());
-									currPlayer.move(7);
+									currPlayer.move(dice.getTotal());
+									//currPlayer.move(2); //testing
 								}
 								
 								ui.display();
@@ -295,13 +295,14 @@ public class Monopoly {
 			currPlayer.GainAGetOutOfJailFreeCard();
 		}
 
-		else if (card.getType()=="FineOrChance"){
+		else if (card.getType()=="fineOrChance"){
+			
 			if (ui.fineOrChance(currPlayer)=="fine"){
-				currPlayer.doTransaction(card.getFigure());
+				currPlayer.doTransaction(-card.getFigure());
 				ui.displayBankTransaction(currPlayer);
 				ui.displayBalance(currPlayer);
 			}
-			else if (ui.fineOrChance(currPlayer)=="Chance"){
+			else{
 				processCard("Chance");
 			}
 			

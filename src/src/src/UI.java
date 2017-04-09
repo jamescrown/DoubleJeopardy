@@ -158,11 +158,13 @@ public class UI {
 	
 	public String fineOrChance(Player player){
 		boolean inputValid = false;
-		String choice = "error";
+		String choice = "";
+		infoPanel.displayString("Enter fine or chance: ");
 		do{
 			commandPanel.inputString();
 			string = commandPanel.getString();
 			infoPanel.displayString("> " + string);
+			string = commandPanel.getString();
 			string = string.toLowerCase();
 			string = string.trim();
 			switch(string){
@@ -171,7 +173,7 @@ public class UI {
 					inputValid = true;
 					break;
 				case "chance" :
-					choice = "Chance";
+					choice = "chance";
 					inputValid = true;
 					break;
 				default:
@@ -180,6 +182,7 @@ public class UI {
 			if (!inputValid) {
 			displayError(ERR_SYNTAX);
 			}
+			
 		} while (!inputValid);
 		
 		return choice;
