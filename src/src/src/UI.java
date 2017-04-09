@@ -188,6 +188,43 @@ public class UI {
 		return choice;
 	}
 	
+		public String playerInJail(Player player) {
+		boolean inputValid = false;
+		String choice = "";
+		infoPanel.displayString("Enter card, roll or pay: ");
+		do{
+			commandPanel.inputString();
+			string = commandPanel.getString();
+			infoPanel.displayString(">" + string);
+			string = commandPanel.getString();
+			string = string.toLowerCase();
+			string = string.trim();
+			switch(string){
+				case "card" :
+					choice = "card";
+					inputValid = true;
+					break;
+				case "roll" :
+					choice = "roll";
+					inputValid = true;
+					break;
+				default:
+					inputValid = false;
+				case "pay" :
+					choice ="pay";
+					inputValid = true;
+					break;
+			}
+			if (!inputValid) {
+				displayError(ERR_SYNTAX);
+				}
+				
+			} while (!inputValid);
+			
+			return choice;
+		}
+
+	
 	public void inputCommand (Player player) {
 		boolean inputValid = false;
 		do {
