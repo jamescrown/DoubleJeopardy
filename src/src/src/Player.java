@@ -8,8 +8,9 @@ public class Player {
 	private int amount;
 	private String tokenName;
 	private int tokenId;
-	private boolean passedGo;
+	public boolean passedGo;
 	public boolean inJail=false;
+	public boolean jailCard = false;
 	private ArrayList<Property> properties = new ArrayList<Property>();
 	
 // CONSTRUCTORS
@@ -30,6 +31,7 @@ public class Player {
 	
 	public void goToJail(){
 		setPosition(10);
+		passedGo = false;
 		inJail = true;
 		return;
 	}
@@ -48,6 +50,18 @@ public class Player {
 		return tokenId;
 	}
 	
+	public boolean JailCard(){
+		return jailCard; //does the player have a get out of jail free card
+	}
+	
+	public void GainAGetOutOfJailFreeCard(){
+		jailCard = true;
+	}
+	
+	public void UseAGetOutOfJailFreeCard(){
+		jailCard = false;
+	}
+	
 // METHODS DEALING WITH TOKEN POSITION
 	
 	public int getPosition () {
@@ -55,8 +69,13 @@ public class Player {
 	}
 	
 	public void setPosition(int square){
+		if(square < position){
+			passedGo = true;
+		}
+		else if (square > position){
+			passedGo = false;
+		}
 		position = square;
-		passedGo = false;
 		return;
 	}
 
