@@ -9,6 +9,7 @@ public class Monopoly {
 	private Players players = new Players();
 	private Player currPlayer;
 	private Dice dice = new Dice();
+	private Cards cards = new Cards();
 	private Board board = new Board(dice);
 	private UI ui = new UI(players, board);
 	private boolean gameOver = false;
@@ -19,6 +20,7 @@ public class Monopoly {
 	private boolean taxOwed;
 	private boolean rentPaid;
 	private boolean taxPaid;
+	private boolean cardMovement;
 	private int doubles;
 	
 	Monopoly () {
@@ -86,21 +88,28 @@ public class Monopoly {
 		return;
 	}
 	
-	private void processRoll () {
+	private void processRoll (boolean cardMovement) {
 		if (currPlayer.getBalance()>=0){
 			if (!rollDone) {
 				if(!taxOwed){
 					if (!rentOwed) {
 						
-						dice.roll();
-						ui.displayDice(currPlayer, dice);
+						if(!cardMovement){//don't roll if you are moving as the result of a card
+							dice.roll();
+							ui.displayDice(currPlayer, dice);
+						}
+						
+						
 						if (dice.isDouble()){
 							doubles++;
 						}	
 						
 							if(doubles != 3){
-								//currPlayer.move(dice.getTotal());
-								currPlayer.move(1);
+								if(!cardMovement){//don't move again if you have moved as the result of a card
+									//currPlayer.move(dice.getTotal());
+									currPlayer.move(7);
+								}
+								
 								ui.display();
 								if (currPlayer.passedGo()) {
 									currPlayer.doTransaction(+GO_MONEY);
@@ -117,6 +126,10 @@ public class Monopoly {
 									currPlayer.goToJail(); //jail is square 10
 									ui.displayString("You have been sent to jail");
 									//in jail
+								}
+								
+								if(board.getSquare(currPlayer.getPosition()).getName() == "Community Chest" || board.getSquare(currPlayer.getPosition()).getName() == "Chance"){
+									processCard(board.getSquare(currPlayer.getPosition()).getName());
 								}
 								if (board.getSquare(currPlayer.getPosition()) instanceof Property && 
 										((Property) board.getSquare(currPlayer.getPosition())).isOwned() &&
@@ -196,6 +209,103 @@ public class Monopoly {
 			ui.displayError(UI.ERR_NOT_A_TAX);
 		}
 		return;
+	}
+	
+	private void processCard(String TypeCard){
+		ui.displayString("You drew the card:");
+		Card card;
+		int whichCard = (int)(Math.random() * 16);
+		//int whichCard = 15; //to test each of the cards
+		if(TypeCard == "Community Chest"){
+			card = cards.getCommunityChestCard(whichCard);
+		}
+		else{
+			card = cards.getChanceCard(whichCard);
+		}
+		
+		ui.displayString(card.getName());
+		
+		if (card.getType()== "fine" || card.getType()== "inherit"){
+			currPlayer.doTransaction(card.getFigure());
+			ui.displayBankTransaction(currPlayer);
+			ui.displayBalance(currPlayer);
+		}
+		
+		else if (card.getType()== "move"){
+			currPlayer.setPosition(card.getFigure());
+			processRoll(true);
+		}
+		
+		else if (card.getType()== "jail"){
+			currPlayer.goToJail();
+		}
+		
+		else if (card.getType()== "moveSpaces"){
+			currPlayer.setPosition(currPlayer.getPosition() + card.getFigure());
+			currPlayer.passedGo = false;
+			processRoll(true);
+		}
+		
+		else if (card.getType()=="houses"){
+			
+			int numHouses = 0;
+			int housesTotal = 0;
+			int numHotels = 0;
+			int hotelsTotal = 0;
+			currPlayer.getProperties();
+			for (Property p : currPlayer.getProperties()){
+				if(p instanceof Site){
+					if (((Site) p).hasBuildings()){
+						if (((Site) p).getNumBuildings()<5){
+							numHouses += ((Site) p).getNumBuildings();
+						}
+						else{ //5 builds -> 1 hotel
+							numHotels += (((Site) p).getNumBuildings()-4);
+						}
+					}
+				}
+			}
+			housesTotal = (card.getFigure()*numHouses);
+			hotelsTotal = ((card.getFigure()+75)*numHotels);
+			ui.displayString("You own "+ numHouses +" houses. £"+ card.getFigure()+ " each: £" + housesTotal);
+			ui.displayString("You own "+ numHotels +" hotels. £"+ (card.getFigure()+75)+ " each: £" + hotelsTotal);
+			if((housesTotal+hotelsTotal) != 0){
+				currPlayer.doTransaction(-(housesTotal+hotelsTotal));
+				ui.displayBankTransaction(currPlayer);
+				ui.displayBalance(currPlayer);
+			}
+			
+		}
+		
+		else if (card.getType()=="eachPlayer"){
+			//Collect £10 from each player
+			int collection = card.getFigure();
+			for (Player p : players.get()) {
+				if (p != currPlayer){
+					p.doTransaction (-collection);
+					currPlayer.doTransaction(+collection);
+					ui.displayTransaction (p, currPlayer);
+				}
+			}
+			
+			ui.displayBalance(currPlayer);
+		}
+		
+		else if (card.getType()=="jailCard"){
+			currPlayer.GainAGetOutOfJailFreeCard();
+		}
+
+		else if (card.getType()=="FineOrChance"){
+			if (ui.fineOrChance(currPlayer)=="fine"){
+				currPlayer.doTransaction(card.getFigure());
+				ui.displayBankTransaction(currPlayer);
+				ui.displayBalance(currPlayer);
+			}
+			else if (ui.fineOrChance(currPlayer)=="Chance"){
+				processCard("Chance");
+			}
+			
+		}
 	}
 
 	private void processBuy () {
@@ -404,11 +514,12 @@ public class Monopoly {
 		rentOwed = false;
 		rentPaid = false;
 		doubles = 0;
+		cardMovement = false;
 		do {
 			ui.inputCommand(currPlayer);
 			switch (ui.getCommandId()) {
 				case UI.CMD_ROLL :
-					processRoll();
+					processRoll(cardMovement);
 					break;
 //				case UI.CMD_PAY_RENT :
 //					processPayRent();

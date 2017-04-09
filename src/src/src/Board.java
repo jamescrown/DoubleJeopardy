@@ -19,7 +19,7 @@ public class Board {
 	Board (Dice dice) {
 			squares[0] = new Square("Go");
 			squares[1] = new Site("Old Kent Rd", "kent", 60, 50, new int[] {2,10,30,90,160,250}, brown, 50);
-			squares[2] = new Square("Comminity Chest");
+			squares[2] = new Square("Community Chest");
 			squares[3] = new Site("Whitechapel Rd", "whitechapel", 60, 50, new int[] {4,20,60,180,320,450}, brown, 50);
 			squares[4] = new Square("Income Tax");
 			squares[5] = new Station("King's Cross Station", "kings", 200, 100, new int[] {25,50,100,200});

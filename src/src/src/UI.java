@@ -156,6 +156,35 @@ public class UI {
 		return (words.length==3);
 	}
 	
+	public String fineOrChance(Player player){
+		boolean inputValid = false;
+		String choice = "error";
+		do{
+			commandPanel.inputString();
+			string = commandPanel.getString();
+			infoPanel.displayString("> " + string);
+			string = string.toLowerCase();
+			string = string.trim();
+			switch(string){
+				case "fine" :
+					choice = "fine";
+					inputValid = true;
+					break;
+				case "chance" :
+					choice = "Chance";
+					inputValid = true;
+					break;
+				default:
+					inputValid = false;
+			}
+			if (!inputValid) {
+			displayError(ERR_SYNTAX);
+			}
+		} while (!inputValid);
+		
+		return choice;
+	}
+	
 	public void inputCommand (Player player) {
 		boolean inputValid = false;
 		do {
@@ -348,7 +377,7 @@ public class UI {
 	}
 	
 	public void displayCommandHelp () {
-		infoPanel.displayString("Available commands: roll, buy, pay tax build, demolish, mortgage, redeem, bankrupt, property, balance, done, quit. ");
+		infoPanel.displayString("Available commands: roll, buy, pay tax, build, demolish, mortgage, redeem, bankrupt, property, balance, done, quit. ");
 		return;
 	}
 	
