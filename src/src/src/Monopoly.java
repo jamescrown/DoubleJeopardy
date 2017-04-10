@@ -97,6 +97,7 @@ public class Monopoly {
 						if(!cardMovement){//don't roll if you are moving as the result of a card
 							dice.roll();
 							ui.displayDice(currPlayer, dice);
+							
 						}
 						
 						
@@ -107,7 +108,7 @@ public class Monopoly {
 							if(doubles != 3){
 								if(!cardMovement){//don't move again if you have moved as the result of a card
 									currPlayer.move(dice.getTotal());
-									//currPlayer.move(2); //testing
+									//currPlayer.move(30); //testing
 								}
 								
 								ui.display();
@@ -125,6 +126,9 @@ public class Monopoly {
 								if(board.getSquare(currPlayer.getPosition()).getName() == "Go To Jail"){
 									currPlayer.goToJail(); //jail is square 10
 									ui.displayString("You have been sent to jail");
+									ui.displayJail();
+									doubles = 0;
+									rollDone=true;
 									//in jail
 								}
 								
@@ -148,6 +152,10 @@ public class Monopoly {
 								currPlayer.goToJail();
 								ui.display();
 								ui.displayString("You rolled doubles 3 times and have been sent to jail");
+								ui.displayJail();
+								doubles = 0;
+								rollDone=true;
+
 							}
 					} else {
 						ui.displayError(UI.ERR_RENT_OWED);	
@@ -238,6 +246,11 @@ public class Monopoly {
 		
 		else if (card.getType()== "jail"){
 			currPlayer.goToJail();
+			ui.displayString("You have been sent to jail");
+			ui.displayJail();
+			doubles = 0;
+			rollDone=true;
+
 		}
 		
 		else if (card.getType()== "moveSpaces"){
@@ -267,8 +280,8 @@ public class Monopoly {
 			}
 			housesTotal = (card.getFigure()*numHouses);
 			hotelsTotal = ((card.getFigure()+75)*numHotels);
-			ui.displayString("You own "+ numHouses +" houses. £"+ card.getFigure()+ " each: £" + housesTotal);
-			ui.displayString("You own "+ numHotels +" hotels. £"+ (card.getFigure()+75)+ " each: £" + hotelsTotal);
+			ui.displayString("You own "+ numHouses +" houses. Â£"+ card.getFigure()+ " each: Â£" + housesTotal);
+			ui.displayString("You own "+ numHotels +" hotels. Â£"+ (card.getFigure()+75)+ " each: Â£" + hotelsTotal);
 			if((housesTotal+hotelsTotal) != 0){
 				currPlayer.doTransaction(-(housesTotal+hotelsTotal));
 				ui.displayBankTransaction(currPlayer);
@@ -278,7 +291,7 @@ public class Monopoly {
 		}
 		
 		else if (card.getType()=="eachPlayer"){
-			//Collect £10 from each player
+			//Collect Â£10 from each player
 			int collection = card.getFigure();
 			for (Player p : players.get()) {
 				if (p != currPlayer){
@@ -471,7 +484,9 @@ public class Monopoly {
 			if (rollDone) {
 				if (!rentOwed || (rentOwed && rentPaid)) {
 					if (!taxOwed || (taxOwed && taxPaid)){
+					
 						turnFinished = true;
+						
 						ui.clearPanel();
 					}
 					else{
@@ -516,6 +531,10 @@ public class Monopoly {
 		rentPaid = false;
 		doubles = 0;
 		cardMovement = false;
+		if(currPlayer.inJail){
+			ui.displayString("IN JAIL");
+			ui.displayRemainingNightsInJail(currPlayer);
+		}
 		do {
 			ui.inputCommand(currPlayer);
 			switch (ui.getCommandId()) {
@@ -566,9 +585,23 @@ public class Monopoly {
 					turnFinished = true;
 					gameOver = true;
 					break;
+				case UI.CMD_ROLLDOUBLE :
+					processRollForDoubles();
+					break;
+				case UI.CMD_PAYBAIL :
+					payBail();
+					break;
+				case UI.CMD_HELPJAIL :
+					displayJailHelp();
+					break;
+				case UI.CMD_JAILCARD :
+					processJailCard(currPlayer);
+					break;
+					
 			}
 		} while (!turnFinished);
 		return;
+		
 	}
 	
 	public void payTax(int taxPrice){
@@ -620,4 +653,77 @@ public class Monopoly {
 	public boolean isGameOver () {
 		return gameOver;
 	}
+	
+	public void payBail(){// pays 50 to the bank as bail and leaves jail , only if you can afford it
+		if(currPlayer.inJail=true){
+			if(currPlayer.jailCount>0){
+		  if (currPlayer.getBalance() >= 50) {				
+			currPlayer.doTransaction(-50);
+			ui.displayBankTransaction(currPlayer);
+			ui.displayJailLeave();
+			ui.displayBalance(currPlayer);
+			currPlayer.inJail = false;
+			rollDone= true;
+		  } else {
+			ui.displayError(UI.ERR_INSUFFICIENT_FUNDS);
+		  }
+			}else{
+				ui.displayError(UI.ERR_JAILFIRST);
+			}
+	    }else{
+			ui.displayError(UI.ERR_NOTJAIL);
+		}
+	}
+	public void displayJailHelp(){//displays the help for jail
+		ui.displayJailCommandHelp();
+	}
+	private void processRollForDoubles () {//rolls for doubles and will leave jail if it succeeds
+		if(currPlayer.inJail=true){
+			if(currPlayer.jailCount>0){
+			if (!rollDone) {
+						dice.roll();
+						ui.displayDice(currPlayer, dice);
+						ui.display();
+
+						if (dice.isDouble()) {
+						    currPlayer.leaveJail();
+						    ui.displayJailLeave();
+						    
+						}
+						else{
+						ui.displayJailDoubleFail();
+						}
+						    rollDone = true;
+                    		return;
+                      	}
+			else{
+				ui.displayError(UI.ERR_DOUBLE_ROLL);					
+			}
+			
+		   }else{
+				ui.displayError(UI.ERR_JAILFIRST);
+			}
+		}else{
+			ui.displayError(UI.ERR_NOTJAIL);
+		}
+          }
+	public void processJailCard(Player player){//checks if the player has a get out of jail card and then uses it or else returns errors
+		if(currPlayer.inJail=true){
+			if(currPlayer.jailCount>0){
+		         if(player.JailCard()){
+			        currPlayer.leaveJail();
+			        ui.displayJailLeave();
+			        rollDone= true;
+		           }
+		          else{
+		          	ui.displayError(UI.ERR_NOJAILCARD);
+		              }
+			 }else{
+					ui.displayError(UI.ERR_JAILFIRST);
+				}
+	    }else{
+			ui.displayError(UI.ERR_NOTJAIL);
+		}
+	}
+	
 }
