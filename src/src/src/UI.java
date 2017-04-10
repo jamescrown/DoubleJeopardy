@@ -630,7 +630,7 @@ public class UI {
 		infoPanel.displayString("You must either roll , pay or use a card");
 	}
 	public void displayJailCommandHelp () {//list of commands and info for players in jail
-		infoPanel.displayString("Available commands: Roll, Pay Bail, Card, bankrupt, property, balance, done, quit. ");
+		infoPanel.displayString("Available commands: roll, pay (bail), card, bankrupt, property, balance, done, quit. ");
 		return;
 	}
 	public void displayJailLeave (){//display that the player has left jail
