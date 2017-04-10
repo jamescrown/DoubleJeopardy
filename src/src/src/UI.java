@@ -28,6 +28,12 @@ public class UI {
 	public static final int CMD_CHEAT = 16;
 	public static final int CMD_DEMOLISH = 17;
 	public static final int CMD_TAX = 18;
+	public static final int CMD_ROLLDOUBLE = 19;
+	public static final int CMD_PAYBAIL = 20;
+	public static final int CMD_HELPJAIL = 21;
+	public static final int CMD_JAILCARD = 22;
+
+	
 	
 	public static final int ERR_SYNTAX = 0;
 	public static final int ERR_DOUBLE_ROLL = 1;
@@ -54,6 +60,10 @@ public class UI {
 	public static final int ERR_NOT_A_TAX = 22;
 	public static final int ERR_TAX_ALREADY_PAID = 23;
 	public static final int ERR_NEG_BALANCE = 24;
+	public static final int ERR_NOTJAIL = 25;
+	public static final int ERR_JAILFIRST = 26;
+	public static final int ERR_NOJAILCARD = 27;
+
 	
 	private final String[] errorMessages = {
 		"Error: Not a valid command.",
@@ -80,7 +90,10 @@ public class UI {
 		"Error: You owe tax.",
 		"Error: You don't owe tax.",
 		"Error: You have already paid the tax.",
-		"Error: You can't continue with a negative bank balance."
+		"Error: You can't continue with a negative bank balance.",
+		"Error: You are not in Jail anymore.",
+		"Error: You must spend at least one night in jail",
+		"Error: You do not own a 'Get Out of Jail Free' card"
 	};
 	
 	private JFrame frame = new JFrame();
@@ -188,45 +201,118 @@ public class UI {
 		return choice;
 	}
 	
-		public String playerInJail(Player player) {
-		boolean inputValid = false;
-		String choice = "";
-		infoPanel.displayString("Enter card, roll or pay: ");
-		do{
-			commandPanel.inputString();
-			string = commandPanel.getString();
-			infoPanel.displayString(">" + string);
-			string = commandPanel.getString();
-			string = string.toLowerCase();
-			string = string.trim();
-			switch(string){
-				case "card" :
-					choice = "card";
-					inputValid = true;
-					break;
-				case "roll" :
-					choice = "roll";
-					inputValid = true;
-					break;
-				default:
-					inputValid = false;
-				case "pay" :
-					choice ="pay";
-					inputValid = true;
-					break;
-			}
-			if (!inputValid) {
-				displayError(ERR_SYNTAX);
-				}
-				
-			} while (!inputValid);
-			
-			return choice;
-		}
+//		public String playerInJail(Player player) {
+//		boolean inputValid = false;
+//		String choice = "";
+//		infoPanel.displayString("Enter card, roll or pay: ");
+//		do{
+//			commandPanel.inputString();
+//			string = commandPanel.getString();
+//			infoPanel.displayString(">" + string);
+//			string = commandPanel.getString();
+//			string = string.toLowerCase();
+//			string = string.trim();
+//			switch(string){
+//				case "card" :
+//					choice = "card";
+//					inputValid = true;
+//					break;
+//				case "roll" :
+//					choice = "roll";
+//					inputValid = true;
+//					break;
+//				default:
+//					inputValid = false;
+//				case "pay" :
+//					choice ="pay";
+//					inputValid = true;
+//					break;
+//			}
+//			if (!inputValid) {
+//				displayError(ERR_SYNTAX);
+//				}
+//				
+//			} while (!inputValid);
+//			
+//			return choice;
+//		}
 
 	
 	public void inputCommand (Player player) {
 		boolean inputValid = false;
+		if(player.inJail==true){
+           //entire new set of inputs for players in jail , including pay bail , use card and roll for doubles
+			do{
+		    infoPanel.displayString(player + " type your command:");
+			commandPanel.inputString();
+			string = commandPanel.getString();
+			infoPanel.displayString("> " + string);
+			string = commandPanel.getString();
+			string = string.toLowerCase();
+			string = string.trim();
+			string = string.replaceAll("( )+", " ");
+			String[] words = string.split(" ");
+			switch (words[0]) {
+			case "quit" :
+				commandId = CMD_QUIT;
+				inputValid = hasNoArgument(words);
+				break;
+			case "done" :
+				commandId = CMD_DONE;
+				player.jailWait();
+				if(player.jailCount>3){
+					displayJailLeave();
+					player.inJail=false;		
+				}
+				inputValid = hasNoArgument(words);
+				break;
+			case "roll" :
+				commandId = CMD_ROLLDOUBLE;
+				inputValid = hasNoArgument(words);
+				break;
+			case "pay" :
+				commandId = CMD_PAYBAIL;
+				inputValid = hasNoArgument(words);
+				break;
+			case "property" :
+				commandId = CMD_PROPERTY;
+				inputValid = hasNoArgument(words);
+				break;
+			case "balance" :
+				commandId = CMD_BALANCE;
+				inputValid = hasNoArgument(words);
+				break;
+			case "bankrupt" :
+				commandId = CMD_BANKRUPT;
+				inputValid = hasNoArgument(words);
+				break;
+			case "help" :
+				commandId = CMD_HELPJAIL;
+				inputValid = hasNoArgument(words);
+/*test*/  //          displayReturnJailValue(player);
+				break;
+			case "card":
+			    commandId = CMD_JAILCARD;
+			    inputValid = hasNoArgument(words);
+		     	break;
+			default:
+				inputValid = false;
+			}
+		if (!inputValid) {
+			displayError(ERR_SYNTAX);
+		}
+	} while (!inputValid);
+	if (commandId == CMD_DONE) {
+		done = true;
+	} else {
+		done = false;
+	}		
+	return;
+	}
+			
+		
+		
+		else{
 		do {
 			infoPanel.displayString(player + " type your command:");
 			commandPanel.inputString();
@@ -316,6 +402,7 @@ public class UI {
 				case "help" :
 					commandId = CMD_HELP;
 					inputValid = hasNoArgument(words);
+/*test*/            displayReturnJailValue(player);
 					break;
 				case "cheat" :
 					commandId = CMD_CHEAT;
@@ -339,6 +426,7 @@ public class UI {
 			done = false;
 		}		
 		return;
+		}
 	}
 	
 	public String getString () {
@@ -538,5 +626,27 @@ public class UI {
 	public void clearPanel(){
 		infoPanel.clearPanel();
 	}
-	
+	public void displayJail(){//display the instructions for jail
+		infoPanel.displayString("You must either roll , pay or use a card");
+	}
+	public void displayJailCommandHelp () {//list of commands and info for players in jail
+		infoPanel.displayString("Available commands: Roll, Pay Bail, Card, bankrupt, property, balance, done, quit. ");
+		return;
+	}
+	public void displayJailLeave (){//display that the player has left jail
+		infoPanel.displayString("Congratulations! you have left jail");
+		return;
+	}	
+	public void displayJailDoubleFail (){//the player failed to get doubles in jail
+		infoPanel.displayString("You failed to roll doubles");
+		return;
+	}	
+	public void displayReturnJailValue (Player player){//test function to see if jail is true or false
+		infoPanel.displayString("Jail:"+ player.jailStatus());
+		return;
+	}	
+	public void displayRemainingNightsInJail(Player player){//displays how long the player must wait before leaving jail
+		int nights = 4 - player.jailCount;
+		infoPanel.displayString("You have "+nights+" remaining nights in Jail");
+	}
 }
