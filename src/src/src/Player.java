@@ -11,6 +11,7 @@ public class Player {
 	public boolean passedGo;
 	public boolean inJail=false;
 	public boolean jailCard = false;
+	public int jailCount = 0;
 	private ArrayList<Property> properties = new ArrayList<Property>();
 	
 // CONSTRUCTORS
@@ -177,13 +178,17 @@ public class Player {
 		return name + " (" + tokenName + ")";
 	}
 			
-	public void leaveJail(){		
-		inJail=false;		
+	public void leaveJail(){//function to leave jail , sets jail to false and resets the count		
+		inJail=false;	
+		jailCount = 0;
 	}		
-	public boolean jailStatus(){		
+	public boolean jailStatus(){		//returns the jail status as a test
 		return inJail;		
+	}
+	public void jailWait(){		//adds to the count so players can leave jail after three turns
+		jailCount +=1;
+		return;		
 	}
 	
 
 }
-
