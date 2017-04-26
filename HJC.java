@@ -78,3 +78,82 @@ public class HJC implements Bot {
 			if(player.getBalance()< 0 && !MortgageNeeded){
 				MortgageNeeded = true;
 				return "balance";
+		}
+		}	
+		
+		if ((rollDone || doubles) && square instanceof Property && !(((Property) square).isOwned())){
+			Property property = (Property) board.getSquare(player.getPosition());
+			if(player.getBalance() >= property.getPrice()){
+				doubleCount--; 
+				return "buy";
+			}
+			else if(rollDone == false || doubles){
+				rollDone = true;
+				return "roll";
+			}
+			else{
+				rollDone = false;
+				doubleCount = 0;
+				return "done";
+			}
+		}
+		
+		if(player.getBalance() > 200 && redeemCheck){ //check if you have any properties to redeem/unmortgage
+			ArrayList<Property> propertyList = player.getProperties();
+			ArrayList<Property> MortgagedProperties = new ArrayList<Property>() ;
+			
+			for(Property p : propertyList){
+				if (p.isMortgaged()){
+					MortgagedProperties.add(p);
+				}
+			}
+			if(!MortgagedProperties.isEmpty()){
+				rollDone = false;
+				return checkToRedeem(MortgagedProperties);
+			}
+			
+		}
+		
+		if(player.getBalance() < 0 || MortgageNeeded){
+			rollDone = false;
+			MortgageNeeded = true;
+			return checkToMortgage();
+		}
+		
+		
+		else if (rollDone == false || (doubles && player.getBalance() > 0)){
+			rollDone = true;
+			return "roll";
+		}
+		else if(!doubles){
+			rollDone = false;
+			doubleCount = 0;
+			return checkToBuild();
+		}
+		else{
+			return "quit";
+		}
+	}
+	else{
+		return "quit";
+	}
+	
+	}
+  
+	private String checkToRedeem(ArrayList<Property> mortgagedProperties){
+		Property temp = mortgagedProperties.get(0);
+		for(Property p : mortgagedProperties){ //redeem most expensive property you can afford to 
+			if((p.getMortgageRemptionPrice() <= player.getBalance()) && (p.getMortgageRemptionPrice()>temp.getMortgageValue()) ){
+				temp = p;
+			}
+		}
+		if((temp.getMortgageRemptionPrice() <= player.getBalance())){
+			return "redeem " + temp.getShortName();
+		}
+		else{ //can't afford to redeem any at this time
+			redeemCheck = false;
+			return "balance";
+		}
+			
+	}
+	
