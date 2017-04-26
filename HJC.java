@@ -157,3 +157,78 @@ public class HJC implements Bot {
 			
 	}
 	
+	private String checkToMortgage() {
+		ArrayList<Property> propertyList = player.getProperties();
+		ArrayList<Property> unMortgagedProperties = new ArrayList<Property>() ;
+		if (propertyList.isEmpty()){ //if you have no properties to mortgage you must go bankrupt
+			return "bankrupt";
+		}
+		else{
+			for(Property p : propertyList){
+				if (!p.isMortgaged()){
+					if ((p instanceof Site) && (((Site) p).getNumBuildings() > 0)){
+						checkToDemolish((Site) p); //check if there are buildings on it that you need to demolish first
+					}
+					else{
+						unMortgagedProperties.add(p); //otherwise add to unmortgaged properties arraylist
+					}
+				}
+			}
+			if(unMortgagedProperties.isEmpty()){
+				return "bankrupt"; //if all your properties are already mortgaged, declare bankruptcy
+			}
+			else{
+				Property temp = unMortgagedProperties.get(0);
+				for(Property p : unMortgagedProperties){ 
+					if((p.getMortgageValue() >= player.getBalance()) && (p.getMortgageValue()<temp.getMortgageValue()) ){
+						temp = p;
+					}
+				}
+			
+				MortgageNeeded = false;	
+				return ("mortgage " + temp.getShortName());
+			}
+	
+		}
+		
+	}
+
+	private String checkToBuild() {
+		ArrayList<Property> propertyList = player.getProperties();
+		for(Property p : propertyList){
+			if (p instanceof Site) {
+				Site site = (Site) p;
+				if(player.getBalance() > (3*site.getBuildingPrice()) && site.canBuild(3)){// if you have more than the price + 70 just to leave some dollars on the side
+					if (player.isGroupOwner(site)) {
+						if (!site.isMortgaged()) {
+							return "build " + p.getShortName() + " 3"; 
+						}
+					}
+				}
+			}
+		}
+		return "done";
+	}
+
+    private String checkToDemolish(Site t) {
+		if(t.getNumBuildings()>=1){
+			return "demolish " + t.getShortName() + " 1";
+
+		}
+		if(rollDone){
+		rollDone = false;
+		return "roll";
+		}
+		else{
+			return "done";
+		}
+	}
+	
+	public String getDecision () {
+    if(player.getBalance()<=10){
+    	return "chance";
+    }
+    	return "pay";
+	}
+	
+}
