@@ -7,8 +7,6 @@ public class HJC implements Bot {
 	// You cannot change any other classes
 	// YourTeamName may not alter the state of the board or the player objects
 	// It may only inspect the state of the board and the player objects
-  //build houses in three , build seven steps ahead of opponents, best areas are orange, red, pink
-  
   
   BoardAPI board;
 	PlayerAPI player;
