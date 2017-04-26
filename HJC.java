@@ -8,7 +8,7 @@ public class HJC implements Bot {
 	// YourTeamName may not alter the state of the board or the player objects
 	// It may only inspect the state of the board and the player objects
   
-  BoardAPI board;
+  	BoardAPI board;
 	PlayerAPI player;
 	DiceAPI dice;
 	boolean rollDone;
